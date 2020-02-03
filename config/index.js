@@ -5,7 +5,7 @@ const path = require('path')
 const conditionAlias = {
   "react": path.resolve(__dirname, "../node_modules/@tarojs/taro"),
   "axios": path.resolve(__dirname, "../node_modules/taro-axios"),
-  // "axios-hooks": path.resolve(__dirname, "../node_modules/axios-hooks/src"),
+  "axios-hooks": path.resolve(__dirname, "../node_modules/axios-hooks/src"),
 }
 
 if(process.env.TARO_ENV === 'h5') {
@@ -36,12 +36,16 @@ const config = {
     plugins: [
       'transform-decorators-legacy',
       'transform-class-properties',
-      'transform-object-rest-spread'
+      'transform-object-rest-spread',
+      ['transform-runtime', {
+        "helpers": false,
+        "polyfill": false,
+        "regenerator": true,
+        "moduleName": 'babel-runtime'
+      }]
     ]
   },
   defineConstants: {
-    // window: {}
-    Function: (...args)=>(...args2)=>{console.log(args,args2)}
   },
   alias: {
     // 'react': 'node_modules/nervjs',

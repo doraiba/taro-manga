@@ -1,4 +1,4 @@
-import Taro, { useCallback, useEffect } from '@tarojs/taro'
+import Taro, { useCallback, /*useEffect*/ } from '@tarojs/taro'
 // import { View, Button, Text } from '@tarojs/components'
 import { observer } from '@tarojs/mobx'
 import { AtNavBar } from 'taro-ui'

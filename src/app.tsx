@@ -3,7 +3,7 @@ import { AsyncTrunk } from 'mobx-sync'
 import { TaroAsyncStorage } from '@/storage'
 import Index from '@/pages/index'
 import { stores } from '@/contexts'
-import { makeUseAxios } from "axios-hooks";
+import { configure } from "axios-hooks";
 import axios from 'axios'
 
 import './app.scss'
@@ -14,7 +14,7 @@ import './app.scss'
 //   require('nerv-devtools')
 // }
 
-makeUseAxios({ axios })
+configure({ axios })
 
 class App extends Component {
 
