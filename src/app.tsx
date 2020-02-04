@@ -5,7 +5,7 @@ import Index from '@/pages/index'
 import {stores} from '@/contexts'
 import {configure} from "axios-hooks";
 import axios from 'axios'
-import LRU from 'lru-cache'
+// import LRU from 'lru-cache'
 import DOMAIN from '@/contexts/manga-api'
 import injectDefaultLog from "@/utils/inject-axios-log";
 
@@ -17,9 +17,9 @@ import './app.scss'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
-const cache = new LRU({max: 10})
+// const cache = new LRU({max: 10})
 
-configure({cache, axios: injectDefaultLog(axios.create({baseURL: DOMAIN}))})
+configure({/*cache, */axios: injectDefaultLog(axios.create({baseURL: DOMAIN}))})
 
 class App extends Component {
 

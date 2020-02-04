@@ -26,7 +26,6 @@ const Category46: Taro.FC<Category> = ({category_id, data = []}) => {
           </SwiperItem>)
         }
       </Swiper>
-      <View>{JSON.stringify(data)}</View>
     </Block>
   )
 }
