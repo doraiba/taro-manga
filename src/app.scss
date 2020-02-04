@@ -1,1 +1,12 @@
 @import "~taro-ui/dist/style/index.scss"; // 引入组件样式 - 方式二
+
+
+.mg-avatar {
+  width: 20*2px;
+  height: 20*2px;
+  line-height: 20*2px;
+  border: 1PX solid #000;
+}
+.mg-search {
+  font-size: 24*2px !important;
+}

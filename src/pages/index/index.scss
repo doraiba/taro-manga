@@ -1,0 +1,22 @@
+#app-container {
+  display: flex;
+  height: 100vh;
+  flex-flow: column nowrap;
+
+  .container {
+    flex: 1;
+
+    .mg-tabs {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .at-tabs__body {
+        flex: 1;
+
+        .at-tabs-pane {
+          height: 100%;
+        }
+      }
+    }
+  }
+}

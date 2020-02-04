@@ -1,0 +1,27 @@
+
+
+.nav-header{
+  display: flex;
+  font-size: 18PX;
+
+
+  @mixin no-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .nav-leading {
+    flex: 2;
+    @include no-nav
+  }
+  .nav-title {
+    flex: 5;
+    @include no-nav
+  }
+  .nav-actions {
+    flex: 2;
+    @include no-nav;
+    justify-content: space-evenly;
+  }
+}
+

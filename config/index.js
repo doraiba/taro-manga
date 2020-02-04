@@ -5,7 +5,7 @@ const path = require('path')
 const conditionAlias = {
   "react": path.resolve(__dirname, "../node_modules/@tarojs/taro"),
   "axios": path.resolve(__dirname, "../node_modules/taro-axios"),
-  "axios-hooks": path.resolve(__dirname, "../node_modules/axios-hooks/src"),
+  // "axios-hooks": path.resolve(__dirname, "../node_modules/axios-hooks/es"),
 }
 
 if(process.env.TARO_ENV === 'h5') {

@@ -1,10 +1,14 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { AsyncTrunk } from 'mobx-sync'
-import { TaroAsyncStorage } from '@/storage'
+import Taro, {Component, Config} from '@tarojs/taro'
+import {AsyncTrunk} from 'mobx-sync'
+import {TaroAsyncStorage} from '@/storage'
 import Index from '@/pages/index'
-import { stores } from '@/contexts'
-import { configure } from "axios-hooks";
+import {stores} from '@/contexts'
+import {configure} from "axios-hooks";
 import axios from 'axios'
+import LRU from 'lru-cache'
+import DOMAIN from '@/contexts/manga-api'
+import injectDefaultLog from "@/utils/inject-axios-log";
+
 
 import './app.scss'
 
@@ -13,18 +17,23 @@ import './app.scss'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
+const cache = new LRU({max: 10})
 
-configure({ axios })
+configure({cache, axios: injectDefaultLog(axios.create({baseURL: DOMAIN}))})
 
 class App extends Component {
 
-  componentDidMount() { }
+  componentDidMount() {
+  }
 
-  componentDidShow() { }
+  componentDidShow() {
+  }
 
-  componentDidHide() { }
+  componentDidHide() {
+  }
 
-  componentDidCatchError() { }
+  componentDidCatchError() {
+  }
 
   /**
    * 指定config的类型声明为: Taro.Config
@@ -53,9 +62,9 @@ class App extends Component {
     // },
     window: {
       backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarBackgroundColor: '#0094ff',
+      navigationBarTitleText: '动漫之家',
+      navigationBarTextStyle: 'white'
     }
   }
 
@@ -68,7 +77,7 @@ class App extends Component {
   }
 }
 
-new AsyncTrunk(stores.counterStore, { storage: new TaroAsyncStorage() }).init().then(() => {
+new AsyncTrunk(stores.counterStore, {storage: new TaroAsyncStorage()}).init().then(() => {
   Taro.render(<App />, document.getElementById('app'))
 })
 
