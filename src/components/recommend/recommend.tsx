@@ -14,15 +14,14 @@ const Recommend: Taro.FC = () => {
   useEffect(() => {
     refetch()
   }, [refetch])
-  const [c46, c47] = data
+  const [c46, c47, , , , , c54, , c56] = data
   if (loading || error) return <AtActivityIndicator color='#0094ff' size={50} mode='center' content='Loading...' />
   return (
     <View className='mg-recommend'>
       <Category46 {...c46} />
       <Category47 {...c47} />
-      <Category47 {...c47} />
-      <Category47 {...c47} />
-      <Category47 {...c47} />
+      <Category47 {...c54} />
+      <Category47 {...c56} />
     </View>
   )
 }

@@ -1,10 +1,11 @@
-import Taro from '@tarojs/taro'
+import Taro, {useCallback} from '@tarojs/taro'
 import {observer, useLocalStore} from "@tarojs/mobx";
 import {AtTabs, AtTabsPane} from "taro-ui";
 import Recommend from "@/components/recommend/recommend";
 import {ScrollView, View} from '@tarojs/components';
 
 import './manga-container.scss'
+import {BaseEventOrigFunction} from "@tarojs/components/types/common";
 
 const MangaContainer: Taro.FC = () => {
 
@@ -24,10 +25,13 @@ const MangaContainer: Taro.FC = () => {
 
   const {current, items, handleClick} = store
 
+  const handleScrollToLower = useCallback((e: BaseEventOrigFunction<any>) => {
+    console.log(e)
+  }, [])
 
   return (
     <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
-      <ScrollView scrollY className='mg-discovery'>
+      <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
         <AtTabsPane current={current} index={0}>
           <Recommend />
         </AtTabsPane>

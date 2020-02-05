@@ -1,0 +1,29 @@
+.mg-card {
+
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 2%;
+
+  .mg-card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 5*2px 0;
+    color: #0094ff;
+
+    .mg-card-leading {
+      display: flex;
+      justify-content: space-between;
+
+      .mg-card-title {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .mg-card-need {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+
+}

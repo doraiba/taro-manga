@@ -2,16 +2,31 @@
   display: flex;
   flex-flow: column nowrap;
   justify-content: space-between;
+  font-size: 12*2px;
+  width: 112.5*2px;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #000000;
+  margin-top: 10*2px;
+
   .mg-mange-item-cover {
     height: 150*2px;
     width: 112.5*2px;
+
     .mg-mange-item-cover-img {
       height: 100%;
       width: 100%;
       vertical-align: bottom;
+      border-radius: 3%;
     }
   }
-  .mg-manga-item-title {}
-  .mg-manga-item-subtitle {}
+
+  .mg-manga-item-title {
+  }
+
+  .mg-manga-item-subtitle {
+    opacity: .6;
+    color: rgba(0,0,0,.6);
+  }
 
 }
