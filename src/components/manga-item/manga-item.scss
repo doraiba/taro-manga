@@ -1,0 +1,17 @@
+.mg-manga-item {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  .mg-mange-item-cover {
+    height: 150*2px;
+    width: 112.5*2px;
+    .mg-mange-item-cover-img {
+      height: 100%;
+      width: 100%;
+      vertical-align: bottom;
+    }
+  }
+  .mg-manga-item-title {}
+  .mg-manga-item-subtitle {}
+
+}

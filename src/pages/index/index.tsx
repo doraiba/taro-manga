@@ -7,14 +7,15 @@ import MangaContainer from '@/components/manga-container/manga-container';
 import './index.scss'
 
 const Index: Taro.FC = () => {
+
   return (
     <View id='app-container'>
       <Header />
-      <MangaContainer />
+      <View className='mg-container'>
+        <MangaContainer />
+      </View>
     </View>
   )
 }
-// Index.config = {
-//   navigationBarTitleText: '首页'
-// }
+
 export default Index

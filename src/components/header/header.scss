@@ -3,7 +3,7 @@
 .nav-header{
   display: flex;
   font-size: 18PX;
-
+  height: 44*2px;
 
   @mixin no-nav {
     display: flex;
