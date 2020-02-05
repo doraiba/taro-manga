@@ -4,12 +4,24 @@ import {View} from '@tarojs/components'
 import useAxios from 'axios-hooks'
 import {AtActivityIndicator} from 'taro-ui'
 import {RECOMMEND} from "@/contexts/manga-api";
+import EventCenter, {EventDefine} from "@/utils/event-center";
 
 import './recommend.scss'
 import Category46 from "./category-46";
 import Category47 from "./category-47";
 
 const Recommend: Taro.FC = () => {
+
+
+  useEffect(() => {
+    EventCenter.on(EventDefine.ScrollToLowerEvent, ({event, tab}) => {
+      if (tab === 0) {
+        console.log(event)
+      }
+    })
+    return () => EventCenter.off(EventDefine.ScrollToLowerEvent)
+  }, [])
+
   const [{loading, error, data = []}, refetch] = useAxios(RECOMMEND, {manual: true})
   useEffect(() => {
     refetch()

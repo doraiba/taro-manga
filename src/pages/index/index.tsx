@@ -11,11 +11,12 @@ const Index: Taro.FC = () => {
   return (
     <View id='app-container'>
       <Header />
-      <View className='mg-container'>
-        <MangaContainer />
-      </View>
+      <MangaContainer />
     </View>
   )
 }
 
+Index.config = {
+  enablePullDownRefresh: false
+}
 export default Index
