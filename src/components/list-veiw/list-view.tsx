@@ -79,8 +79,8 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
     <Block>
       {error && <View>加载出错</View>}
       {renderList([...list])}
-      {(!loading && hasMore && !error) &&
-      <AtActivityIndicator color='#0094ff' size={50} mode='center' content='Loading...' />}
+      {((loading || hasMore) && !error) &&
+      <AtActivityIndicator className='at-row__justify--center' color='#0094ff' size={50} content='Loading...' />}
     </Block>
   );
 }
