@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
+import dayjs from "dayjs";
 
 import './manga-item.scss'
 
@@ -17,7 +18,7 @@ const MangaItem: Taro.FC<MangaItemProps> = ({children, cover, title, authors, ty
           <View className='mg-union-produce'>
             <View className='mg-union-authors'>{authors}</View>
             <View className='mg-union-tag'>{types}</View>
-            <View className='mg-union-date'>{last_updatetime}</View>
+            <View className='mg-union-date'>{dayjs.unix((last_updatetime as number) ).format('YYYY-MM-DD HH:mm')}</View>
           </View>
         </View>
       </View>

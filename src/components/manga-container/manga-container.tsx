@@ -52,7 +52,7 @@ const MangaContainer: Taro.FC = () => {
       </AtTabsPane>
       <AtTabsPane current={current} index={3}>
         <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Rank />
+          {current === 3 && <Rank />}
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={4}>

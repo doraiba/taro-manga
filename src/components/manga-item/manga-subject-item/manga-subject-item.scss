@@ -3,6 +3,7 @@
   display: flex;
   flex-flow: column nowrap;
   padding: 0 5*2px;
+  color: #000;
 
   .mg-subject-image-wrapper {
     width: 355*2px;
@@ -22,6 +23,15 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 5*2px;
+
+    .mg-subject-title {
+      font-size: 14*2px;
+    }
+
+    .mg-subject-time {
+      color: #343434;
+      font-size: 12*2px;
+    }
   }
 
 }
