@@ -20,10 +20,10 @@ type CustomProps = {
 
 type ListProps = CustomProps;
 
-const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize = 10, initial = 0, url, search, renderList}) => {
+const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize , initial , url, search, renderList}) => {
   const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
   const [{error, loading}, refetch] = useAxios({}, {manual: true});
-  const initialPage = useMemo(() => initial, [initial]);
+  const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
     currPage: initialPage,
     pageSize: source.psize,
@@ -50,8 +50,10 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize = 10, init
       this.hasMore = list.length === this.pageSize
     }),
     forward: (function (this: StoreType) {
+      console.log("forward")
       if (this.hasMore)
         ++this.currPage;
+      console.log(this.hasMore,this.currPage, '===============')
     }),
     refresh: (function (this: StoreType) {
       this.currPage = initialPage;
@@ -68,12 +70,12 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize = 10, init
   useEffect(() => autorun(() => store.fetch(store.currPage, store.refreshCount)), []);
 
   useScrollToLower4Event((e) => {
-
+    console.log("list-view == bottom", e)
     if (!(fetchCondition) || fetchCondition(e))
       store.forward()
   })
 
-  const {currPage, totalPage, list} = store
+  const {currPage, totalPage, list = []} = store
   return (<Block>
     {error && <View>重试</View>}
     {(loading && currPage === initialPage) && <View>加载中</View>}
@@ -85,7 +87,9 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize = 10, init
 }
 
 ListView.defaultProps = {
-  fetchCondition: () => true
+  fetchCondition: () => true,
+  initial: 0,
+  psize: 10
 }
 
 export default observer(ListView);
