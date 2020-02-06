@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import {RANK} from "@/contexts/manga-api";
-import ListView from "@/components/list-veiw/list-view";
+import ListViewII from "@/components/list-veiw/list-view-II";
 import {View} from "@tarojs/components";
 import {MangaItem} from "@/components/manga-item";
 import {AtList} from "taro-ui";
@@ -9,7 +9,7 @@ import {observer} from '@tarojs/mobx'
 const Rank: Taro.FC = () => {
 
   return (
-    <ListView key='rank' fetchCondition={({tab}) => tab === 3}
+    <ListViewII key='rank' fetchCondition={({tab}) => tab === 3}
       url={RANK} renderList={(list = []) => <AtList>
       {list.map((e: RankItem, i) => {
         return <MangaItem key={i} {...e} >

@@ -5,6 +5,7 @@ const useScrollToLower4Event = (listener: (...args: any[]) => void) => {
   useEffect(() => {
     EventCenter.on(EventDefine.ScrollToLowerEvent, listener)
     return () => EventCenter.off(EventDefine.ScrollToLowerEvent)
-  }, [listener])
+    //  eslint-disable-next-line
+  }, [])
 }
 export default useScrollToLower4Event
