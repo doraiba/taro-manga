@@ -52,6 +52,7 @@
     "mobx-sync": "^2.1.2",
     "nerv-devtools": "^1.5.5",
     "nervjs": "^1.5.5",
+    "query-string": "^6.10.1",
     "react-hooks-form": "^2.0.1",
     "regenerator-runtime": "0.11.1",
     "rxjs": "^6.5.4",

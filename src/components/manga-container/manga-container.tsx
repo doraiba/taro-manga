@@ -5,7 +5,9 @@ import Recommend from "@/components/recommend/recommend";
 import {ScrollView, View} from '@tarojs/components';
 import {BaseEventOrigFunction} from "@tarojs/components/types/common";
 import EventCenter, {EventDefine} from "@/utils/event-center";
-import {throttle} from 'lodash-es'
+import throttle from 'lodash-es/throttle'
+import Latest from "@/components/latest/latest";
+
 
 import './manga-container.scss'
 
@@ -16,7 +18,6 @@ const MangaContainer: Taro.FC = () => {
       {title: '推荐'},
       {title: '更新'},
       {title: '分类'},
-
       {title: '排行'},
       {title: '专题'}
     ],
@@ -34,23 +35,25 @@ const MangaContainer: Taro.FC = () => {
 
   return (
     <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
-      <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-        <AtTabsPane current={current} index={0}>
+      <AtTabsPane current={current} index={0}>
+        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Recommend />
-        </AtTabsPane>
-        <AtTabsPane current={current} index={1}>
-          <View>更新</View>
-        </AtTabsPane>
-        <AtTabsPane current={current} index={2}>
-          <View>分类</View>
-        </AtTabsPane>
-        <AtTabsPane current={current} index={3}>
-          <View>排行</View>
-        </AtTabsPane>
-        <AtTabsPane current={current} index={4}>
-          <View>专题</View>
-        </AtTabsPane>
-      </ScrollView>
+        </ScrollView>
+      </AtTabsPane>
+      <AtTabsPane current={current} index={1}>
+        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+          <Latest />
+        </ScrollView>
+      </AtTabsPane>
+      <AtTabsPane current={current} index={2}>
+        <View>分类</View>
+      </AtTabsPane>
+      <AtTabsPane current={current} index={3}>
+        <View>排行</View>
+      </AtTabsPane>
+      <AtTabsPane current={current} index={4}>
+        <View>专题</View>
+      </AtTabsPane>
     </AtTabs>
   )
 }

@@ -19,3 +19,29 @@ type CategoryItem = {
   "obj_id": number,
   "status": string
 }
+
+type LatestItem = {
+  "id": number,
+  "title": string,
+  "islong": number,
+  "authors": string,
+  "types": string,
+  "cover": string,
+  "status": string,
+  "last_update_chapter_name": string,
+  "last_update_chapter_id": number,
+  "last_updatetime": number
+}
+
+interface StoreType {
+  refreshCount: number,
+  currPage: number,
+  totalPage: number,
+  pageSize: number,
+  list: Array<any>,
+  fetch: (page: number, refreshCounte?: number) => void,
+  refresh: VoidFunction,
+  forward: VoidFunction,
+  retry: VoidFunction,
+  hasMore: boolean
+}
