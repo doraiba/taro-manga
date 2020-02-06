@@ -13,3 +13,11 @@ view {
   font-size: 24*2px !important;
 }
 
+.mg-grid {
+  .at-grid__flex .content-inner__img {
+    width: 90*2px;
+    height: 90*2px;
+    border-radius: 2%;
+
+  }
+}

@@ -2,11 +2,12 @@ import Taro, {useCallback} from '@tarojs/taro'
 import {observer, useLocalStore} from "@tarojs/mobx";
 import {AtTabs, AtTabsPane} from "taro-ui";
 import Recommend from "@/components/recommend/recommend";
-import {ScrollView, View} from '@tarojs/components';
+import {ScrollView} from '@tarojs/components';
 import {BaseEventOrigFunction} from "@tarojs/components/types/common";
 import EventCenter, {EventDefine} from "@/utils/event-center";
 import throttle from 'lodash-es/throttle'
 import Latest from "@/components/latest/latest";
+import Category from "@/components/category/category";
 
 import Rank from "@/components/rank/rank";
 import Subject from "@/components/subject/subject";
@@ -48,7 +49,9 @@ const MangaContainer: Taro.FC = () => {
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={2}>
-        <View>分类</View>
+        <ScrollView scrollY className='mg-discovery'>
+          <Category />
+        </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={3}>
         <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
