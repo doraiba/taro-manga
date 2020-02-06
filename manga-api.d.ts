@@ -32,6 +32,20 @@ type LatestItem = {
   "last_update_chapter_id": number,
   "last_updatetime": number
 }
+type RankItem = {
+  "comic_id": string,
+  "title": string,
+  "authors": string,
+  "status": string,
+  "cover": string,
+  "types": string,
+  "last_updatetime": string,
+  "last_update_chapter_name": string,
+  "comic_py": string,
+  "num": string,
+  "tag_id": string
+}
+
 
 interface StoreType {
   refreshCount: number,

@@ -45,9 +45,7 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize = 10, init
       });
       const {list, totalPage} = convert ? convert(response) : {list: response.data, totalPage: 0}
       if (!list) return;
-      console.log(this.list, 'before')
       this.list = [...this.list, ...list];
-      console.log(this.list, 'after')
       this.totalPage = totalPage;
       this.hasMore = list.length === this.pageSize
     }),

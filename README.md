@@ -19,3 +19,13 @@
 | 我的订阅 | http://v3api.dmzj.com/recommend/batchUpdate?category_id=49&channel=ios&uid=110332672&version=3.0.2 |
 |          |                                                              |
 
+### taro 使用心得
+
+```text
+解决提示Function问题: "regenerator-runtime": "0.11.1",
+解决lodash 函数now报错: 入口文件添加global.Date = Date
+
+map函数结构工具竟然不提示错误,编译显示index.scss问题!!!
+
+ 
+```
