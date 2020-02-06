@@ -1,10 +1,11 @@
 import Taro from '@tarojs/taro'
 import {RANK} from "@/contexts/manga-api";
 import ListViewII from "@/components/list-veiw/list-view-II";
-import {View} from "@tarojs/components";
 import {MangaItem} from "@/components/manga-item";
-import {AtList} from "taro-ui";
+import {AtList, AtTag} from "taro-ui";
 import {observer} from '@tarojs/mobx'
+
+import './rank.scss'
 
 const Rank: Taro.FC = () => {
 
@@ -13,7 +14,7 @@ const Rank: Taro.FC = () => {
       url={RANK} renderList={(list = []) => <AtList>
       {list.map((e: RankItem, i) => {
         return <MangaItem key={i} {...e} >
-          <View>{i}</View>
+          <AtTag type='primary' circle>{i + 1}</AtTag>
         </MangaItem>
       })}
     </AtList>}
