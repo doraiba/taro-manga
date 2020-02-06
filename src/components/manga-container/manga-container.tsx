@@ -10,6 +10,7 @@ import Latest from "@/components/latest/latest";
 
 
 import './manga-container.scss'
+import Rank from "@/components/rank/rank";
 
 const MangaContainer: Taro.FC = () => {
 
@@ -49,7 +50,9 @@ const MangaContainer: Taro.FC = () => {
         <View>分类</View>
       </AtTabsPane>
       <AtTabsPane current={current} index={3}>
-        <View>排行</View>
+        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+          <Rank />
+        </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={4}>
         <View>专题</View>

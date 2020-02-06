@@ -1,18 +1,19 @@
 import Taro from '@tarojs/taro'
-import {LATEST} from "@/contexts/manga-api";
+import {RANK} from "@/contexts/manga-api";
 import ListView from "@/components/list-veiw/list-view";
 import {View} from "@tarojs/components";
 import {MangaItem} from "@/components/manga-item";
 import {AtList} from "taro-ui";
+import {observer} from '@tarojs/mobx'
 
-const Latest: Taro.FC = () => {
+const Rank: Taro.FC = () => {
 
   return (
-    <ListView key='latest' psize={30} fetchCondition={({tab}) => tab === 1}
-      url={LATEST} renderList={(list = []) => <AtList>
-      {list.map((e: LatestItem, i) => {
+    <ListView key='rank' fetchCondition={({tab}) => tab === 3}
+      url={RANK} renderList={(list = []) => <AtList>
+      {list.map((e: RankItem, i) => {
         return <MangaItem key={i} {...e} >
-          <View>{e.last_update_chapter_name}</View>
+          <View>{i}</View>
         </MangaItem>
       })}
     </AtList>}
@@ -20,4 +21,4 @@ const Latest: Taro.FC = () => {
   )
 }
 
-export default Latest
+export default observer(Rank)

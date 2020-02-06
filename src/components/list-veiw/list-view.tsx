@@ -50,10 +50,8 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize , initial 
       this.hasMore = list.length === this.pageSize
     }),
     forward: (function (this: StoreType) {
-      console.log("forward")
       if (this.hasMore)
         ++this.currPage;
-      console.log(this.hasMore,this.currPage, '===============')
     }),
     refresh: (function (this: StoreType) {
       this.currPage = initialPage;
@@ -70,7 +68,6 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize , initial 
   useEffect(() => autorun(() => store.fetch(store.currPage, store.refreshCount)), []);
 
   useScrollToLower4Event((e) => {
-    console.log("list-view == bottom", e)
     if (!(fetchCondition) || fetchCondition(e))
       store.forward()
   })
