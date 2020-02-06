@@ -5,6 +5,7 @@ import useAxios from 'axios-hooks'
 import {autorun} from "mobx";
 import {isFunction} from "@/utils";
 import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
+import {AtActivityIndicator} from "taro-ui";
 
 
 type CustomProps = {
@@ -20,7 +21,7 @@ type CustomProps = {
 
 type ListProps = CustomProps;
 
-const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize , initial , url, search, renderList}) => {
+const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, url, search, renderList}) => {
   const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
   const [{error, loading}, refetch] = useAxios({}, {manual: true});
   const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
@@ -72,15 +73,16 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize , initial 
       store.forward()
   })
 
-  const {currPage, totalPage, list = []} = store
-  return (<Block>
-    {error && <View>重试</View>}
-    {(loading && currPage === initialPage) && <View>加载中</View>}
+  const {list = [], hasMore} = store
+
+  return (
     <Block>
+      {error && <View>加载出错</View>}
       {renderList([...list])}
-      {(!loading && totalPage === 0 && !error) && <View>刷新</View>}
+      {(!loading && hasMore && !error) &&
+      <AtActivityIndicator color='#0094ff' size={50} mode='center' content='Loading...' />}
     </Block>
-  </Block>);
+  );
 }
 
 ListView.defaultProps = {

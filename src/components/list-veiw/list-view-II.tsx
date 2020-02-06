@@ -5,6 +5,7 @@ import useAxios from 'axios-hooks'
 import {autorun} from "mobx";
 import {isFunction} from "@/utils";
 import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
+import {AtActivityIndicator} from "taro-ui";
 
 
 type CustomProps = {
@@ -72,11 +73,16 @@ const ListViewII: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial
     if (!(fetchCondition) || fetchCondition(e))
       store.forward()
   })
-  const {list} = store
-  return (<Block>
-    {(loading || error) && <View>加载中</View>}
-    {renderList([...list])}
-  </Block>);
+  const {list = [], hasMore} = store
+
+  return (
+    <Block>
+      {error && <View>加载出错</View>}
+      {renderList([...list])}
+      {(!loading && hasMore && !error) &&
+      <AtActivityIndicator color='#0094ff' size={50} mode='center' content='Loading...' />}
+    </Block>
+  );
 }
 
 ListViewII.defaultProps = {
