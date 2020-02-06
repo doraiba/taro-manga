@@ -1,3 +1,59 @@
 .mg-manga-union-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5*2px 0;
+  margin-left: 10*2px;
+  border-bottom: 1PX solid #cbcbcb;
+  color: #000;
 
+  .mg-union-info {
+    display: flex;
+    flex: 2;
+
+    .mg-union-image-wrapper {
+      width: 78*2px;
+      height: 104*2px;
+      flex-shrink: 0;
+
+      .mg-union-image {
+        border-radius: 3%;
+        vertical-align: bottom;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .mg-union-desc {
+      padding: 5*2px;
+      display: flex;
+      flex-flow: column nowrap;
+
+      .mg-union-title {
+        height: 33*2px;
+        line-height: 33*2px;
+        font-size: 15*2px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+
+      .mg-union-produce {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+
+        .mg-union-authors,
+        .mg-union-tag,
+        .mg-union-date {
+          font-size: 12*2px;
+          opacity: .9;
+        }
+      }
+    }
+  }
+
+  .mg-item-actions {
+    flex: 1;
+  }
 }

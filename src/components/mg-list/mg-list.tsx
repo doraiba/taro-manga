@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro'
-import {AtList, AtListItem} from "taro-ui";
+import {AtList} from "taro-ui";
+import {MangaItem} from "@/components/manga-item";
 
 type MangaListProps = {
   list: Array<LatestItem>
@@ -10,8 +11,7 @@ const MangaList: Taro.FC<MangaListProps> = ({list}) => {
   return (
     <AtList>
       {list.map((e, i) => {
-        const {title, authors, cover, last_update_chapter_name} = e
-        return <AtListItem key={i} title={title} thumb={cover} note={authors} extraText={last_update_chapter_name} />
+        return <MangaItem key={i} item={{...e}} />
       })}
     </AtList>
   )
