@@ -11,7 +11,7 @@ const MangaList: Taro.FC<MangaListProps> = ({list}) => {
   return (
     <AtList>
       {list.map((e, i) => {
-        return <MangaItem key={i} item={{...e}} />
+        return <MangaItem key={i} {...e} />
       })}
     </AtList>
   )

@@ -3,19 +3,14 @@ import {Image, View} from '@tarojs/components'
 
 import './manga-item.scss'
 
-type Item = RankItem | LatestItem
-type MangaItemProps = {
-  item: Item,
-  renderActions?: (item: Item) => React.ReactElement
-}
+type MangaItemProps = RankItem | LatestItem
 
-const MangaItem: Taro.FC<MangaItemProps> = ({renderActions, item}) => {
-  const {cover, title, authors, types, last_updatetime} = item
+const MangaItem: Taro.FC<MangaItemProps> = ({children, cover, title, authors, types, last_updatetime}) => {
   return (
     <View className='mg-manga-union-item'>
       <View className='mg-union-info'>
         <View className='mg-union-image-wrapper'>
-          <Image className='mg-union-image' lazyLoad mode='widthFix' src={cover} />
+          <Image className='mg-union-image' lazyLoad src={cover} />
         </View>
         <View className='mg-union-desc'>
           <View className='mg-union-title'>{title}</View>
@@ -27,11 +22,9 @@ const MangaItem: Taro.FC<MangaItemProps> = ({renderActions, item}) => {
         </View>
       </View>
       <View className='mg-item-actions'>
-        {renderActions && renderActions(item)}
+        {children}
       </View>
     </View>)
 }
-MangaItem.defaultProps = {
-  item: {} as Item
-}
+
 export default MangaItem

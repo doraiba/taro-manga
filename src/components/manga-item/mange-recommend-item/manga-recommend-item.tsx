@@ -8,7 +8,7 @@ const MangaRecommendItem: Taro.FC<CategoryItem> = ({cover, title, sub_title, aut
   return (
     <View className='mg-manga-item'>
       <View className='mg-manga-item-cover'>
-        <Image className='mg-manga-item-cover-img' src={cover} />
+        <Image className='mg-manga-item-cover-img' lazyLoad src={cover} />
       </View>
 
       <View className='mg-manga-item-title'>{title}</View>
