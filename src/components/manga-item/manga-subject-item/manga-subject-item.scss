@@ -1,0 +1,27 @@
+.mg-subject-item {
+  margin: 5*2px;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 0 5*2px;
+
+  .mg-subject-image-wrapper {
+    width: 355*2px;
+    height: 142*2px;
+    flex-shrink: 0;
+    align-self: center;
+
+    .mg-subject-image {
+      border-radius: 5%;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .mg-subject-desc {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5*2px;
+  }
+
+}

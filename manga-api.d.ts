@@ -46,6 +46,17 @@ type RankItem = {
   "tag_id": string
 }
 
+type SubjectItem = {
+  "id": number,
+  "title": string,
+  "short_title": string,
+  "create_time": number,
+  "small_cover": string,
+  "page_type": number,
+  "sort": number,
+  "page_url": string
+}
+
 
 interface StoreType {
   refreshCount: number,

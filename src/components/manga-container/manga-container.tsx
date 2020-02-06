@@ -8,9 +8,10 @@ import EventCenter, {EventDefine} from "@/utils/event-center";
 import throttle from 'lodash-es/throttle'
 import Latest from "@/components/latest/latest";
 
+import Rank from "@/components/rank/rank";
+import Subject from "@/components/subject/subject";
 
 import './manga-container.scss'
-import Rank from "@/components/rank/rank";
 
 const MangaContainer: Taro.FC = () => {
 
@@ -55,7 +56,9 @@ const MangaContainer: Taro.FC = () => {
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={4}>
-        <View>专题</View>
+        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+          <Subject />
+        </ScrollView>
       </AtTabsPane>
     </AtTabs>
   )
