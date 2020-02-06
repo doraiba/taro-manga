@@ -34,7 +34,7 @@ const MangaContainer: Taro.FC = () => {
 
   const handleScrollToLower = useCallback(throttle((e: BaseEventOrigFunction<any>) => {
     EventCenter.trigger(EventDefine.ScrollToLowerEvent, {event: e, tab: current})
-  }, 5000), [current])
+  }, 2000), [current])
 
   return (
     <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
