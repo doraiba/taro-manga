@@ -6,6 +6,7 @@ import {ScrollView} from '@tarojs/components';
 import {BaseEventOrigFunction} from "@tarojs/components/types/common";
 import EventCenter, {EventDefine} from "@/utils/event-center";
 import throttle from 'lodash-es/throttle'
+import debounce from 'lodash-es/debounce'
 import Latest from "@/components/latest/latest";
 import Category from "@/components/category/category";
 
@@ -36,7 +37,8 @@ const MangaContainer: Taro.FC = () => {
     EventCenter.trigger(EventDefine.ScrollToLowerEvent, {event: e, tab: current})
   }, 2000), [current])
 
-  const handleScrollToUpper = useCallback(throttle((e: BaseEventOrigFunction<any>) => {
+  const handleScrollToUpper = useCallback(debounce((e: BaseEventOrigFunction<any>) => {
+    console.log("handleScrollToUpper")
     EventCenter.trigger(EventDefine.ScrollToUpperEvent, {event: e, tab: current})
   }, 1000), [current])
 

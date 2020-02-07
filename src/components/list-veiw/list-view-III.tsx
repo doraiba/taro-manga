@@ -2,10 +2,11 @@ import Taro, {useEffect, useMemo} from "@tarojs/taro";
 import {observer, useAsObservableSource, useLocalStore} from '@tarojs/mobx'
 import {Block, View} from "@tarojs/components";
 import useAxios from 'axios-hooks'
-import {autorun} from "mobx";
+import {action, autorun} from "mobx";
 import {isFunction} from "@/utils";
-import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
 import {AtActivityIndicator} from "taro-ui";
+import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
+import useScrollToUpper4Event from "@/hooks/useScrollToUpper4Event";
 
 
 type CustomProps = {
@@ -21,19 +22,19 @@ type CustomProps = {
 
 type ListProps = CustomProps;
 
-const ListViewIII: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, url, search, renderList}) => {
+const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, url, search, renderList}) => {
   const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
   const [{error, loading}, refetch] = useAxios({}, {manual: true});
   const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
     currPage: initialPage,
-    pageSize: source.psize,
+    get pageSize(){ return source.psize },
+    get search(){ return source.search },
     refreshCount: 0,
     list: [],
-    search: source.search || {},
     totalPage: -1,
     // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-    fetch: (async function (page: number, _refreshCount?: number) {
+    fetch: action(async function (page: number, _refreshCount?: number) {
       let remoteURL: string = url as string
       if (isFunction(url)) {
         remoteURL = url(page) as string
@@ -49,17 +50,16 @@ const ListViewIII: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initia
       this.list = [...this.list, ...list];
       this.totalPage = totalPage;
       this.hasMore = list.length === this.pageSize
-
     }),
-    forward: (function (this: StoreType) {
+    forward: action(function (this: StoreType) {
       if (this.hasMore)
         ++this.currPage;
     }),
-    refresh: (function (this: StoreType) {
+    refresh: action(function (this: StoreType) {
       this.currPage = initialPage;
       this.refreshCount = this.refreshCount + 1;
     }),
-    retry: (function (this: StoreType) {
+    retry: action(function (this: StoreType) {
       this.list = [];
       this.refresh();
     }),
@@ -73,6 +73,12 @@ const ListViewIII: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initia
     if (!(fetchCondition) || fetchCondition(e))
       store.forward()
   })
+
+  useScrollToUpper4Event((e)=>{
+    if (!(fetchCondition) || fetchCondition(e))
+      store.refresh()
+  })
+
   const {list = [], hasMore} = store
 
   return (
@@ -85,10 +91,10 @@ const ListViewIII: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initia
   );
 }
 
-ListViewIII.defaultProps = {
+ListView.defaultProps = {
   fetchCondition: () => true,
   initial: 0,
   psize: 10
 }
 
-export default observer(ListViewIII);
+export default observer(ListView);

@@ -4,9 +4,9 @@ import {Block, View} from "@tarojs/components";
 import useAxios from 'axios-hooks'
 import {action, autorun} from "mobx";
 import {isFunction} from "@/utils";
-import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
 import {AtActivityIndicator} from "taro-ui";
-import useScrollToLowerEvent from "@/hooks/useScrollToUpper4Event";
+import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
+import useScrollToUpper4Event from "@/hooks/useScrollToUpper4Event";
 
 
 type CustomProps = {
@@ -74,7 +74,7 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
       store.forward()
   })
 
-  useScrollToLowerEvent((e)=>{
+  useScrollToUpper4Event((e)=>{
     if (!(fetchCondition) || fetchCondition(e))
       store.refresh()
   })
