@@ -27,10 +27,10 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
   const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
     currPage: initialPage,
-    pageSize: source.psize,
+    get pageSize(){ return source.psize },
     refreshCount: 0,
     list: [],
-    search: source.search || {},
+    get search(){ return source.search },
     totalPage: -1,
     // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
     fetch: (async function (page: number, _refreshCount?: number) {

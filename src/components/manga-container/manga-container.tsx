@@ -39,27 +39,27 @@ const MangaContainer: Taro.FC = () => {
   return (
     <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
       <AtTabsPane current={current} index={0}>
-        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Recommend />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={1}>
-        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Latest />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={2}>
-        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Category />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={3}>
-        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Rank />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={4}>
-        <ScrollView lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Subject />
         </ScrollView>
       </AtTabsPane>
