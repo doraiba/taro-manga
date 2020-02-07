@@ -60,7 +60,7 @@ const Login: Taro.FC = () => {
         />
         <View className='at-row at-row__justify--around'>
           <AtButton className='at-col'>注册→</AtButton>
-          <AtButton className='at-col'loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>登录</AtButton>
+          <AtButton className='at-col' loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>登录</AtButton>
         </View>
       </AtForm>
     </View>

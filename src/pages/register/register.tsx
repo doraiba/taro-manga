@@ -70,7 +70,7 @@ const Register: Taro.FC = () => {
         />
         <View className='at-row at-row__justify--around'>
           <AtButton className='at-col' onClick={()=> Taro.navigateTo({url: LOGIN_PAGE})}>登录→</AtButton>
-          <AtButton className='at-col'loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>注册</AtButton>
+          <AtButton className='at-col' loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>注册</AtButton>
         </View>
       </AtForm>
     </View>

@@ -9,7 +9,6 @@ import axios from 'axios'
 import DOMAIN, {UCENTER} from '@/contexts/manga-api'
 import injectDefaultLog from "@/utils/inject-axios-log";
 import {autorun} from "mobx";
-import {INDEX_PAGE, LOGIN_PAGE, REGISTER_PAGE, USER_PAGE} from "@/utils/app-constant";
 
 
 import './app.scss'
@@ -49,11 +48,11 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      INDEX_PAGE,
-      USER_PAGE,
-      LOGIN_PAGE,
-      REGISTER_PAGE,
-    ].map(e => e.replace('/', '')),
+      'pages/index/index',
+      'pages/user/user',
+      'pages/login/login',
+      'pages/register/register',
+    ],
     // tabBar: {
     //   list: [
     //     {
