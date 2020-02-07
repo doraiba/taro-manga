@@ -1,0 +1,29 @@
+.mg-user {
+
+  .mg-user-card {
+    margin: 30px 15px;
+    display: flex;
+
+    .mg-user-avatar-wrapp {
+      flex-shrink: 0;
+      .mg-user-avatar {
+        height: 80*2px;
+        width: 80px*2;
+      }
+    }
+
+    .mg-user-info {
+      align-self: center;
+      margin-left: 30px;
+      flex: 1;
+      .mg-user-nickname {
+
+      }
+
+      .mg-user-subscriber {
+
+      }
+    }
+  }
+
+}

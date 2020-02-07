@@ -86,3 +86,22 @@ type MangaToken = {
   "email": string,
   "passwd": string
 }
+
+type MangaUser = {
+  "nickname": string,
+  "description": string,
+  "birthday": string,
+  "sex": 1 | 0,
+  "cover": string,
+  "blood": number,
+  "constellation": string,
+  "bind_phone": number,
+  "email": string,
+  "channel": string,
+  "is_verify": 0|1,
+  "is_modify_name": 0|1,
+  "data": Array<any>,
+  "amount": number,
+  "is_set_pwd": 0|1,
+  "bind": Array<any>
+}

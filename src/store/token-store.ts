@@ -2,14 +2,16 @@ import {action, computed, observable} from "mobx";
 
 export default class TokenStore {
 
+  static parseAuth = (url: string, auth: MangaToken): string=> {
+    return Object.keys(auth).reduce(((seed, item) => seed.replace(`{${item}}`,auth[item])), url)
+  }
+
   @observable
   public mangaToken: MangaToken = {} as MangaToken
 
   @action
   public setMangaToken(mangaToken: MangaToken) {
-    console.log("=======",mangaToken)
     this.mangaToken = mangaToken
-    console.log("=======",this.mangaToken)
   }
 
   @action
@@ -30,8 +32,8 @@ export default class TokenStore {
     return this.mangaToken.dmzj_token
   }
 
-  get avatar() {
-    return 'https://avatar' + (this.mangaToken.photo || '').replace(/(http:\/\/images|\/user)/g,'')
+  parseAuth(url: string): string{
+    return TokenStore.parseAuth(url, this.mangaToken)
   }
 
 }

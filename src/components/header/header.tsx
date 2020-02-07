@@ -10,8 +10,9 @@ import './header.scss'
 // eslint-disable-next-line react/no-multi-comp
 const Header: Taro.FC = ({children}) => {
 
-  const {tokenStore} =  useStores()
+  const {tokenStore,userStore} =  useStores()
   const toAuth = useCallback(() => {
+    console.log("====================?????????")
     if(tokenStore.authed) {
     return navigateTo({url: '/pages/user/user'})
     }
@@ -19,7 +20,8 @@ const Header: Taro.FC = ({children}) => {
     // eslint-disable-next-line
   }, [])
 
-  const {authed, avatar} = tokenStore
+  const {authed} = tokenStore
+  const {avatar} = userStore
   return (
     <View className='nav-header'>
       <View className='nav-leading'><DefaultLogo /></View>
@@ -28,7 +30,7 @@ const Header: Taro.FC = ({children}) => {
         <View onClick={toAuth}>
           {authed ? <AtAvatar size='small' circle className='mg-avatar'
             image={avatar}
-          />: <AtIcon  value='user' className='mg-avatar' />}
+          />: <AtIcon  value='user' className='mg-search' />}
 
         </View>
         <AtIcon className='mg-search' value='search'></AtIcon>

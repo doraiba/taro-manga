@@ -6,8 +6,9 @@ import {stores} from '@/contexts'
 import {configure} from "axios-hooks";
 import axios from 'axios'
 // import LRU from 'lru-cache'
-import DOMAIN from '@/contexts/manga-api'
+import DOMAIN, {UCENTER} from '@/contexts/manga-api'
 import injectDefaultLog from "@/utils/inject-axios-log";
+import {autorun} from "mobx";
 
 
 import './app.scss'
@@ -19,8 +20,10 @@ global.Date = Date
 //   require('nerv-devtools')
 // }
 // const cache = new LRU({max: 10})
+//更改axios的请求前缀
+axios.defaults.baseURL = DOMAIN
 
-configure({/*cache, */axios: injectDefaultLog(axios.create({baseURL: DOMAIN}))})
+configure({/*cache, */axios: injectDefaultLog(axios)})
 
 class App extends Component {
 
@@ -78,7 +81,13 @@ class App extends Component {
   }
 }
 
-new AsyncTrunk(stores.tokenStore, {storage: new TaroAsyncStorage()}).init().then(() => {
+const {tokenStore, userStore} = stores
+new AsyncTrunk([tokenStore,userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
+  autorun(async () => {
+    if (!tokenStore.authed) return
+    const {data} = await axios.get<MangaUser>(tokenStore.parseAuth(UCENTER))
+    userStore.setMangaUser(data)
+  }, {name: 'update::user info'})
   Taro.render(<App />, document.getElementById('app'))
 })
 
