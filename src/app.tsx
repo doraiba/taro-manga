@@ -47,7 +47,6 @@ class App extends Component {
     pages: [
       'pages/index/index',
       'pages/user/user',
-      'pages/log/log',
     ],
     // tabBar: {
     //   list: [
@@ -65,7 +64,8 @@ class App extends Component {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#0094ff',
       navigationBarTitleText: '动漫之家',
-      navigationBarTextStyle: 'white'
+      navigationBarTextStyle: 'white',
+      pageOrientation: 'landscape'
     }
   }
 
@@ -78,7 +78,7 @@ class App extends Component {
   }
 }
 
-new AsyncTrunk(stores.counterStore, {storage: new TaroAsyncStorage()}).init().then(() => {
+new AsyncTrunk(stores.tokenStore, {storage: new TaroAsyncStorage()}).init().then(() => {
   Taro.render(<App />, document.getElementById('app'))
 })
 

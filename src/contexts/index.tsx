@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro';
-import CounterStore from '@/store/counter'
+import TokenStore from "@/store/token-store";
 
-export const stores = {counterStore: new CounterStore()};
+export const stores = {tokenStore: new TokenStore()};
 
 const storesContext = Taro.createContext(stores)
 

@@ -6,10 +6,10 @@
   color: #000;
 
   .mg-subject-image-wrapper {
-    width: 355*2px;
+    //width: 355*2px;
     height: 142*2px;
-    flex-shrink: 0;
-    align-self: center;
+    flex: 1 0;
+    //align-self: center;
 
     .mg-subject-image {
       border-radius: 2%;
