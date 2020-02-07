@@ -1,0 +1,15 @@
+.mg-shadow{
+  height: 0;
+  background-color: #ccc;
+  position: absolute;
+  left: 0;
+  right: 0;
+  transition: all .3s;
+}
+.mg-shadow-open {
+  height: calc(100vh - 23px - 30PX);
+}
+.mg-subscribe {
+  height: 1800px;
+  background-color: red;
+}
