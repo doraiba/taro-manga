@@ -36,30 +36,36 @@ const MangaContainer: Taro.FC = () => {
     EventCenter.trigger(EventDefine.ScrollToLowerEvent, {event: e, tab: current})
   }, 2000), [current])
 
+  const handleScrollToUpper = useCallback(throttle((e: BaseEventOrigFunction<any>) => {
+    EventCenter.trigger(EventDefine.ScrollToLowerEvent, {event: e, tab: current})
+  }, 1000), [current])
+
+  const upperThreshold = -80,lowerThreshold = 100;
+
   return (
     <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
       <AtTabsPane current={current} index={0}>
-        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Recommend />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={1}>
-        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Latest />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={2}>
-        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Category />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={3}>
-        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Rank />
         </ScrollView>
       </AtTabsPane>
       <AtTabsPane current={current} index={4}>
-        <ScrollView enableBackToTop lowerThreshold={100} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
           <Subject />
         </ScrollView>
       </AtTabsPane>

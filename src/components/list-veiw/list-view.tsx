@@ -2,10 +2,11 @@ import Taro, {useEffect, useMemo} from "@tarojs/taro";
 import {observer, useAsObservableSource, useLocalStore} from '@tarojs/mobx'
 import {Block, View} from "@tarojs/components";
 import useAxios from 'axios-hooks'
-import {autorun} from "mobx";
+import {action, autorun} from "mobx";
 import {isFunction} from "@/utils";
 import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
 import {AtActivityIndicator} from "taro-ui";
+import useScrollToLowerEvent from "@/hooks/useScrollToUpper4Event";
 
 
 type CustomProps = {
@@ -28,12 +29,12 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
     currPage: initialPage,
     get pageSize(){ return source.psize },
+    get search(){ return source.search },
     refreshCount: 0,
     list: [],
-    get search(){ return source.search },
     totalPage: -1,
     // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
-    fetch: (async function (page: number, _refreshCount?: number) {
+    fetch: action(async function (page: number, _refreshCount?: number) {
       let remoteURL: string = url as string
       if (isFunction(url)) {
         remoteURL = url(page) as string
@@ -50,15 +51,15 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
       this.totalPage = totalPage;
       this.hasMore = list.length === this.pageSize
     }),
-    forward: (function (this: StoreType) {
+    forward: action(function (this: StoreType) {
       if (this.hasMore)
         ++this.currPage;
     }),
-    refresh: (function (this: StoreType) {
+    refresh: action(function (this: StoreType) {
       this.currPage = initialPage;
       this.refreshCount = this.refreshCount + 1;
     }),
-    retry: (function (this: StoreType) {
+    retry: action(function (this: StoreType) {
       this.list = [];
       this.refresh();
     }),
@@ -71,6 +72,11 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
   useScrollToLower4Event((e) => {
     if (!(fetchCondition) || fetchCondition(e))
       store.forward()
+  })
+
+  useScrollToLowerEvent((e)=>{
+    if (!(fetchCondition) || fetchCondition(e))
+      store.refresh()
   })
 
   const {list = [], hasMore} = store
