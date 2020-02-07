@@ -55,6 +55,13 @@
 					"id": -1,
 					"name": "登录",
 					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "用户中心",
+					"pathName": "pages/user/user",
 					"scene": null
 				}
 			]

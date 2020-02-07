@@ -18,12 +18,20 @@ export default class TokenStore {
   }
 
   @computed
+  get authed()  {
+    return !!this.uid && !!this.token
+  }
+  @computed
   get uid() {
     return this.mangaToken.uid
   }
 
   get token() {
     return this.mangaToken.dmzj_token
+  }
+
+  get avatar() {
+    return 'https://avatar' + (this.mangaToken.photo || '').replace(/(http:\/\/images|\/user)/g,'')
   }
 
 }

@@ -1,23 +1,35 @@
-import Taro, {useCallback} from '@tarojs/taro'
+import Taro, {useCallback,navigateTo} from '@tarojs/taro'
 import {View} from "@tarojs/components";
 import DefaultLogo from "@/components/header/component/default-logo/default-logo";
 import {AtAvatar, AtIcon} from "taro-ui";
+import useStores from "@/hooks/use-stores";
+import { observer } from '@tarojs/mobx';
+
 import './header.scss'
 
 // eslint-disable-next-line react/no-multi-comp
 const Header: Taro.FC = ({children}) => {
-  const toLogin = useCallback(() => {
-    Taro.navigateTo({url: '/pages/login/login'})
+
+  const {tokenStore} =  useStores()
+  const toAuth = useCallback(() => {
+    if(tokenStore.authed) {
+    return navigateTo({url: '/pages/user/user'})
+    }
+    navigateTo({url: '/pages/login/login'})
+    // eslint-disable-next-line
   }, [])
 
+  const {authed, avatar} = tokenStore
   return (
     <View className='nav-header'>
       <View className='nav-leading'><DefaultLogo /></View>
       <View className='nav-title'>{children}</View>
       <View className='nav-actions'>
-        <View onClick={toLogin}>
-          <AtAvatar size='small' circle className='mg-avatar'
-            image='https://avatar.dmzj.com/3b/8b/3b8b90e14fa6a2cf30ec163dc9621eb9.png' />
+        <View onClick={toAuth}>
+          {authed ? <AtAvatar size='small' circle className='mg-avatar'
+            image={avatar}
+          />: <AtIcon  value='user' className='mg-avatar' />}
+
         </View>
         <AtIcon className='mg-search' value='search'></AtIcon>
       </View>
@@ -26,4 +38,4 @@ const Header: Taro.FC = ({children}) => {
 }
 
 
-export default Header
+export default observer(Header)
