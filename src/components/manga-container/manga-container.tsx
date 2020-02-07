@@ -38,7 +38,6 @@ const MangaContainer: Taro.FC = () => {
   }, 2000), [current])
 
   const handleScrollToUpper = useCallback(debounce((e: BaseEventOrigFunction<any>) => {
-    console.log("handleScrollToUpper")
     EventCenter.trigger(EventDefine.ScrollToUpperEvent, {event: e, tab: current})
   }, 1000), [current])
 
