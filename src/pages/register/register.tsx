@@ -1,4 +1,4 @@
-import Taro, {useMemo} from '@tarojs/taro'
+import Taro, {useMemo,useCallback} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {AtButton, AtForm, AtInput, AtMessage} from 'taro-ui'
 import useFormal from '@kevinwolf/formal'
@@ -40,6 +40,9 @@ const Register: Taro.FC = () => {
       Taro.redirectTo({url: LOGIN_PAGE})
     }
   });
+
+  const toLogin = useCallback(()=> Taro.navigateTo({url: LOGIN_PAGE}),[])
+
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
 
   return (
@@ -69,7 +72,7 @@ const Register: Taro.FC = () => {
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>
-          <AtButton className='at-col' onClick={()=> Taro.navigateTo({url: LOGIN_PAGE})}>登录→</AtButton>
+          <AtButton className='at-col' onClick={toLogin}>登录→</AtButton>
           <AtButton className='at-col' loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>注册</AtButton>
         </View>
       </AtForm>

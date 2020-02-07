@@ -1,4 +1,4 @@
-import Taro, {useMemo} from '@tarojs/taro'
+import Taro, {useMemo, useCallback} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {AtButton, AtForm, AtInput, AtMessage} from 'taro-ui'
 import useFormal from '@kevinwolf/formal'
@@ -8,7 +8,7 @@ import useAxios from 'axios-hooks'
 import {LOGIN} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import qs from 'query-string';
-import {INDEX_PAGE} from "@/utils/app-constant";
+import {INDEX_PAGE, LOGIN_PAGE} from "@/utils/app-constant";
 
 import './login.scss'
 
@@ -43,6 +43,10 @@ const Login: Taro.FC = () => {
       Taro.redirectTo({url: INDEX_PAGE})
     }
   });
+  const toRegister = useCallback(()=>{
+    Taro.navigateTo({url: LOGIN_PAGE})
+  },[])
+
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
 
   return (
@@ -59,7 +63,7 @@ const Login: Taro.FC = () => {
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>
-          <AtButton className='at-col'>注册→</AtButton>
+          <AtButton className='at-col' onClick={toRegister}>注册→</AtButton>
           <AtButton className='at-col' loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>登录</AtButton>
         </View>
       </AtForm>
