@@ -84,7 +84,7 @@ class App extends Component {
 const {tokenStore, userStore} = stores
 new AsyncTrunk([tokenStore,userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
   autorun(async () => {
-    if (!tokenStore.authed) return
+    if (!tokenStore.authed) return userStore.clear()
     const {data} = await axios.get<MangaUser>(tokenStore.parseAuth(UCENTER))
     userStore.setMangaUser(data)
   }, {name: 'update::user info'})

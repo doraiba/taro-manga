@@ -9,12 +9,12 @@ export default class TokenStore {
   @observable
   public mangaToken: MangaToken = {} as MangaToken
 
-  @action
+  @action.bound
   public setMangaToken(mangaToken: MangaToken) {
     this.mangaToken = mangaToken
   }
 
-  @action
+  @action.bound
   clearMangaToken(){
     this.mangaToken = {} as MangaToken
   }
@@ -32,7 +32,7 @@ export default class TokenStore {
     return this.mangaToken.dmzj_token
   }
 
-  parseAuth(url: string): string{
+  parseAuth = (url: string): string =>{
     return TokenStore.parseAuth(url, this.mangaToken)
   }
 
