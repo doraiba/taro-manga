@@ -51,6 +51,7 @@ class App extends Component {
       'pages/index/index',
       'pages/user/user',
       'pages/login/login',
+      'pages/register/register',
     ],
     // tabBar: {
     //   list: [
