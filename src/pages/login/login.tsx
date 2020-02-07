@@ -8,7 +8,7 @@ import useAxios from 'axios-hooks'
 import {LOGIN} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import qs from 'query-string';
-import {INDEX_PAGE, LOGIN_PAGE} from "@/utils/app-constant";
+import {INDEX_PAGE, REGISTER_PAGE} from "@/utils/app-constant";
 
 import './login.scss'
 
@@ -44,7 +44,7 @@ const Login: Taro.FC = () => {
     }
   });
   const toRegister = useCallback(()=>{
-    Taro.navigateTo({url: LOGIN_PAGE})
+    Taro.navigateTo({url: REGISTER_PAGE})
   },[])
 
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
