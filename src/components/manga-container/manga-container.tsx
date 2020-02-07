@@ -37,7 +37,7 @@ const MangaContainer: Taro.FC = () => {
   }, 2000), [current])
 
   const handleScrollToUpper = useCallback(throttle((e: BaseEventOrigFunction<any>) => {
-    EventCenter.trigger(EventDefine.ScrollToLowerEvent, {event: e, tab: current})
+    EventCenter.trigger(EventDefine.ScrollToUpperEvent, {event: e, tab: current})
   }, 1000), [current])
 
   const upperThreshold = -80,lowerThreshold = 100;

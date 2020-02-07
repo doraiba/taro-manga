@@ -17,6 +17,7 @@ const Index: Taro.FC = () => {
 }
 
 Index.config = {
-  enablePullDownRefresh: false
+  enablePullDownRefresh: false,
+  disableScroll: true
 }
 export default Index
