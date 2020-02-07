@@ -9,6 +9,7 @@ import axios from 'axios'
 import DOMAIN, {UCENTER} from '@/contexts/manga-api'
 import injectDefaultLog from "@/utils/inject-axios-log";
 import {autorun} from "mobx";
+import {INDEX_PAGE, LOGIN_PAGE, REGISTER_PAGE, USER_PAGE} from "@/utils/app-constant";
 
 
 import './app.scss'
@@ -48,11 +49,11 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/index/index',
-      'pages/user/user',
-      'pages/login/login',
-      'pages/register/register',
-    ],
+      INDEX_PAGE,
+      USER_PAGE,
+      LOGIN_PAGE,
+      REGISTER_PAGE,
+    ].map(e => e.replace('/', '')),
     // tabBar: {
     //   list: [
     //     {
@@ -83,7 +84,7 @@ class App extends Component {
 }
 
 const {tokenStore, userStore} = stores
-new AsyncTrunk([tokenStore,userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
+new AsyncTrunk([tokenStore, userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
   autorun(async () => {
     if (!tokenStore.authed) return userStore.clear()
     const {data} = await axios.get<MangaUser>(tokenStore.parseAuth(UCENTER))

@@ -7,6 +7,7 @@ import logo from '@/asset/image/logo.png'
 import useAxios from 'axios-hooks'
 import {REGISTER} from "@/contexts/manga-api";
 import qs from 'query-string';
+import {LOGIN_PAGE} from "@/utils/app-constant";
 
 import './register.scss'
 
@@ -36,7 +37,7 @@ const Register: Taro.FC = () => {
         'type': 'error',
       })
 
-      Taro.redirectTo({url: '/pages/login/login'})
+      Taro.redirectTo({url: LOGIN_PAGE})
     }
   });
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
@@ -68,7 +69,7 @@ const Register: Taro.FC = () => {
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>
-          <AtButton className='at-col'>登录→</AtButton>
+          <AtButton className='at-col' onClick={()=> Taro.navigateTo({url: LOGIN_PAGE})}>登录→</AtButton>
           <AtButton className='at-col'loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>注册</AtButton>
         </View>
       </AtForm>

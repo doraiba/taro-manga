@@ -8,6 +8,7 @@ import useAxios from 'axios-hooks'
 import {LOGIN} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import qs from 'query-string';
+import {INDEX_PAGE} from "@/utils/app-constant";
 
 import './login.scss'
 
@@ -39,7 +40,7 @@ const Login: Taro.FC = () => {
       })
 
       tokenStore.setMangaToken(data)
-      Taro.redirectTo({url: '/pages/index/index'})
+      Taro.redirectTo({url: INDEX_PAGE})
     }
   });
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal

@@ -4,6 +4,7 @@ import useStores from "@/hooks/use-stores";
 import {AtAvatar, AtList, AtListItem, AtButton} from 'taro-ui';
 import {observer} from '@tarojs/mobx';
 import {autorun} from "mobx";
+import {LOGIN_PAGE} from "@/utils/app-constant";
 
 import './user.scss'
 
@@ -11,7 +12,7 @@ const User: Taro.FC = () => {
   const {userStore, tokenStore,tokenStore: {clearMangaToken}} = useStores()
 
   const {autoCheckIn, setAutoCheckIn, avatar, nickname} = userStore
-  useEffect(()=>autorun(()=>(!tokenStore.authed) && redirectTo({url: '/pages/login/login'})),[])
+  useEffect(()=>autorun(()=>(!tokenStore.authed) && redirectTo({url: LOGIN_PAGE})),[])
   return (
     <Block>
       <View className='mg-user'>

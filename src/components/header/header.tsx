@@ -4,6 +4,7 @@ import DefaultLogo from "@/components/header/component/default-logo/default-logo
 import {AtAvatar, AtIcon} from "taro-ui";
 import useStores from "@/hooks/use-stores";
 import { observer } from '@tarojs/mobx';
+import {LOGIN_PAGE, USER_PAGE} from "@/utils/app-constant";
 
 import './header.scss'
 
@@ -12,11 +13,10 @@ const Header: Taro.FC = ({children}) => {
 
   const {tokenStore,userStore} =  useStores()
   const toAuth = useCallback(() => {
-    console.log("====================?????????")
     if(tokenStore.authed) {
-    return navigateTo({url: '/pages/user/user'})
+    return navigateTo({url: USER_PAGE})
     }
-    navigateTo({url: '/pages/login/login'})
+    navigateTo({url: LOGIN_PAGE})
     // eslint-disable-next-line
   }, [])
 
