@@ -5,6 +5,7 @@ const LATEST = `/latest/100/{0}.json?channel=ios&version=3.0.2`
 const RANK = `/rank/0/0/0/{0}.json?channel=ios&version=3.0.2`
 const SUBJECT = `/subject/0/{0}.json?channel=ios&version=3.0.2`
 const CATEGORY = `/0/category.json?channel=ios&version=3.0.2`
+const LOGIN = `https://user.dmzj.com/loginV2/m_confirm`
 export  {
   DOMAIN,
   Ver,
@@ -12,6 +13,7 @@ export  {
   LATEST,
   RANK,
   SUBJECT,
-  CATEGORY
+  CATEGORY,
+  LOGIN
 }
 export default DOMAIN

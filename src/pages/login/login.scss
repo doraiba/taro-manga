@@ -1,0 +1,18 @@
+.mg-login {
+  margin-top: 30*2px;
+  display: flex;
+  flex-flow: column wrap;
+
+  .mg-logo-wrapper {
+    align-self: center;
+
+    .mg-logo {
+      height: 78*2px;
+      width: 78*2px;
+    }
+  }
+
+  .mg-login-form {
+    margin: 5*2px;
+  }
+}

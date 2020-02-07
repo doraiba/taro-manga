@@ -70,3 +70,19 @@ interface StoreType {
   retry: VoidFunction,
   hasMore: boolean
 }
+
+type MGResult<T = any>  = {
+  result: number,
+  msg: string,
+  data: T
+}
+
+type MangaToken = {
+  "uid": string,
+  "nickname": string,
+  "dmzj_token": string,
+  "photo": string,
+  "bind_phone": string,
+  "email": string,
+  "passwd": string
+}
