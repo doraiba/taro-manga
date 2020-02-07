@@ -65,7 +65,6 @@ class App extends Component {
       navigationBarBackgroundColor: '#0094ff',
       navigationBarTitleText: '动漫之家',
       navigationBarTextStyle: 'white',
-      pageOrientation: 'landscape'
     }
   }
 
