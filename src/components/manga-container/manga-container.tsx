@@ -2,7 +2,7 @@ import Taro, {useCallback} from '@tarojs/taro'
 import {observer, useLocalStore} from "@tarojs/mobx";
 import {AtTabs, AtTabsPane} from "taro-ui";
 import Recommend from "@/components/recommend/recommend";
-import {ScrollView} from '@tarojs/components';
+import {ScrollView, Block, View} from '@tarojs/components';
 import {BaseEventOrigFunction} from "@tarojs/components/types/common";
 import EventCenter, {EventDefine} from "@/utils/event-center";
 import throttle from 'lodash-es/throttle'
@@ -43,33 +43,40 @@ const MangaContainer: Taro.FC = () => {
   const upperThreshold = -80,lowerThreshold = 100;
 
   return (
-    <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
-      <AtTabsPane current={current} index={0}>
-        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Recommend />
-        </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane current={current} index={1}>
-        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Latest />
-        </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane current={current} index={2}>
-        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Category />
-        </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane current={current} index={3}>
-        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Rank />
-        </ScrollView>
-      </AtTabsPane>
-      <AtTabsPane current={current} index={4}>
-        <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
-          <Subject />
-        </ScrollView>
-      </AtTabsPane>
-    </AtTabs>
+    <Block>
+      <AtTabs className='mg-tabs' current={current} tabList={[...items]} onClick={handleClick}>
+        <AtTabsPane current={current} index={0}>
+          <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+            <View className='mg-loading-tips'>loading ...</View>
+            <Recommend />
+          </ScrollView>
+        </AtTabsPane>
+        <AtTabsPane current={current} index={1}>
+          <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+            <View className='mg-loading-tips'>loading ...</View>
+            <Latest />
+          </ScrollView>
+        </AtTabsPane>
+        <AtTabsPane current={current} index={2}>
+          <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+            <View className='mg-loading-tips'>loading ...</View>
+            <Category />
+          </ScrollView>
+        </AtTabsPane>
+        <AtTabsPane current={current} index={3}>
+          <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+            <View className='mg-loading-tips'>loading ...</View>
+            <Rank />
+          </ScrollView>
+        </AtTabsPane>
+        <AtTabsPane current={current} index={4}>
+          <ScrollView upperThreshold={upperThreshold} onScrollToUpper={handleScrollToUpper} enableBackToTop lowerThreshold={lowerThreshold} scrollY className='mg-discovery' onScrollToLower={handleScrollToLower}>
+            <View className='mg-loading-tips'>loading ...</View>
+            <Subject />
+          </ScrollView>
+        </AtTabsPane>
+      </AtTabs>
+    </Block>
   )
 }
 

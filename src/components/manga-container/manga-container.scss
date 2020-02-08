@@ -1,3 +1,9 @@
 .mg-discovery {
-  height: calc(100vh - 44*2px - 45*2px);
+  height: calc(100vh - 44*2px);
+}
+.mg-loading-tips {
+  display: flex;
+  height: 45*2px;
+  justify-content: center;
+  align-items: center;
 }

@@ -21,3 +21,13 @@ view {
 
   }
 }
+.mg-tabs {
+  .at-tabs__header {
+    z-index: 99;
+    position: fixed;
+    top: 44*2px;
+    left: 0;
+    right: 0;
+  }
+}
+
