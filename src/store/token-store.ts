@@ -29,8 +29,8 @@ export default class TokenStore {
     return this.mangaToken.dmzj_token
   }
 
-  parseAuth = (url?: string): string | undefined =>{
-    return url && parsePath(url, this.mangaToken)
+  parseAuth = (url: string): string =>{
+    return parsePath(url, this.mangaToken)
   }
 
 }

@@ -9,6 +9,7 @@ import axios from 'axios'
 import DOMAIN, {UCENTER} from '@/contexts/manga-api'
 import injectDefaultLog from "@/utils/inject-axios-log";
 import {autorun} from "mobx";
+import injectDefaultAuth from "@/utils/inject-axios-auth";
 
 
 import './app.scss'
@@ -22,8 +23,9 @@ global.Date = Date
 // const cache = new LRU({max: 10})
 //更改axios的请求前缀
 axios.defaults.baseURL = DOMAIN
+const {tokenStore, userStore} = stores
 
-configure({/*cache, */axios: injectDefaultLog(axios)})
+configure({/*cache, */axios: injectDefaultAuth(injectDefaultLog(axios),tokenStore)})
 
 class App extends Component {
 
@@ -54,6 +56,7 @@ class App extends Component {
       'pages/register/register',
       'pages/subscribe/subscribe',
       'pages/manga/manga',
+      'pages/browse/browse',
     ],
     // tabBar: {
     //   list: [
@@ -84,11 +87,10 @@ class App extends Component {
   }
 }
 
-const {tokenStore, userStore} = stores
 new AsyncTrunk([tokenStore, userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
   autorun(async () => {
     if (!tokenStore.authed) return userStore.clear()
-    const {data} = await axios.get<MangaUser>(tokenStore.parseAuth(UCENTER))
+    const {data} = await axios.get<MangaUser>(UCENTER)
     userStore.setMangaUser(data)
   }, {name: 'update::user info'})
   Taro.render(<App />, document.getElementById('app'))

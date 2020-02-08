@@ -7,7 +7,6 @@ import {parsePath} from "@/utils";
 import dayjs from "dayjs";
 import StartReading from "@/components/start-reading/start-reading";
 
-import './manga.scss'
 
 const Manga: Taro.FC = () => {
   const [timestamp, setTimeStamp] = useState(() => dayjs().unix())
