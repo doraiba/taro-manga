@@ -7,7 +7,7 @@ import {isFunction} from "@/utils";
 import {AtActivityIndicator} from "taro-ui";
 import useScrollToLower4Event from "@/hooks/useScrollToLower4Event";
 import useScrollToUpper4Event from "@/hooks/useScrollToUpper4Event";
-
+import EventCenter,{EventDefine} from '@/utils/event-center'
 
 type CustomProps = {
   fetchCondition?: (any) => boolean
@@ -50,6 +50,7 @@ const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, 
       this.list = page === initialPage ?list : [...this.list, ...list];
       this.totalPage = totalPage;
       this.hasMore = list.length === this.pageSize
+      EventCenter.trigger(EventDefine.ScrollToUpperFetchEnd)
     }),
     forward: action(function (this: StoreType) {
       if (this.hasMore)

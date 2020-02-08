@@ -1,9 +1,8 @@
 import Taro from '@tarojs/taro'
 import {RANK} from "@/contexts/manga-api";
-import ListView from "@/components/list-veiw/list-view-II";
+import ListView from "@/components/list-veiw/list-view-III";
 import {MangaItem} from "@/components/manga-item";
 import {AtList, AtTag} from "taro-ui";
-import {observer} from '@tarojs/mobx'
 
 import './rank.scss'
 
@@ -22,4 +21,4 @@ const Rank: Taro.FC = () => {
   )
 }
 
-export default observer(Rank)
+export default Rank
