@@ -6,7 +6,7 @@ import {COMICREINFO} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import dayjs from "dayjs";
 import {AtButton} from "taro-ui";
-import {reaction} from "mobx";
+import {autorun} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
 import {BaseEventOrig} from "@tarojs/components/types/common";
 import {BROWSE_PAGE} from "@/utils/app-constant";
@@ -15,23 +15,21 @@ type StartReadingProps = {
   onClick?: (r: ComicReInfo, e?: BaseEventOrig<any>) => void,
   oid: number | string,
   timestamp?: number //通知刷新用
-} & Omit<AtButtonProps, 'onClick'>
+} & Omit<AtButtonProps, 'onClick'|'loading'>
 
 const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
   const {timestamp, oid, onClick, ...props} = ignore
   const source = useAsObservableSource({timestamp, oid})
-  const {tokenStore: {authed}} = useStores()
+  const {tokenStore} = useStores()
 
-  const [{data = {} as ComicReInfo}, reFetch] = useAxios<ComicReInfo>({url: parsePath(COMICREINFO, source)}, {manual: true})
-  useEffect(() => {
-    authed && reFetch()
-  }, [authed, reFetch])
-  useEffect(() => reaction(() => source.timestamp, () => authed && reFetch()))
+  const [{loading, data = {} as ComicReInfo}, reFetch] = useAxios<ComicReInfo>({url: parsePath(COMICREINFO, source)}, {manual: true})
+
+  useEffect(() => autorun( () => tokenStore.authed && reFetch({params:{timestamp: source.timestamp}})), [])
 
   // TODO 远程数据不存在获取本地缓存
-  const filter = Object.keys(data).length === 0 ? data : {} as ComicReInfo
+  const filter = Object.keys(data).length !== 0 ? data : {} as ComicReInfo
   const tag = filter.chapter_name || '开始阅读'
-  return (<AtButton {...props} onClick={event => onClick && onClick(filter, event)}>{tag}</AtButton>)
+  return (<AtButton {...props} loading={loading} onClick={event => onClick && onClick(filter, event)}>{tag}</AtButton>)
 }
 
 StartReading.defaultProps = {
