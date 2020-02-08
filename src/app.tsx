@@ -53,6 +53,7 @@ class App extends Component {
       'pages/login/login',
       'pages/register/register',
       'pages/subscribe/subscribe',
+      'pages/manga/manga',
     ],
     // tabBar: {
     //   list: [

@@ -1,10 +1,7 @@
 import {action, computed, observable} from "mobx";
+import {parsePath} from '@/utils'
 
 export default class TokenStore {
-
-  static parseAuth = (url: string, auth: MangaToken): string=> {
-    return Object.keys(auth).reduce(((seed, item) => seed.replace(`{${item}}`,auth[item])), url)
-  }
 
   @observable
   public mangaToken: MangaToken = {} as MangaToken
@@ -32,8 +29,8 @@ export default class TokenStore {
     return this.mangaToken.dmzj_token
   }
 
-  parseAuth = (url: string): string =>{
-    return TokenStore.parseAuth(url, this.mangaToken)
+  parseAuth = (url?: string): string | undefined =>{
+    return url && parsePath(url, this.mangaToken)
   }
 
 }

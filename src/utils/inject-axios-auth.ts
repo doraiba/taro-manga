@@ -5,8 +5,7 @@ import TokenStore from "@/store/token-store";
 const injectDefaultAuth = (axios: AxiosInstance,
                           tokenStore: TokenStore) => {
   axios.interceptors.request.use((value => {
-    // TODO 没有请求标准,存在formdata,params
-    console.log(tokenStore.uid,tokenStore.token)
+    value.url = tokenStore.parseAuth(value.url)
     return value
   }));
 

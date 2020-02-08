@@ -8,6 +8,8 @@ const CATEGORY = `/0/category.json?channel=ios&version=3.0.2`
 const LOGIN = `https://user.dmzj.com/loginV2/m_confirm`
 const REGISTER = `https://user.dmzj.com/register/m_submit_v2`
 const UCENTER = `/UCenter/comicsv2/{uid}.json?channel=ios&dmzj_token={dmzj_token}`
+const COMIC = `/comic/comic_{oid}.json`
+const COMICREINFO = `https://interface.dmzj.com/api/getReInfo/comic/{uid}/{oid}/0`
 
 export  {
   DOMAIN,
@@ -19,6 +21,8 @@ export  {
   CATEGORY,
   LOGIN,
   REGISTER,
-  UCENTER
+  UCENTER,
+  COMIC,
+  COMICREINFO
 }
 export default DOMAIN

@@ -4,7 +4,7 @@
 	"description": "",
 	"appid": "wxf5c317bdfadcb0e9",
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"enhance": false,
 		"postcss": false,
@@ -76,6 +76,14 @@
 					"id": -1,
 					"name": "我的订阅",
 					"pathName": "pages/subscribe/subscribe",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "漫画详情",
+					"pathName": "pages/manga/manga",
+					"query": "oid=50758",
 					"scene": null
 				}
 			]

@@ -71,7 +71,7 @@ interface StoreType {
   hasMore: boolean
 }
 
-type MGResult<T = any>  = {
+type MGResult<T = any> = {
   result: number,
   msg: string,
   data: T
@@ -98,10 +98,102 @@ type MangaUser = {
   "bind_phone": number,
   "email": string,
   "channel": string,
-  "is_verify": 0|1,
-  "is_modify_name": 0|1,
+  "is_verify": 0 | 1,
+  "is_modify_name": 0 | 1,
   "data": Array<any>,
   "amount": number,
-  "is_set_pwd": 0|1,
+  "is_set_pwd": 0 | 1,
   "bind": Array<any>
 }
+
+
+interface Type {
+  tag_id: number;
+  tag_name: string;
+}
+
+interface Status {
+  tag_id: number;
+  tag_name: string;
+}
+
+interface Author {
+  tag_id: number;
+  tag_name: string;
+}
+
+interface Datum {
+  chapter_id: number;
+  chapter_title: string;
+  updatetime: number;
+  filesize: number;
+  chapter_order: number;
+}
+
+interface Chapter {
+  title: string;
+  data: Datum[];
+}
+
+interface LatestComment {
+  comment_id: number;
+  uid: number;
+  content: string;
+  createtime: number;
+  nickname: string;
+  avatar: string;
+}
+
+interface Comment {
+  comment_count: number;
+  latest_comment: LatestComment[];
+}
+
+interface DhUrlLink {
+  title: string;
+  list: any[];
+}
+
+interface Comic {
+  id: number;
+  islong: number;
+  direction: number;
+  title: string;
+  is_dmzj: number;
+  cover: string;
+  description: string;
+  last_updatetime: number;
+  last_update_chapter_name: string;
+  copyright: number;
+  first_letter: string;
+  comic_py: string;
+  hidden: number;
+  hot_num: number;
+  hit_num: number;
+  uid?: any;
+  is_lock: number;
+  last_update_chapter_id: number;
+  types: Type[];
+  status: Status[];
+  authors: Author[];
+  subscribe_num: number;
+  chapters: Chapter[];
+  comment: Comment;
+  url_links: any[];
+  isHideChapter: string;
+  dh_url_links: DhUrlLink[];
+  is_dot: string;
+}
+
+interface ComicReInfo {
+  uid: number;
+  type: number;
+  comic_id: number;
+  chapter_id: number;
+  record: number;
+  viewing_time: number;
+  comic_name: string;
+  cover: string;
+  chapter_name: string;
+}
+
