@@ -1,4 +1,4 @@
-import Taro, {useState} from '@tarojs/taro'
+import Taro, {useState, usePullDownRefresh} from '@tarojs/taro'
 import {Block, View} from '@tarojs/components'
 import {AtSearchBar} from 'taro-ui';
 import {observer} from '@tarojs/mobx';
@@ -6,6 +6,10 @@ import {observer} from '@tarojs/mobx';
 import './subscribe.scss'
 
 const Subscribe: Taro.FC = () => {
+
+  usePullDownRefresh(()=>{
+    console.log("usePullDownRefresh")
+  })
 
   const [searchParam, setSearchParam] = useState(()=>'')
 
@@ -25,7 +29,8 @@ const Subscribe: Taro.FC = () => {
     </Block>)
 }
 Subscribe.config = {
-  navigationBarTitleText: '我的订阅'
+  navigationBarTitleText: '我的订阅',
+  enablePullDownRefresh: true
 }
 
 export default observer(Subscribe)
