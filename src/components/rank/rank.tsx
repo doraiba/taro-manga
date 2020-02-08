@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import {RANK} from "@/contexts/manga-api";
-import ListView from "@/components/list-veiw/list-view-III";
+import ListView from "@/components/list-veiw/list-view-II";
 import {MangaItem} from "@/components/manga-item";
 import {AtList, AtTag} from "taro-ui";
 
