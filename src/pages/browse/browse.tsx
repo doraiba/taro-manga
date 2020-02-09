@@ -9,16 +9,19 @@ import useComic from "@/hooks/use-comic";
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
 
-  const {} = useComic(()=> params.oid,[])
-  const [{data},refetch] =  useAxios(parsePath(CHAPTER, params), {manual: true})
-  useEffect(() => {refetch()},[])
+  const {data: comic} = useComic(() => params.oid, [params.oid])
+
+  const [{data}, refetch] = useAxios(parsePath(CHAPTER, params), {manual: true})
+  useEffect(() => {
+    refetch()
+  }, [])
   return (
     <Block>
       <View>{JSON.stringify(params)}</View>
       <View>{JSON.stringify(data)}</View>
+      <View>{JSON.stringify(comic)}</View>
     </Block>)
 }
-Browse.config = {
-}
+Browse.config = {}
 
 export default observer(Browse)

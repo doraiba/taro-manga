@@ -10,7 +10,7 @@ const Manga: Taro.FC = () => {
   const [timestamp, setTimeStamp] = useState(() => dayjs().unix())
   const {params} = useRouter()
 
-  const {data, refetch} = useComic(() => parseInt(params.oid),[])
+  const {data, refetch} = useComic(() => params.oid,[params.oid])
   const handleRefresh = useCallback(async () => {
     setTimeStamp(() => dayjs().unix())
     await refetch()
