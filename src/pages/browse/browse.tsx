@@ -4,10 +4,12 @@ import {observer} from '@tarojs/mobx';
 import {parsePath} from '@/utils';
 import {CHAPTER} from "@/contexts/manga-api";
 import useAxios from 'axios-hooks'
+import useComic from "@/hooks/use-comic";
 
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
-  // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
+
+  const {} = useComic(()=> params.oid,[])
   const [{data},refetch] =  useAxios(parsePath(CHAPTER, params), {manual: true})
   useEffect(() => {refetch()},[])
   return (

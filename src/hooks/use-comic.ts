@@ -4,23 +4,27 @@ import {parsePath} from "@/utils";
 import {COMIC} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 
-const useComic = (factory: () => number, deps: DependencyList | undefined) => {
-  const oid = useMemo(factory, deps)
+const useComic = (factory: () => number | string, deps: DependencyList | undefined) => {
+  // eslint-disable-next-line
+  const oid = useMemo(() => factory() as any - 0, deps)
   const {comicStore: {isValid, findById, insetOrUpdateById}} = useStores()
-  const [{loading, error, response}, refetch] = useAxios<Comic>({url: parsePath(COMIC, {oid})}, {manual: true})
+  const [{loading, error, data, response}, refetch] = useAxios<Comic>({url: parsePath(COMIC, {oid})}, {manual: true})
   const exist = findById(oid), valid = isValid(exist)
   const [comic, setComic] = useState<Comic>(() => exist)
   useEffect(() => {
-    if (!valid) {
-      refetch().then(({data}) => {
-        setComic(() => {
-          insetOrUpdateById(data)
-          return data
-        })
-      }).catch(e => console.log('remote server error', e))
-    }
+    if (!valid) refetch()
     // eslint-disable-next-line
   }, [])
+
+  useEffect(() => {
+    if (isValid(data)) {
+      setComic(() => {
+        insetOrUpdateById(data)
+        return data
+      })
+    }
+    // eslint-disable-next-line
+  }, [data])
 
   return {loading, error, data: comic, response, forceUpdate: insetOrUpdateById, refetch}
 }
