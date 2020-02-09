@@ -23,7 +23,7 @@ global.Date = Date
 // const cache = new LRU({max: 10})
 //更改axios的请求前缀
 axios.defaults.baseURL = DOMAIN
-const {tokenStore, userStore} = stores
+const {tokenStore, userStore, comicStore} = stores
 
 configure({/*cache, */axios: injectDefaultAuth(injectDefaultLog(axios),tokenStore)})
 
@@ -73,7 +73,7 @@ class App extends Component {
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#0094ff',
-      navigationBarTitleText: '动漫之家',
+      navigationBarTitleText: '二刺猿',
       navigationBarTextStyle: 'white',
     }
   }
@@ -87,7 +87,7 @@ class App extends Component {
   }
 }
 
-new AsyncTrunk([tokenStore, userStore], {storage: new TaroAsyncStorage()}).init().then(() => {
+new AsyncTrunk([tokenStore, userStore, comicStore], {storage: new TaroAsyncStorage()}).init().then(() => {
   autorun(async () => {
     if (!tokenStore.authed) return userStore.clear()
     const {data} = await axios.get<MangaUser>(UCENTER)

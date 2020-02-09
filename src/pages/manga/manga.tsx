@@ -1,28 +1,22 @@
-import Taro, {useCallback, useState, useEffect, usePullDownRefresh, useRouter} from '@tarojs/taro'
+import Taro, {useCallback, usePullDownRefresh, useRouter, useState} from '@tarojs/taro'
 import {Block, View} from '@tarojs/components'
 import {observer} from '@tarojs/mobx';
-import useAxios from 'axios-hooks'
-import {COMIC} from "@/contexts/manga-api";
-import {parsePath} from "@/utils";
 import dayjs from "dayjs";
 import StartReading from "@/components/start-reading/start-reading";
+import useComic from "@/hooks/use-comic";
 
 
 const Manga: Taro.FC = () => {
   const [timestamp, setTimeStamp] = useState(() => dayjs().unix())
   const {params} = useRouter()
-  const [{data = {}}, reFetch] = useAxios<Comic>({url: parsePath(COMIC, params)}, {manual: true})
+  const {data, refetch} = useComic(() => parseInt(params.oid),[])
   const handleRefresh = useCallback(async () => {
     setTimeStamp(() => dayjs().unix())
-    await reFetch()
+    await refetch()
     Taro.stopPullDownRefresh()
-  }, [reFetch])
+  }, [refetch])
 
   usePullDownRefresh(handleRefresh)
-
-  useEffect(() => {
-    handleRefresh()
-  }, [handleRefresh])
 
   return (
     <Block>

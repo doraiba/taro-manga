@@ -12,13 +12,14 @@ import {BaseEventOrig} from "@tarojs/components/types/common";
 import {BROWSE_PAGE} from "@/utils/app-constant";
 
 type StartReadingProps = {
-  onClick?: (r: ComicReInfo, e?: BaseEventOrig<any>) => void,
-  oid: number | string,
+  onClick?: (e: BaseEventOrig<any>, r?: ComicReInfo, chapter?: number) => void,
+  oid: number | string, //漫画id
+  cid?: number //章节初始id,第一话
   timestamp?: number //通知刷新用
 } & Omit<AtButtonProps, 'onClick'|'loading'>
 
 const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
-  const {timestamp, oid, onClick, ...props} = ignore
+  const {timestamp, oid,cid, onClick, ...props} = ignore
   const source = useAsObservableSource({timestamp, oid})
   const {tokenStore} = useStores()
 
@@ -27,16 +28,18 @@ const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
   useEffect(() => autorun( () => tokenStore.authed && reFetch({params:{timestamp: source.timestamp}})), [])
 
   // TODO 远程数据不存在获取本地缓存
-  const filter = Object.keys(data).length !== 0 ? data : {} as ComicReInfo
+  const filter = Object.keys(data).length !== 0 ? data : {comic_id: oid} as ComicReInfo
   const tag = filter.chapter_name || '开始阅读'
-  return (<AtButton {...props} loading={loading} onClick={event => onClick && onClick(filter, event)}>{tag}</AtButton>)
+  return (<AtButton {...props} loading={loading} onClick={event => onClick && onClick(event,filter,cid)}>{tag}</AtButton>)
 }
 
 StartReading.defaultProps = {
   timestamp: dayjs().unix(),
   size: 'small',
-  onClick: r => {
-    navigateTo({url: `${BROWSE_PAGE}?oid=${r.comic_id}`})
+  onClick: (_e, r , c) => {
+    const {comic_id, chapter_id = c} = r as ComicReInfo
+    if(!chapter_id) return Taro.showToast({title: `无法定位章节信息:${comic_id}/${chapter_id}`})
+    navigateTo({url: `${BROWSE_PAGE}?oid=${comic_id}&cid=${chapter_id}`})
   }
 }
 
