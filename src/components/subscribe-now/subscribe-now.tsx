@@ -11,7 +11,7 @@ import {AtButtonProps} from "taro-ui/@types/button";
 import {LOGIN_PAGE} from "@/utils/app-constant";
 import qs from 'query-string'
 
-type ActionType = 'REQUEST_ADD' | 'REQUEST_CANCEL'
+type ActionType = 'REQUEST_ADD' | 'REQUEST_CANCEL' | 'NEED_LOGIN'
 
 type SubscribeNowProps = {
   oid: number | string, //漫画id
@@ -35,6 +35,8 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
         return {...state, ...{tag: '取消订阅', status: 0}}
       case "REQUEST_CANCEL":
         return {...state, ...{tag: '立即订阅', status: 1}}
+      case "NEED_LOGIN":
+        return {...state, ...{tag: '→ 登录'}}
       default:
         return state
     }
@@ -52,6 +54,10 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
 
   // 刷新状态解析
   useEffect(() => {
+    if(!tokenStore.authed){
+      dispatch({type: "NEED_LOGIN"})
+      return;
+    }
     if (data) {
       dispatch({type: data.code === 1 ? "REQUEST_CANCEL" : "REQUEST_ADD"})
     }

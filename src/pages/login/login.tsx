@@ -63,7 +63,7 @@ const Login: Taro.FC = () => {
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>
-          <AtButton className='at-col' onClick={toRegister}>注册→</AtButton>
+          <AtButton className='at-col' onClick={toRegister}>→ 注册</AtButton>
           <AtButton className='at-col' loading={isSubmitting} onClick={submit} {...getSubmitButtonProps()}>登录</AtButton>
         </View>
       </AtForm>
