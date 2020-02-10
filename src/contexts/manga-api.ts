@@ -19,14 +19,15 @@ export const REGISTER = `https://user.dmzj.com/register/m_submit_v2`
 export const UCENTER = `/UCenter/comicsv2/{uid}.json?${suffix}&dmzj_token={dmzj_token}`
 // 漫画信息
 export const COMIC = `/comic/comic_{oid}.json?${suffix}`
-// 订阅信息
+// 访问记录
 export const COMICREINFO = `https://interface.dmzj.com/api/getReInfo/comic/{uid}/{oid}/0?${suffix}`
 // 章节信息
 export const CHAPTER = `/chapter/{oid}/{cid}.json?${suffix}`
 // 是否订阅
 export const SUBSCRIBE = `/subscribe/0/{uid}/{oid}?${suffix}`
-//
+// 取消订阅
 export const SUBSCRIBE_CANCEL = `/subscribe/cancel?${suffix}&type=mh&uid={uid}&obj_ids={oid}&dmzj_token={dmzj_token}`
+// 订阅漫画
 export const SUBSCRIBE_ADD = `/subscribe/add`
 
 
