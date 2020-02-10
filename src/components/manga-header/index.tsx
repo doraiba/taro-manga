@@ -9,9 +9,8 @@ import './index.scss'
 const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,title,cover, authors, types, hot_num, subscribe_num, status, last_updatetime, firstChapter, timestamp}) => {
 
   useEffect(()=>{
-    Taro.setNavigationBarTitle({title})
-    // eslint-disable-next-line
-  },[])
+    title && Taro.setNavigationBarTitle({title})
+  },[title])
 
   return <Block>
     <View className='mg-primary-card'>
