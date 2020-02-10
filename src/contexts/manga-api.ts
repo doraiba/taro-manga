@@ -24,6 +24,9 @@ export const COMICREINFO = `https://interface.dmzj.com/api/getReInfo/comic/{uid}
 export const CHAPTER = `/chapter/{oid}/{cid}.json`
 // 是否订阅
 export const SUBSCRIBE = `/subscribe/0/{uid}/{oid}`
+//
+export const SUBSCRIBE_CANCEL = `/subscribe/cancel?type=mh&uid={uid}&obj_ids={oid}&dmzj_token={dmzj_token}`
+export const SUBSCRIBE_ADD = `/subscribe/add`
 
 
 export default DOMAIN

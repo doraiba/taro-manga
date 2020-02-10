@@ -5,19 +5,18 @@ import Taro, {
   useMemo,
   navigateTo,
   Reducer,
-  ReducerAction,
-  ReducerState
 } from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {parsePath} from "@/utils";
-import {SUBSCRIBE} from "@/contexts/manga-api";
+import {SUBSCRIBE, SUBSCRIBE_ADD, SUBSCRIBE_CANCEL, Ver} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import dayjs from "dayjs";
 import {AtButton} from "taro-ui";
 import {autorun} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
 import {LOGIN_PAGE} from "@/utils/app-constant";
+import qs from 'query-string'
 
 type ActionType = 'REQUEST_ADD' | 'REQUEST_CANCEL'
 
@@ -31,8 +30,8 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
   const source = useAsObservableSource({timestamp, oid})
   const {tokenStore} = useStores()
 
-  const [{loading, data = {} as MGResult}, reFetch] = useAxios<MGResult>({url: parsePath(SUBSCRIBE, source)}, {manual: true})
-  const [{loading: subLoading, data: subData = {} as MGResult}, refetch] = useAxios<MGResult>({}, {manual: true})
+  const [{loading}, reFetch] = useAxios<MGResult>({url: parsePath(SUBSCRIBE, source)}, {manual: true})
+  const [{loading: subLoading}, refetch] = useAxios<MGResult>({}, {manual: true})
 
   useEffect(() => autorun(() => tokenStore.authed && reFetch({params: {timestamp: source.timestamp}})), [])
 
@@ -40,7 +39,7 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
     status: -1,
     tag: '加载中'
   }), [])
-  const reducer: Reducer<typeof initialState, { type: ActionType, payload?: typeof initialState }> = useCallback((state: typeof initialState, {type, payload}) => {
+  const reducer: Reducer<typeof initialState, { type: ActionType, payload?: typeof initialState }> = useCallback((state: typeof initialState, {type}) => {
     switch (type) {
       case "REQUEST_ADD":
         return {...state, ...{tag: '取消订阅', status: 0}}
@@ -56,16 +55,37 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
     if (!tokenStore.authed) {
       return await navigateTo({url: LOGIN_PAGE})
     }
-
-
-  }, [])
+    if (state.status === -1) return;
+    if (state.status === 0) {
+      await refetch({url: parsePath(SUBSCRIBE_CANCEL, {oid})})
+      dispatch({type: "REQUEST_ADD"})
+    }
+    if (state.status === 1) {
+      await refetch({
+        url: parsePath(SUBSCRIBE_ADD, {oid}),
+        method: 'post',
+        headers: {'Content-Type': 'application/x-www-form-encoded'},
+        data: tokenStore.parseAuth(qs.stringify({
+          channel: 'ios',
+          version: Ver,
+          obj_ids: oid,
+          type: 'mh',
+          uid: '{uid}'
+        }))
+      })
+      dispatch({type: "REQUEST_CANCEL"})
+    }
+  }, [oid, refetch, state.status, tokenStore])
 
   useEffect(() => {
+    reFetch().then(({data: {result}}) => {
+      dispatch({type: result === 1 ? "REQUEST_CANCEL" : "REQUEST_ADD"})
+    })
+  }, [])
 
-  }, [data])
+  const buttonLoading = loading || subLoading
 
-  const {data: isSubscribe} = data
-  return (<AtButton {...props} loading={loading} onClick={handleClick}>{state.tag}</AtButton>)
+  return (<AtButton {...props} loading={buttonLoading} onClick={handleClick}>{state.tag}</AtButton>)
 }
 
 SubscribeNow.defaultProps = {
