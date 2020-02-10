@@ -11,7 +11,7 @@ const Rank: Taro.FC = () => {
   return (
     <ListView key='rank' fetchCondition={({tab}) => tab === 3}
       url={RANK} renderList={(list = []) => <AtList>
-      {list.map((e: RankItem, i) => {
+      {list.map((e, i) => {
         return <MangaItem key={i} {...e} >
           <AtTag type='primary' circle>{i + 1}</AtTag>
         </MangaItem>

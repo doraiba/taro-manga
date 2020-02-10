@@ -1,12 +1,12 @@
 import Taro,{useEffect} from '@tarojs/taro'
-import {Block, Image, Text, View} from '@tarojs/components'
+import {Block, Image, ScrollView, Text, View} from '@tarojs/components'
 
 import dayjs from "dayjs";
 import SubscribeNow from "@/components/subscribe-now/subscribe-now";
 import StartReading from "@/components/start-reading/start-reading";
 import './index.scss'
 
-const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,title,cover, authors, types, hot_num, subscribe_num, status, last_updatetime, firstChapter, timestamp}) => {
+const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,title,cover, authors, types, hot_num, subscribe_num, status, last_updatetime,description, firstChapter, timestamp}) => {
 
   useEffect(()=>{
     title && Taro.setNavigationBarTitle({title})
@@ -47,6 +47,11 @@ const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> =
         </View>
       </View>
     </View>
+    <ScrollView scrollY className='mg-primary-desc-scroll'>
+      <View className='at-article__p'>
+        {description}
+      </View>
+    </ScrollView>
   </Block>
 }
 

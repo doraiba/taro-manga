@@ -80,10 +80,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 4,
 					"name": "漫画详情",
 					"pathName": "pages/manga/manga",
-					"query": "oid=50758",
+					"query": "oid= 43524",
 					"scene": null
 				},
 				{
