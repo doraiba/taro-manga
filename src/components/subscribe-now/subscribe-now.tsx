@@ -62,7 +62,10 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
     if (!tokenStore.authed) {
       return await navigateTo({url: LOGIN_PAGE})
     }
+
+    // 初始状态
     if (state.status === -1) return;
+    // 未订阅状态
     if (state.status === 1) {
       const {data: {code}} = await refetch({
         url: parsePath(SUBSCRIBE_ADD, {oid}),
@@ -79,6 +82,7 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
       })
       return code === 0 && dispatch({type: "REQUEST_ADD"})
     }
+    // 订阅状态
     if (state.status === 0) {
       const {data: {code}} = await refetch({url: parsePath(SUBSCRIBE_CANCEL, {oid})})
       return code === 0 && dispatch({type: "REQUEST_CANCEL"})
