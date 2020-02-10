@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro'
+import Taro,{useEffect} from '@tarojs/taro'
 import {Block, Image, Text, View} from '@tarojs/components'
 
 import dayjs from "dayjs";
@@ -6,7 +6,12 @@ import SubscribeNow from "@/components/subscribe-now/subscribe-now";
 import StartReading from "@/components/start-reading/start-reading";
 import './index.scss'
 
-const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,cover, authors, types, hot_num, subscribe_num, status, last_updatetime, firstChapter, timestamp}) => {
+const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,title,cover, authors, types, hot_num, subscribe_num, status, last_updatetime, firstChapter, timestamp}) => {
+
+  useEffect(()=>{
+    Taro.setNavigationBarTitle({title})
+    // eslint-disable-next-line
+  },[])
 
   return <Block>
     <View className='mg-primary-card'>
