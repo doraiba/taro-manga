@@ -58,9 +58,9 @@ const Manga: Taro.FC = () => {
               </View>
             </View>
             <View className='mg-primary-service'>
-              <SubscribeNow className='mg-primary-button' timestamp={timestamp} oid={oid} />
+              <SubscribeNow className='mg-primary-button__w80' timestamp={timestamp} oid={oid} />
               <View className='mg-primary-space' />
-              <StartReading className='mg-primary-button' timestamp={timestamp} oid={oid} cid={firstChapter} />
+              <StartReading className='mg-primary-button__w80 mg-primary-button' timestamp={timestamp} oid={oid} cid={firstChapter} />
             </View>
           </View>
         </View>

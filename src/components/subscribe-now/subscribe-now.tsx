@@ -26,7 +26,7 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
 // 初始状态
   const initialState = useMemo(() => ({
     status: -1,
-    tag: '加载中'
+    tag: '⊙ˍ⊙'
   }), [])
   // reducer
   const reducer: Reducer<typeof initialState, { type: ActionType, payload?: typeof initialState }> = useCallback((state: typeof initialState, {type}) => {

@@ -1,15 +1,16 @@
-import Taro, {useEffect, navigateTo} from '@tarojs/taro'
+import Taro, {navigateTo, useEffect} from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {parsePath} from "@/utils";
 import {COMICREINFO} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import dayjs from "dayjs";
-import {AtButton} from "taro-ui";
+import {AtButton, AtMessage} from "taro-ui";
 import {autorun} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
 import {BaseEventOrig} from "@tarojs/components/types/common";
 import {BROWSE_PAGE} from "@/utils/app-constant";
+import {Block, View} from '@tarojs/components';
 
 type StartReadingProps = {
   onClick?: (e: BaseEventOrig<any>, r?: ComicReInfo, chapter?: number) => void,
@@ -29,8 +30,15 @@ const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
 
   // TODO 远程数据不存在获取本地缓存
   const filter = Object.keys(data).length !== 0 ? data : {comic_id: oid} as ComicReInfo
-  const tag = filter.chapter_name || '开始阅读'
-  return (<AtButton {...props} loading={loading} onClick={event => onClick && onClick(event,filter,cid)}>{tag}</AtButton>)
+  const {chapter_name = '开始阅读',chapter_id} = filter
+  return (
+    <Block>
+      <AtMessage />
+      <View onLongPress={() => chapter_id && Taro.atMessage({message: `阅读进度: ${chapter_name}`})}>
+        <AtButton {...props} loading={loading} onClick={event => onClick && onClick(event,filter,cid)}>{chapter_name}</AtButton>
+      </View>
+    </Block>
+    )
 }
 
 StartReading.defaultProps = {
