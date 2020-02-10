@@ -73,6 +73,7 @@ interface StoreType {
 
 type MGResult<T = any> = {
   result: number,
+  code: number,
   msg: string,
   data: T
 }

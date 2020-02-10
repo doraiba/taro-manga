@@ -1,15 +1,8 @@
-import Taro, {
-  useEffect,
-  useCallback,
-  useReducer,
-  useMemo,
-  navigateTo,
-  Reducer,
-} from '@tarojs/taro'
+import Taro, {navigateTo, Reducer, useCallback, useEffect, useMemo, useReducer,} from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {parsePath} from "@/utils";
-import {SUBSCRIBE, SUBSCRIBE_ADD, SUBSCRIBE_CANCEL, Ver} from "@/contexts/manga-api";
+import {SUBSCRIBE, SUBSCRIBE_ADD, SUBSCRIBE_CANCEL} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import dayjs from "dayjs";
 import {AtButton} from "taro-ui";
@@ -30,15 +23,12 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
   const source = useAsObservableSource({timestamp, oid})
   const {tokenStore} = useStores()
 
-  const [{loading}, reFetch] = useAxios<MGResult>({url: parsePath(SUBSCRIBE, source)}, {manual: true})
-  const [{loading: subLoading}, refetch] = useAxios<MGResult>({}, {manual: true})
-
-  useEffect(() => autorun(() => tokenStore.authed && reFetch({params: {timestamp: source.timestamp}})), [])
-
+// 初始状态
   const initialState = useMemo(() => ({
     status: -1,
     tag: '加载中'
   }), [])
+  // reducer
   const reducer: Reducer<typeof initialState, { type: ActionType, payload?: typeof initialState }> = useCallback((state: typeof initialState, {type}) => {
     switch (type) {
       case "REQUEST_ADD":
@@ -51,37 +41,49 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
   }, [initialState])
 
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  // 请求订阅信息
+  const [{loading, data}, reFetch] = useAxios<MGResult>({url: parsePath(SUBSCRIBE, source)}, {manual: true})
+  // 待请求 订阅或取消
+  const [{loading: subLoading}, refetch] = useAxios<MGResult>({}, {manual: true})
+
+  // 根据父组件传递的时间戳进行刷新
+  useEffect(() => autorun(() => tokenStore.authed && reFetch({params: {timestamp: source.timestamp}})), [])
+
+  // 刷新状态解析
+  useEffect(() => {
+    if (data) {
+      dispatch({type: data.code === 1 ? "REQUEST_CANCEL" : "REQUEST_ADD"})
+    }
+  }, [data])
+
+
   const handleClick = useCallback(async () => {
     if (!tokenStore.authed) {
       return await navigateTo({url: LOGIN_PAGE})
     }
     if (state.status === -1) return;
-    if (state.status === 0) {
-      await refetch({url: parsePath(SUBSCRIBE_CANCEL, {oid})})
-      dispatch({type: "REQUEST_ADD"})
-    }
     if (state.status === 1) {
-      await refetch({
+      const {data: {code}} = await refetch({
         url: parsePath(SUBSCRIBE_ADD, {oid}),
         method: 'post',
-        headers: {'Content-Type': 'application/x-www-form-encoded'},
-        data: tokenStore.parseAuth(qs.stringify({
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        data: qs.stringify({
           channel: 'ios',
-          version: Ver,
+          version: '3.0.2',
           obj_ids: oid,
           type: 'mh',
-          uid: '{uid}'
-        }))
+          uid: tokenStore.uid,
+          dmzj_token: tokenStore.token
+        })
       })
-      dispatch({type: "REQUEST_CANCEL"})
+      return code === 0 && dispatch({type: "REQUEST_ADD"})
+    }
+    if (state.status === 0) {
+      const {data: {code}} = await refetch({url: parsePath(SUBSCRIBE_CANCEL, {oid})})
+      return code === 0 && dispatch({type: "REQUEST_CANCEL"})
     }
   }, [oid, refetch, state.status, tokenStore])
-
-  useEffect(() => {
-    reFetch().then(({data: {result}}) => {
-      dispatch({type: result === 1 ? "REQUEST_CANCEL" : "REQUEST_ADD"})
-    })
-  }, [])
 
   const buttonLoading = loading || subLoading
 
