@@ -51,6 +51,10 @@
         .mg-union-date {
           font-size: 12*2px;
           opacity: .9;
+          .at-icon {
+            vertical-align: baseline;
+            margin: 0 5*2px;
+          }
         }
       }
     }
