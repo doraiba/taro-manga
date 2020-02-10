@@ -6,10 +6,10 @@ import {MANGA_PAGE} from "@/utils/app-constant";
 import './manga-recommend-item.scss'
 
 type MangaRecommendItemProps = CategoryItem& {onClick?: (event: ITouchEvent,id?: string|number) => any}
-const MangaRecommendItem: Taro.FC<MangaRecommendItemProps> = ({onClick,obj_id,cover, title, sub_title, authors}) => {
+const MangaRecommendItem: Taro.FC<MangaRecommendItemProps> = ({onClick,id,obj_id,cover, title, sub_title, authors}) => {
 
   return (
-    <View className='mg-manga-item' onClick={e => onClick && onClick(e,obj_id)}>
+    <View className='mg-manga-item' onClick={e => onClick && onClick(e,id || obj_id)}>
       <View className='mg-manga-item-cover'>
         <Image className='mg-manga-item-cover-img' lazyLoad src={cover} />
       </View>
