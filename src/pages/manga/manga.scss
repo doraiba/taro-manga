@@ -1,5 +1,54 @@
 .mg-primary {
   .mg-primary-card {
-    background: url("../../asset/image/int_bg.png") inherit/ 100% 100%;
+    display: flex;
+    //align-items: center;
+    padding: 20px*2 0;
+    background-image: url("../../asset/image/int_bg.png");
+    background-size: 100% 100%;
+
+    .mg-primary-image-wrapper {
+      flex-shrink: 0;
+      height: 137px*2;
+      width: 102px*2;
+      overflow: hidden;
+      float: left;
+      margin: 0 15px*2;
+      border: 2px*2 solid #fff;
+      border-radius: 2px*2;
+
+      .mg-primary-image {
+        border-radius: 1PX;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .mg-primary-header {
+      flex: 1;
+      display: flex;
+      flex-flow: column nowrap;
+      font-size: 13px*2;
+      color: #fff;
+      .mg-primary-desc {
+        flex: 1;
+        .mg-primary-item {
+          .at-icon{
+            margin-right: 5*2px;
+            vertical-align: baseline;
+          }
+        }
+      }
+      .mg-primary-service{
+        display: flex;
+        .mg-primary-button {
+          width: 77px*2;
+          font-size: 13px*2;
+          color: #fff;
+        }
+        .mg-primary-space {
+          padding: 0 10px*2;
+        }
+      }
+    }
   }
 }
