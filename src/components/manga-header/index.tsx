@@ -43,7 +43,7 @@ const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> =
         <View className='mg-primary-service'>
           <SubscribeNow className='mg-primary-button__w80' timestamp={timestamp} oid={id} />
           <View className='mg-primary-space' />
-          <StartReading className='mg-primary-button__w80 mg-primary-button' timestamp={timestamp} oid={id} cid={firstChapter} />
+          <StartReading onChange={(r)=>console.log('receive:', r)} className='mg-primary-button__w80 mg-primary-button' timestamp={timestamp} oid={id} cid={firstChapter} />
         </View>
       </View>
     </View>
