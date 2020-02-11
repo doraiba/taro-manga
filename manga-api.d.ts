@@ -198,3 +198,13 @@ interface ComicReInfo {
   chapter_name: string;
 }
 
+type ComicChapter = {
+  chapter_id: number;
+  comic_id: number;
+  title: string;
+  chapter_order: number;
+  direction: number;
+  page_url: string[];
+  picnum: number;
+  comment_count: number;
+}
