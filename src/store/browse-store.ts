@@ -7,7 +7,7 @@ export default class BrowseStore {
   @observable repository: ComicReInfo[] = []
 
 
-  findById = (id: number) => this.repository.filter(({chapter_id}) => chapter_id === id).pop()
+  findById = (id: number) => this.repository.filter(({chapter_id}) => chapter_id === id)[0]
 
 
 }

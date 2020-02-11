@@ -71,7 +71,7 @@ class App extends Component {
     //   ]
     // },
     window: {
-      backgroundTextStyle: 'light',
+      backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#0094ff',
       navigationBarTitleText: '二刺猿',
       navigationBarTextStyle: 'white',

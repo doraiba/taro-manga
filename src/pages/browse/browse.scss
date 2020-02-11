@@ -1,3 +1,8 @@
 .mg-proxy-image{
   width: 100vw;
+  vertical-align: bottom;
+  &__placeholder{
+    height: 100vh;
+  }
 }
+

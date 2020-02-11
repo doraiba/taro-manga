@@ -26,7 +26,7 @@ const Manga: Taro.FC = () => {
     status: [],
     chapters: [{data: [{chapter_id: -1}]}]
   }
-  const firstChapter = (filter.chapters[0].data.pop() as any).chapter_id
+  const firstChapter = (filter.chapters[0].data[0] as any).chapter_id
   return (
     <Block>
       <View className='mg-primary'>
