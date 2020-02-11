@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const DOMAIN = 'https://v3api.dmzj.com'
 export const Ver = "v3"
 export const suffix = 'channel=ios&version=3.0.2'
@@ -29,6 +31,8 @@ export const SUBSCRIBE = `/subscribe/0/{uid}/{oid}?${suffix}`
 export const SUBSCRIBE_CANCEL = `/subscribe/cancel?${suffix}&type=mh&uid={uid}&obj_ids={oid}&dmzj_token={dmzj_token}`
 // 订阅漫画
 export const SUBSCRIBE_ADD = `/subscribe/add`
+// 上传浏览记录
+export const UPCOMICREINFO = `https://interface.dmzj.com/api/record/getRe?callback=record_jsonpCallback&uid=110332672&type=3&st=comic&json=[{"time" : "${dayjs().unix()}","chapterId": "{cid}","{oid}": "{cid}","comicId": {oid},"page": {page}}]&${suffix}`
 
 
 export default DOMAIN

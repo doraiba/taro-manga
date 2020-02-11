@@ -1,25 +1,38 @@
-import Taro, {useEffect, useRouter, useCallback, useReachBottom, usePullDownRefresh} from '@tarojs/taro'
+import Taro, {
+  useCallback,
+  useEffect,
+  usePageScroll,
+  usePullDownRefresh,
+  useReachBottom,
+  useRef,
+  useRouter,
+  useDidHide
+} from '@tarojs/taro'
 import {Block, Image, View} from '@tarojs/components'
 import {observer, useAsObservableSource, useLocalStore} from '@tarojs/mobx';
 import {parsePath} from '@/utils';
-import {CHAPTER} from "@/contexts/manga-api";
+import {CHAPTER, UPCOMICREINFO} from "@/contexts/manga-api";
+import axios from 'taro-axios'
 import useAxios from 'axios-hooks'
 import useComic from "@/hooks/use-comic";
 import {autorun, when} from "mobx";
 import flatten from 'lodash-es/flatten'
 import debounce from 'lodash-es/debounce'
+import throttle from 'lodash-es/throttle'
 import {ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER} from "@/utils/app-constant";
 
 import './browse.scss'
+
+type PItem = { comic_id: number, chapter_id: number, title: string,proxy_url: string }
 
 type BrowseStore = {
   primary: number,
   cursor: number,
   chapters: ComicChapter[],
-  list: { comic_id: number, chapter_id: number, proxy_url: string }[],
+  list: PItem[],
   fetch: (this: BrowseStore, cid: string | number) => void,
-
 }
+type OffsetRecord = PItem & {offsetTop: number}
 
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
@@ -34,9 +47,10 @@ const Browse: Taro.FC = () => {
     cursor: parseInt(params.cid),
     chapters: [],
     get list(this: BrowseStore) {
-      return flatten(this.chapters.map(({comic_id, chapter_id, page_url}) => page_url.map(e => ({
+      return flatten(this.chapters.map(({comic_id, chapter_id, page_url,title}) => page_url.map(e => ({
         comic_id,
         chapter_id,
+        title,
         proxy_url: e.replace(ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER)
       }))))
     },
@@ -76,14 +90,39 @@ const Browse: Taro.FC = () => {
     if(!next) return;
     store.cursor = next
   }))
+
+  const lastView = useRef<OffsetRecord>()
+  const title = useRef<string>().current
+  const offsetSource = useRef<OffsetRecord[]>([]).current
+  usePageScroll(throttle((args)=>{
+    const _index = offsetSource.findIndex(({offsetTop}) => offsetTop >= args.scrollTop)
+    const offsetRecord = offsetSource[_index]
+    // 设置标题
+    if(title !== title) Taro.setNavigationBarTitle({title: offsetRecord.title})
+    // 最后阅读到的地方
+    lastView.current = offsetRecord
+  }))
+
+  const updateVisitorLogs = useCallback(()=>{
+    const {proxy_url,comic_id,chapter_id} = lastView.current as OffsetRecord
+    const page = proxy_url.replace(/.+\/(\d+).+/g,'$1')
+    axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page}))
+  },[])
+
+  useDidHide(updateVisitorLogs)
+
+  useEffect(()=>updateVisitorLogs,[])
+
   const {list} = store
-  // const proxyURL = page_url.map((e) => e.replace(ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER))
+
+  // 高度问题怎么搞
   return (
     <Block>
       <View>
         {list.map((e) => <Image
+          onLoad={(_e: any)=>offsetSource.push({...e,offsetTop: _e.target.offsetTop})}
           data-comic-id={e.comic_id} data-chapter-id={e.chapter_id} className='mg-proxy-image'
-          mode='widthFix' key={e.proxy_url} src={e.proxy_url}
+          mode='widthFix' lazyLoad key={e.proxy_url} src={e.proxy_url}
         />)}
       </View>
     </Block>)

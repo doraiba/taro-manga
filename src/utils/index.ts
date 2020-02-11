@@ -13,6 +13,6 @@ export const isFunction = <T extends () => void>(value: any): value is T => {
 }
 
 export const parsePath = (url: string, pathVariables: Record<string, any>): string=> {
-  return Object.keys(pathVariables).reduce(((seed, item) => seed.replace(`{${item}}`,pathVariables[item])), url)
+  return Object.keys(pathVariables).reduce(((seed, item) => seed.replace(new RegExp(`{${item}}`,'g'),pathVariables[item])), url)
 }
 // eslint-disable-next-line import/prefer-default-export
