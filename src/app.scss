@@ -39,3 +39,11 @@ view {
     text-overflow: ellipsis;
   }
 }
+.mg-primary {
+  .at-grid-item--rect::before {
+    padding-bottom: 36px*2;
+  }
+  .at-grid-item__content-inner {
+    justify-content: stretch;
+  }
+}
