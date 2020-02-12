@@ -4,7 +4,8 @@ import {observer} from '@tarojs/mobx';
 import dayjs from "dayjs";
 import useComic from "@/hooks/use-comic";
 import MangaHeader from "@/components/manga-header";
-
+import {BROWSE_PAGE} from "@/utils/app-constant";
+import { AtDivider, AtGrid } from 'taro-ui';
 import './manga.scss'
 
 const Manga: Taro.FC = () => {
@@ -26,7 +27,8 @@ const Manga: Taro.FC = () => {
     status: [],
     chapters: [{data: [{chapter_id: -1}]}]
   }
-  const firstChapter = (filter.chapters[0].data[0] as any).chapter_id
+  const {chapters} = filter
+  const firstChapter = (chapters[0].data.unshift() as any).chapter_id
   return (
     <Block>
       <View className='mg-primary'>
@@ -38,9 +40,20 @@ const Manga: Taro.FC = () => {
                 <View className='taro-img__mode-scaletofill at-icon at-icon-bookmark' />
               </View>
             </View>
-            <Text className='taro-text at-card__header-title'>这是个标题</Text>
-            <Text className='taro-text at-card__header-extra'>额外信息</Text>
+            <Text className='taro-text at-card__header-title'>漫画章节</Text>
+            <Text className='taro-text at-card__header-extra'>TODO排序</Text>
           </View>
+          {
+            chapters.map((e,i)=><View key={i} className='at-card__content'>
+              <AtDivider className='mg-card-divider' content={e.title} fontColor='#2d8cf0' lineColor='#2d8cf0' />
+              <View className='at-card__content-info'>
+                <AtGrid mode='rect' hasBorder={false} columnNum={4}
+                  data={e.data.map(_e=>({value: _e.chapter_title, ..._e, iconInfo: { size: 20, color: '#FF4949', value: 'bookmark', }}))}
+                  onClick={(__e: any)=> Taro.navigateTo({url: `${BROWSE_PAGE}?oid=${oid}&cid=${__e.chapter_id}`})}
+                />
+              </View>
+            </View>)
+          }
         </View>
       </View>
     </Block>

@@ -129,7 +129,6 @@ const Browse: Taro.FC = () => {
       let prevIndex = 0.1;
       return ((result: ObserveCallbackResult & {dataset: PItem & {index: number}})=>{
         const {dataset} = result
-        console.log(result)
         const selector = (!decoration.current ? Math.min(prevIndex,dataset.index): Math.max(prevIndex,dataset.index));
         const localIndex = prevIndex;
         prevIndex = selector;
