@@ -122,13 +122,14 @@ const Browse: Taro.FC = () => {
   useEffect(()=>updateVisitorLogs,[])
   const $scope = useScope()
   useLayoutEffect(()=>{
-
+    if(!list.length) return ;
     const intersectionObserver = Taro.createIntersectionObserver($scope,{observeAll: true, thresholds:[0, 0.5, 0.8]})
-    intersectionObserver.relativeToViewport();
+    intersectionObserver.relativeToViewport({top: -5});
     intersectionObserver.observe('.mg-proxy-image',((()=>{
-      let prevIndex = -1;
+      let prevIndex = 1;
       return ((result: ObserveCallbackResult & {dataset: PItem & {index: number}})=>{
         const {dataset} = result
+        console.log(result)
         const selector = (!decoration.current ? Math.min(prevIndex,dataset.index): Math.max(prevIndex,dataset.index));
         const localIndex = prevIndex;
         prevIndex = selector;
