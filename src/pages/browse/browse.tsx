@@ -1,12 +1,14 @@
 import Taro, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   usePageScroll,
   usePullDownRefresh,
   useReachBottom,
   useRef,
   useRouter,
-  useDidHide
+  useDidHide,
+  useScope
 } from '@tarojs/taro'
 import {Block, Image, View} from '@tarojs/components'
 import {observer, useAsObservableSource, useLocalStore} from '@tarojs/mobx';
@@ -23,16 +25,20 @@ import {ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER} from "@/utils/app-constant";
 
 import './browse.scss'
 
-type PItem = { comic_id: number, chapter_id: number, title: string,proxy_url: string }
+import ObserveCallbackResult = Taro.IntersectionObserver.ObserveCallbackResult;
 
+type PItem = { comic_id: number, chapter_id: number, title: string,proxy_url: string, count: number,page: number }
+
+type OffsetRecord = PItem & {offsetTop: number}
 type BrowseStore = {
   primary: number,
   cursor: number,
   chapters: ComicChapter[],
   list: PItem[],
+  offsetSource: OffsetRecord[],
+  loaded: (url: string) => boolean,
   fetch: (this: BrowseStore, cid: string | number) => void,
 }
-type OffsetRecord = PItem & {offsetTop: number}
 
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
@@ -47,12 +53,18 @@ const Browse: Taro.FC = () => {
     cursor: parseInt(params.cid),
     chapters: [],
     get list(this: BrowseStore) {
-      return flatten(this.chapters.map(({comic_id, chapter_id, page_url,title}) => page_url.map(e => ({
+      return flatten(this.chapters.map(({comic_id, chapter_id, page_url,title}) => page_url.map((e,i, _this) => ({
         comic_id,
         chapter_id,
         title,
+        page: i + 1,
+        count: _this.length,
         proxy_url: e.replace(ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER)
       }))))
+    },
+    offsetSource: [] as OffsetRecord[],
+    loaded(url){
+      return this.offsetSource.findIndex(({proxy_url})=>url === proxy_url) !== -1
     },
     async fetch(cid) {
       const {data} = await refetch({url: parsePath(CHAPTER, {oid: this.primary, cid})})
@@ -90,17 +102,18 @@ const Browse: Taro.FC = () => {
     if(!next) return;
     store.cursor = next
   }))
+  const {list, offsetSource,loaded} = store
 
   const lastView = useRef<OffsetRecord>()
   const title = useRef<string>().current
-  const offsetSource = useRef<OffsetRecord[]>([]).current
+  // const offsetSource = useRef<OffsetRecord[]>([]).current
   usePageScroll(throttle((args)=>{
     const _index = offsetSource.findIndex(({offsetTop}) => offsetTop >= args.scrollTop)
-    const offsetRecord = offsetSource[_index]
+    const offsetRecord = offsetSource[_index] || {}
     // 设置标题
-    if(title !== title) Taro.setNavigationBarTitle({title: offsetRecord.title})
+    if(offsetRecord.title !== title) Taro.setNavigationBarTitle({title: offsetRecord.title})
     // 最后阅读到的地方
-    lastView.current = offsetRecord
+    if(Object.keys(offsetRecord).length) lastView.current = offsetRecord
   }))
 
   const updateVisitorLogs = useCallback(()=>{
@@ -112,16 +125,23 @@ const Browse: Taro.FC = () => {
   useDidHide(updateVisitorLogs)
 
   useEffect(()=>updateVisitorLogs,[])
+  const $scope = useScope()
+  useLayoutEffect(()=>{
 
-  const {list} = store
-
+    const intersectionObserver = Taro.createIntersectionObserver($scope,{observeAll: true,thresholds: [0, 0.8]})
+    intersectionObserver.relativeToViewport();
+    intersectionObserver.observe('.mg-proxy-image',(result: ObserveCallbackResult)=>{
+      console.log(result, 'ObserveCallbackResult')
+    })
+    return () => intersectionObserver.disconnect()
+  },[$scope, list.length])
   // 高度问题怎么搞
   return (
     <Block>
-      <View>
+      <View id='mg-container'>
         {list.map((e) => <Image
-          onLoad={(_e: any)=>offsetSource.push({...e,offsetTop: _e.target.offsetTop})}
-          data-comic-id={e.comic_id} data-chapter-id={e.chapter_id} className='mg-proxy-image'
+          onLoad={(_e: any)=>{offsetSource.push({...e,offsetTop: _e.target.offsetTop});}}
+          data-comic-id={e.comic_id} data-chapter-id={e.chapter_id} data-proxy-url={e.proxy_url} className={`mg-proxy-image ${loaded(e.proxy_url) ? '':'mg-proxy-image__placeholder'}`}
           mode='widthFix' lazyLoad key={e.proxy_url} src={e.proxy_url}
         />)}
       </View>

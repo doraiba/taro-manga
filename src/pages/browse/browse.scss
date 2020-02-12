@@ -1,8 +1,26 @@
+.mg-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
 .mg-proxy-image{
   width: 100vw;
   vertical-align: bottom;
+  overflow-anchor: auto;
   &__placeholder{
     height: 100vh;
   }
 }
 
+.mg-primary-view{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 13px*2;
+  margin: 5px*2;
+  padding: 2*2px;
+  opacity: .3;
+  border-radius: 30%;
+  color: #fff;
+  background-color: #000;
+}
