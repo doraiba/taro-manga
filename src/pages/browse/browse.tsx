@@ -83,7 +83,7 @@ const Browse: Taro.FC = () => {
 
   usePullDownRefresh(() => {
     const {prev} = findInRepository(store.chapters[0]!.chapter_id, repository)
-    if(!prev) return;
+    if(!prev) return Taro.stopPullDownRefresh();
     store.cursor = prev
     when(() => source.loading, () => {
       Taro.stopPullDownRefresh()
