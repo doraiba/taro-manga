@@ -1,15 +1,19 @@
-import Taro, {useMemo,useCallback} from '@tarojs/taro'
+import Taro, {useMemo,useCallback,useReducer,Reducer} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {AtButton, AtForm, AtInput, AtMessage} from 'taro-ui'
 import useFormal from '@kevinwolf/formal'
 import * as yup from 'yup'
 import logo from '@/asset/image/logo.png'
 import useAxios from 'axios-hooks'
-import {REGISTER} from "@/contexts/manga-api";
+import {CAPTCHA, REGISTER} from "@/contexts/manga-api";
 import qs from 'query-string';
 import {LOGIN_PAGE} from "@/utils/app-constant";
+import axios from 'taro-axios'
+import {parsePath} from "@/utils";
 
 import './register.scss'
+
+type ActionType = 'UN_SEND' | 'SEND'
 
 const Register: Taro.FC = () => {
 
@@ -43,7 +47,34 @@ const Register: Taro.FC = () => {
 
   const toLogin = useCallback(()=> Taro.navigateTo({url: LOGIN_PAGE}),[])
 
-  const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
+  const {submit, change, errors, isSubmitting, getSubmitButtonProps,values} = formal
+
+  const reducer: Reducer<{status: 0|1,text: string},{type: ActionType,payload?: number}> = function (state, {type, payload}) {
+    switch (type) {
+      case 'SEND':
+        return {status: 1, text: `${payload}s`}
+      case "UN_SEND":
+        return {status: 0, text: `再来一次`}
+    }
+    return state
+  }
+
+  const [state, dispatch] = useReducer(reducer,{status: 0,text: '发送验证码'})
+
+  const handleSendCaptcha = useCallback(async ()=>{
+    if(state.status === 1) return ;
+    if((!values.tel) || values.tel.length !== 11) return Taro.atMessage({message: '可怜啊,手机号都不知道是个啥', type: 'error'})
+    const {data: {code, msg}} = await axios.get<MGResult>(parsePath(CAPTCHA,values))
+    const valid = code === 0
+    !valid && Taro.atMessage({message: msg, type: 'error'})
+    valid && ~function sender(timer: number){
+      if(timer === 0) return dispatch({type: "UN_SEND"})
+      setTimeout(()=>{
+        dispatch({type: "SEND", payload: timer})
+        sender(--timer)
+      },1000)
+    }(60)
+  },[state, values])
 
   return (
     <View className='mg-login'>
@@ -55,7 +86,7 @@ const Register: Taro.FC = () => {
         <AtInput clear maxLength={11} placeholder='请输入手机号' error={!!errors.tel} name='nickname'
           onChange={(e) => change('tel', e)} onErrorClick={() => Taro.atMessage({message: errors.tel + '', type: 'error'})}
         >
-          <View>发送验证码</View>
+          <View className={`captcha ${state.status === 1 ? 'at-tag--disabled' : ''}`} onClick={handleSendCaptcha}>{state.text}</View>
         </AtInput>
         <AtInput
           name='valid_code'
@@ -80,7 +111,7 @@ const Register: Taro.FC = () => {
   )
 }
 Register.config = {
-  navigationBarTitleText: '登录'
+  navigationBarTitleText: '注册'
 }
 
 export default Register

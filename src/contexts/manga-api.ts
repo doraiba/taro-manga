@@ -17,6 +17,8 @@ export const CATEGORY = `/0/category.json?${suffix}`
 export const LOGIN = `https://user.dmzj.com/loginV2/m_confirm`
 // 注册
 export const REGISTER = `https://user.dmzj.com/register/m_submit_v2`
+// 发送验证码
+export const CAPTCHA = `https://user.dmzj.com/register/send_tel_code?tel={tel}&${suffix}`
 // 个人信息
 export const UCENTER = `/UCenter/comicsv2/{uid}.json?${suffix}&dmzj_token={dmzj_token}`
 // 漫画信息

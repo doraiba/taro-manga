@@ -1,24 +1,7 @@
-.mg-login {
-  margin-top: 30*2px;
-  display: flex;
-  flex-flow: column wrap;
+@import "src/pages/login/login";
+.captcha {
+  width: 5em;
+  white-space: nowrap;
+  overflow: hidden;
 
-  .mg-logo-wrapper {
-    align-self: center;
-
-    .mg-logo {
-      height: 78*2px;
-      width: 78*2px;
-    }
-  }
-
-  .mg-login-form {
-    margin: 5*2px;
-  }
-  .at-row__justify--around {
-    margin-top: 15px;
-    .at-col {
-      width: 45vw;
-    }
-  }
 }
