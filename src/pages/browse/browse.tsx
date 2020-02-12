@@ -126,7 +126,7 @@ const Browse: Taro.FC = () => {
     const intersectionObserver = Taro.createIntersectionObserver($scope,{observeAll: true, thresholds:[0, 0.5, 0.8]})
     intersectionObserver.relativeToViewport({top: -5});
     intersectionObserver.observe('.mg-proxy-image',((()=>{
-      let prevIndex = 1;
+      let prevIndex = 0.1;
       return ((result: ObserveCallbackResult & {dataset: PItem & {index: number}})=>{
         const {dataset} = result
         console.log(result)
