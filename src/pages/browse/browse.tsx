@@ -1,5 +1,6 @@
 import Taro, {
   useCallback,
+  useDidHide,
   useEffect,
   useLayoutEffect,
   usePageScroll,
@@ -7,7 +8,6 @@ import Taro, {
   useReachBottom,
   useRef,
   useRouter,
-  useDidHide,
   useScope
 } from '@tarojs/taro'
 import {Block, Image, View} from '@tarojs/components'
@@ -20,7 +20,6 @@ import useComic from "@/hooks/use-comic";
 import {autorun, when} from "mobx";
 import flatten from 'lodash-es/flatten'
 import debounce from 'lodash-es/debounce'
-import throttle from 'lodash-es/throttle'
 import {ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER} from "@/utils/app-constant";
 
 import './browse.scss'
@@ -29,14 +28,12 @@ import ObserveCallbackResult = Taro.IntersectionObserver.ObserveCallbackResult;
 
 type PItem = { comic_id: number, chapter_id: number, title: string,proxy_url: string, count: number,page: number }
 
-type OffsetRecord = PItem & {offsetTop: number}
 type BrowseStore = {
   primary: number,
   cursor: number,
   chapters: ComicChapter[],
   list: PItem[],
-  offsetSource: OffsetRecord[],
-  loaded: (url: string) => boolean,
+  lastView: PItem,
   fetch: (this: BrowseStore, cid: string | number) => void,
 }
 
@@ -52,6 +49,7 @@ const Browse: Taro.FC = () => {
     primary: parseInt(params.oid),
     cursor: parseInt(params.cid),
     chapters: [],
+    lastView: {} as PItem,
     get list(this: BrowseStore) {
       return flatten(this.chapters.map(({comic_id, chapter_id, page_url,title}) => page_url.map((e,i, _this) => ({
         comic_id,
@@ -62,14 +60,9 @@ const Browse: Taro.FC = () => {
         proxy_url: e.replace(ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER)
       }))))
     },
-    offsetSource: [] as OffsetRecord[],
-    loaded(url){
-      return this.offsetSource.findIndex(({proxy_url})=>url === proxy_url) !== -1
-    },
     async fetch(cid) {
       const {data} = await refetch({url: parsePath(CHAPTER, {oid: this.primary, cid})})
       this.chapters = [...this.chapters, data].sort((a, b) => a.chapter_order - b.chapter_order)
-      await Taro.setNavigationBarTitle({title: data.title})
     },
   }))
 
@@ -102,24 +95,26 @@ const Browse: Taro.FC = () => {
     if(!next) return;
     store.cursor = next
   }))
-  const {list, offsetSource,loaded} = store
+  // 方向标识 0:上 1:下
+  const decoration = useRef<0|1>(0)
+  const handleScroll = useCallback((()=>{
+    let initialHeight = 0;
+    return ({scrollTop})=>{
+      decoration.current = scrollTop > initialHeight ? 1 : 0
+      initialHeight = scrollTop
+    }
+  })(),[])
+  usePageScroll(handleScroll)
 
-  const lastView = useRef<OffsetRecord>()
+  const {list, lastView} = store
+
   const title = useRef<string>().current
-  // const offsetSource = useRef<OffsetRecord[]>([]).current
-  usePageScroll(throttle((args)=>{
-    const _index = offsetSource.findIndex(({offsetTop}) => offsetTop >= args.scrollTop)
-    const offsetRecord = offsetSource[_index] || {}
-    // 设置标题
-    if(offsetRecord.title !== title) Taro.setNavigationBarTitle({title: offsetRecord.title})
-    // 最后阅读到的地方
-    if(Object.keys(offsetRecord).length) lastView.current = offsetRecord
-  }))
 
   const updateVisitorLogs = useCallback(()=>{
-    const {proxy_url,comic_id,chapter_id} = lastView.current as OffsetRecord
-    const page = proxy_url.replace(/.+\/(\d+).+/g,'$1')
+    if(!Object.keys(store.lastView).length) return;
+    const {comic_id,chapter_id,page} = store.lastView
     axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page}))
+    // eslint-disable-next-line
   },[])
 
   useDidHide(updateVisitorLogs)
@@ -128,23 +123,36 @@ const Browse: Taro.FC = () => {
   const $scope = useScope()
   useLayoutEffect(()=>{
 
-    const intersectionObserver = Taro.createIntersectionObserver($scope,{observeAll: true,thresholds: [0, 0.8]})
+    const intersectionObserver = Taro.createIntersectionObserver($scope,{observeAll: true, thresholds:[0, 0.5, 0.8]})
     intersectionObserver.relativeToViewport();
-    intersectionObserver.observe('.mg-proxy-image',(result: ObserveCallbackResult)=>{
-      console.log(result, 'ObserveCallbackResult')
-    })
+    intersectionObserver.observe('.mg-proxy-image',((()=>{
+      let prevIndex = -1;
+      return ((result: ObserveCallbackResult & {dataset: PItem & {index: number}})=>{
+        const {dataset} = result
+        const selector = (!decoration.current ? Math.min(prevIndex,dataset.index): Math.max(prevIndex,dataset.index));
+        const localIndex = prevIndex;
+        prevIndex = selector;
+
+        if( localIndex === selector) return;
+        // 设置标题
+        if(dataset.title !== title) Taro.setNavigationBarTitle({title: dataset.title})
+        // 最后阅读到的地方
+        if(Object.keys(dataset).length) store.lastView = dataset
+      })
+    })()))
     return () => intersectionObserver.disconnect()
   },[$scope, list.length])
   // 高度问题怎么搞
   return (
     <Block>
       <View id='mg-container'>
-        {list.map((e) => <Image
-          onLoad={(_e: any)=>{offsetSource.push({...e,offsetTop: _e.target.offsetTop});}}
-          data-comic-id={e.comic_id} data-chapter-id={e.chapter_id} data-proxy-url={e.proxy_url} className={`mg-proxy-image ${loaded(e.proxy_url) ? '':'mg-proxy-image__placeholder'}`}
-          mode='widthFix' lazyLoad key={e.proxy_url} src={e.proxy_url}
+        {list.map((e,i) => <Image
+          data-comic_id={e.comic_id} data-chapter_id={e.chapter_id} data-proxy_url={e.proxy_url}
+          data-title={e.title} data-page={e.page} data-count={e.count} data-index={i}
+          className='mg-proxy-image' mode='widthFix' lazyLoad key={e.proxy_url} src={e.proxy_url}
         />)}
       </View>
+      <View className='mg-primary-view'>{lastView!.page} / {lastView!.count}</View>
     </Block>)
 }
 Browse.config = {
