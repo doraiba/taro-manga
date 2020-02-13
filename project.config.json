@@ -83,7 +83,7 @@
 					"id": 4,
 					"name": "漫画详情",
 					"pathName": "pages/manga/manga",
-					"query": "oid= 49848",
+					"query": "oid=49848",
 					"scene": null
 				},
 				{

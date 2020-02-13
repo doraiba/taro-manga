@@ -55,6 +55,9 @@
     "query-string": "^6.10.1",
     "regenerator-runtime": "0.11.1",
     "taro-axios": "^0.7.0",
+    "taro-list": "^1.0.6",
+    "taro-list-data-manager": "^0.3.1",
+    "taro-listview": "^1.1.15",
     "taro-ui": "^2.2.4",
     "yup": "^0.28.1"
   },

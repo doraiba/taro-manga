@@ -69,7 +69,7 @@ StartReading.defaultProps = {
   size: 'small',
   onClick: (_e, r, c) => {
     const {comic_id, chapter_id = c} = r as ComicReInfo
-    if (!chapter_id) return Taro.showToast({title: `无法定位章节信息:${comic_id}/${chapter_id}`})
+    if (!chapter_id) return Taro.showToast({icon: 'none',title: `无法定位章节信息:${comic_id}/${chapter_id}`})
     navigateTo({url: `${BROWSE_PAGE}?oid=${comic_id}&cid=${chapter_id}`})
   }
 }
