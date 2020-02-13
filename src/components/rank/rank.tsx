@@ -13,7 +13,7 @@ import './rank.scss'
 const Rank: Taro.FC = () => {
 
   return (
-    <ListView key='rank' fetchCondition={({tab}) => tab === 3}
+    <ListView  className='mg-discovery' key='rank'
       url={RANK} renderList={(list = []) => <AtList>
       {list.map((e, i) => {
         return <MangaItem key={i} {...e} >

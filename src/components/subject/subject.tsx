@@ -11,7 +11,7 @@ import {AtList} from "taro-ui";
 const Subject: Taro.FC = () => {
 
   return (
-    <ListView key='subject' fetchCondition={({tab}) => tab === 4}
+    <ListView className='mg-discovery' key='subject'
       url={SUBJECT} renderList={(list = []) => <AtList>
       {list.map((e: SubjectItem, i) => {
         return <MangaSubjectItem key={i} {...e} />

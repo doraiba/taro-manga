@@ -18,7 +18,7 @@ const Latest: Taro.FC = () => {
   },[])
 
   return (
-    <ListView key='latest' psize={30} fetchCondition={({tab}) => tab === 1}
+    <ListView key='latest' psize={30} className='mg-discovery'
       url={LATEST} renderList={(list = []) => <AtList>
       {list.map((e: LatestItem&RankItem, i) => {
         return <MangaItem key={i} {...e} >

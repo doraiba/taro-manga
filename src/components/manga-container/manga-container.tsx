@@ -38,16 +38,16 @@ const MangaContainer: Taro.FC = () => {
         <AtTabsPane current={current} index={0}>
           <Recommend  />
         </AtTabsPane>
-        <AtTabsPane className='mg-discovery' current={current} index={1}>
+        <AtTabsPane current={current} index={1}>
           <Latest />
         </AtTabsPane>
-        <AtTabsPane className='mg-discovery' current={current} index={2}>
+        <AtTabsPane current={current} index={2}>
           <Category />
         </AtTabsPane>
-        <AtTabsPane className='mg-discovery' current={current} index={3}>
+        <AtTabsPane current={current} index={3}>
           <Rank />
         </AtTabsPane>
-        <AtTabsPane className='mg-discovery' current={current} index={4}>
+        <AtTabsPane current={current} index={4}>
           <Subject />
         </AtTabsPane>
       </AtTabs>
