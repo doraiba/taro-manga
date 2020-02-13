@@ -36,7 +36,7 @@ const User: Taro.FC = () => {
             arrow='right'
           />
           <AtListItem
-            onClick={()=>navigateToHistory}
+            onClick={navigateToHistory}
             iconInfo={{size: iconSize, color: '#60b9ff', value: 'eye',}} title='浏览记录'
             arrow='right'
           />
