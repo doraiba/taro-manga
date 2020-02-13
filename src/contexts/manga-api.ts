@@ -40,6 +40,7 @@ export const SUBSCRIBE_CANCEL = `/subscribe/cancel?${suffix}&type=mh&uid={uid}&o
 export const SUBSCRIBE_ADD = `/subscribe/add`
 // 上传浏览记录
 export const UPCOMICREINFO = `https://interface.dmzj.com/api/record/getRe?callback=record_jsonpCallback&uid=110332672&type=3&st=comic&json=[{"time" : "${dayjs().unix()}","chapterId": "{cid}","{oid}": "{cid}","comicId": {oid},"page": {page}}]&${suffix}`
+export const SUBSCRIBE_LIST = `/UCenter/subscribe?type=0&letter=all&sub_type=1&page={0}&size=9&uid={uid}&dmzj_token=4e9c1036e3403221d38d5e9d2054ffd0&${suffix}`
 
 
 export default DOMAIN

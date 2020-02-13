@@ -208,3 +208,14 @@ type ComicChapter = {
   picnum: number;
   comment_count: number;
 }
+
+type SubscribeEntity = {
+  "name": string,
+  "sub_update": string,
+  "sub_img": string,
+  "sub_uptime": number,
+  "sub_first_letter": string,
+  "sub_readed": 0 | 1,
+  "id": number,
+  "status": string
+}
