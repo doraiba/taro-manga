@@ -1,38 +1,36 @@
 /**
  * 个人中心->浏览记录
  */
-import Taro, {useState, usePullDownRefresh} from '@tarojs/taro'
-import {Block, View} from '@tarojs/components'
-import {AtSearchBar} from 'taro-ui';
+import Taro, {useEffect, usePullDownRefresh} from '@tarojs/taro'
+import {Block, ScrollView} from '@tarojs/components'
 import {observer} from '@tarojs/mobx';
+import useAxios from "axios-hooks";
+import {COMICREINFO_ALL} from "@/contexts/manga-api";
+import {MangaHistoryItem} from "@/components/manga-item";
 
 import './history.scss'
 
 const History: Taro.FC = () => {
 
-  usePullDownRefresh(()=>{
-    console.log("usePullDownRefresh")
-  })
+  const [{data = [] as ComicReInfo[]}, refetch] = useAxios<ComicReInfo[]>({
+    url: COMICREINFO_ALL,
+  }, {manual: true})
 
-  const [searchParam, setSearchParam] = useState(()=>'')
+  usePullDownRefresh(refetch)
+
+  useEffect(()=>{refetch()},[])
+
 
   return (
     <Block>
-      <AtSearchBar
-        value={searchParam}
-        onChange={setSearchParam}
-      />
-
-      <View className={`mg-shadow mg-shadow-${searchParam&&'open'}`}>
-
-      </View>
-      <View className='mg-subscribe'>
-
-      </View>
-    </Block>)
+      <ScrollView scrollY enableBackToTop style={{height: '100vh'}}>
+        {data.map((e, i)=> <MangaHistoryItem key={i} {...e} />)}
+      </ScrollView>
+    </Block>
+  )
 }
 History.config = {
-  navigationBarTitleText: '我的订阅',
+  navigationBarTitleText: '浏览记录',
   enablePullDownRefresh: true
 }
 

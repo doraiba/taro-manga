@@ -26,8 +26,10 @@ export const CAPTCHA = `https://user.dmzj.com/register/send_tel_code?tel={tel}&$
 export const UCENTER = `/UCenter/comicsv2/{uid}.json?${suffix}&dmzj_token={dmzj_token}`
 // 漫画信息
 export const COMIC = `/comic/comic_{oid}.json?${suffix}`
-// 访问记录
+// 访问记录 单条
 export const COMICREINFO = `https://interface.dmzj.com/api/getReInfo/comic/{uid}/{oid}/0?${suffix}`
+// 访问记录 所有
+export const COMICREINFO_ALL = `https://interface.dmzj.com/api/getReInfo/comic/{uid}/0?${suffix}`
 // 章节信息
 export const CHAPTER = `/chapter/{oid}/{cid}.json?${suffix}`
 // 是否订阅

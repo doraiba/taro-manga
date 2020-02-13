@@ -92,6 +92,12 @@
 					"pathName": "pages/browse/browse",
 					"query": "oid=50758&cid=92953",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "浏览记录",
+					"pathName": "pages/history/history",
+					"scene": null
 				}
 			]
 		}

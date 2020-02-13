@@ -1,0 +1,67 @@
+.mg-manga-history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5*2px 0;
+  margin-left: 10*2px;
+  border-bottom: 1PX solid #cbcbcb;
+  color: #000;
+
+  .mg-history-info {
+    display: flex;
+    flex: 5;
+    overflow: hidden;
+
+    .mg-history-image-wrapper {
+      width: 62*2px;
+      height: 82*2px;
+      flex-shrink: 0;
+      .mg-history-image {
+        border-radius: 3%;
+        vertical-align: bottom;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .mg-history-desc {
+      padding: 5*2px;
+      margin-left: 5*2px;
+      display: flex;
+      flex-flow: column nowrap;
+      overflow: hidden;
+
+      .mg-history-title {
+        height: 33*2px;
+        line-height: 33*2px;
+        font-size: 15*2px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .mg-history-produce {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+
+        .mg-history-authors,
+        .mg-history-tag,
+        .mg-history-date {
+          font-size: 12*2px;
+          opacity: .9;
+          .at-icon {
+            vertical-align: baseline;
+            margin-right: 5*2px;
+          }
+        }
+      }
+    }
+  }
+
+  .mg-item-actions {
+    text-align: center;
+    flex: 2;
+  }
+}
