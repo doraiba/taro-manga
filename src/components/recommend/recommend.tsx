@@ -1,7 +1,7 @@
 import Taro, {useEffect} from "@tarojs/taro";
-import ListView from 'taro-listview';
 import useAxios from 'axios-hooks'
 import {RECOMMEND} from "@/contexts/manga-api";
+import TaroList from "taro-list";
 import './recommend.scss'
 import Category46 from "./category-46";
 import Category47 from "./category-47";
@@ -18,15 +18,15 @@ const Recommend: Taro.FC = () => {
   }, [refetch])
   const [c46, c47, , , , , c54, , c56] = data
   return (
-    <ListView onPullDownRefresh={async (stop)=>{
+    <TaroList onRefresh={async (stop)=>{
       try { await refetch() }finally {stop()}
-    }} className='mg-discovery' noMore='' footerLoadedText=''
+    }} className='mg-discovery' height='100%' dataManager={undefined as any}
     >
       <Category46 {...c46} />
       <Category47 {...c47} />
       <Category47 {...c54} />
       <Category47 {...c56} />
-    </ListView>
+    </TaroList>
   )
 }
 export default Recommend
