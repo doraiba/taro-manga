@@ -1,3 +1,6 @@
+/**
+ *  推荐tab->内容包裹
+ */
 import Taro from '@tarojs/taro'
 import MangaCard from '@/components/manga-card/manga-card';
 import {MangaRecommendItem} from "@/components/manga-item";

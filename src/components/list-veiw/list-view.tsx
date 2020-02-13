@@ -21,7 +21,17 @@ type CustomProps = {
 
 
 type ListProps = CustomProps;
-
+/**
+ * 分页加载
+ * @param fetchCondition
+ * @param convert
+ * @param psize
+ * @param initial
+ * @param url
+ * @param search
+ * @param renderList
+ * @constructor
+ */
 const ListView: Taro.FC<ListProps> = ({fetchCondition, convert, psize, initial, url, search, renderList}) => {
   const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
   const [{error, loading}, refetch] = useAxios({}, {manual: true});

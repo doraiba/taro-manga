@@ -17,7 +17,11 @@ type SubscribeNowProps = {
   oid: number | string, //漫画id
   timestamp?: number //通知刷新用
 } & Omit<AtButtonProps, 'onClick' | 'loading'>
-
+/**
+ * 漫画详情页-订阅按钮
+ * @param ignore
+ * @constructor
+ */
 const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
   const {timestamp, oid, ...props} = ignore
   const source = useAsObservableSource({timestamp, oid})

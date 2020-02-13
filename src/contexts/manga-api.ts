@@ -1,3 +1,6 @@
+/**
+ * 动漫之家请求地址
+ */
 import dayjs from "dayjs";
 
 const DOMAIN = 'https://v3api.dmzj.com'

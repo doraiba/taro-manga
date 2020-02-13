@@ -19,7 +19,11 @@ type StartReadingProps = {
   cid?: number //章节初始id,第一话
   timestamp?: number //通知刷新用
 } & Omit<AtButtonProps, 'onClick' | 'loading'>
-
+/**
+ * 漫画详情页-开始阅读按钮
+ * @param ignore
+ * @constructor
+ */
 const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
   const {timestamp, oid, cid, onClick, onChange, ...props} = ignore
   const source = useAsObservableSource({timestamp, oid})

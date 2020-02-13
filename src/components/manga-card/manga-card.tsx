@@ -4,7 +4,15 @@ import {AtIcon} from 'taro-ui'
 import './manga-card.scss'
 
 type MangaCardProps = { title?: string, leadingIcon?: string, actionIcon?: string, actionClick?: () => void }
-
+/**
+ * 主页类目card
+ * @param children
+ * @param title
+ * @param leadingIcon
+ * @param actionIcon
+ * @param actionClick
+ * @constructor
+ */
 const MangaCard: Taro.FC<MangaCardProps> = ({children, title, leadingIcon = 'check-circle', actionIcon = '', actionClick}) => {
   return (
     <View className='mg-card'>

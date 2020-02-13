@@ -1,3 +1,6 @@
+/**
+ * 漫画预览页面
+ */
 import Taro, {
   useCallback,
   useDidHide,

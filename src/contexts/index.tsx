@@ -1,3 +1,6 @@
+/**
+ * mobx数据管理
+ */
 import Taro from '@tarojs/taro';
 import TokenStore from "@/store/token-store";
 import UserStore from "@/store/user-store";

@@ -45,5 +45,8 @@ view {
   }
   .at-grid-item__content-inner {
     justify-content: stretch;
+    .at-icon{
+      font-size: 16px *2 !important;
+    }
   }
 }

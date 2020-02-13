@@ -8,6 +8,10 @@ import {BROWSE_PAGE} from "@/utils/app-constant";
 
 import './latest.scss'
 
+/**
+ * 主页tab->更新
+ * @constructor
+ */
 const Latest: Taro.FC = () => {
   const handleClick = useCallback((oid: number,cid: number)=>()=>{
     Taro.navigateTo({url: `${BROWSE_PAGE}?oid=${oid}&cid=${cid}`})

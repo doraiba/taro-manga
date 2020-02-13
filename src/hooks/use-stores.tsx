@@ -1,3 +1,6 @@
+/**
+ * 获取mobx 数据
+ */
 import Taro from '@tarojs/taro';
 import storesContext from '@/contexts'
 

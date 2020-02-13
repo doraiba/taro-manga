@@ -9,6 +9,10 @@ import './recommend.scss'
 import Category46 from "./category-46";
 import Category47 from "./category-47";
 
+/**
+ * 主页tab->推荐
+ * @constructor
+ */
 const Recommend: Taro.FC = () => {
 
   const [{loading, error, data = []}, refetch] = useAxios(RECOMMEND, {manual: true})

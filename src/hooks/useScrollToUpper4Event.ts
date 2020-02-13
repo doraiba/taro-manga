@@ -1,3 +1,6 @@
+/**
+ * 下拉事件监听
+ */
 import {useEffect} from "@tarojs/taro";
 import EventCenter, {EventDefine} from "@/utils/event-center";
 

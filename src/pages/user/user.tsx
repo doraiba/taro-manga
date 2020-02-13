@@ -1,3 +1,6 @@
+/**
+ * 个人中心页面 TODO
+ */
 import Taro,{useEffect,redirectTo} from '@tarojs/taro'
 import {View, Block} from '@tarojs/components'
 import useStores from "@/hooks/use-stores";

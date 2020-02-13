@@ -1,3 +1,6 @@
+/**
+ * 轮播图 TODO 轮播内容详情
+ */
 import Taro from '@tarojs/taro'
 import {Block, Image, Swiper, SwiperItem, View} from '@tarojs/components'
 

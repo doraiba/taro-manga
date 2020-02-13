@@ -6,6 +6,10 @@ import {AtList, AtTag} from "taro-ui";
 
 import './rank.scss'
 
+/**
+ * 主页tab->排行
+ * @constructor
+ */
 const Rank: Taro.FC = () => {
 
   return (

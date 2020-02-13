@@ -8,7 +8,11 @@ import {LOGIN_PAGE, USER_PAGE} from "@/utils/app-constant";
 
 import './header.scss'
 
-// eslint-disable-next-line react/no-multi-comp
+/**
+ * 主页头部信息
+ * @param children
+ * @constructor
+ */
 const Header: Taro.FC = ({children}) => {
 
   const {tokenStore,userStore} =  useStores()

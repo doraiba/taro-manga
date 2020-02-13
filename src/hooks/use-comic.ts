@@ -4,6 +4,11 @@ import {parsePath} from "@/utils";
 import {COMIC} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 
+/**
+ * 动漫详情数据 用于阅读时获取章节信息请求图片
+ * @param factory
+ * @param deps
+ */
 const useComic = (factory: () => number | string, deps: DependencyList | undefined) => {
   // eslint-disable-next-line
   const oid = useMemo(() => factory() as any - 0, deps)

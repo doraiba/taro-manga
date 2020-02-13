@@ -14,6 +14,10 @@ import Subject from "@/components/subject/subject";
 
 import './manga-container.scss'
 
+/**
+ * 主页容器
+ * @constructor
+ */
 const MangaContainer: Taro.FC = () => {
 
   const store = useLocalStore(() => ({

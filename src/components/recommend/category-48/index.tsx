@@ -4,6 +4,6 @@ import {Block} from '@tarojs/components'
 import './index.scss'
 
 const Category48: Taro.FC = () => {
-  return <Block>222222222222</Block>
+  return <Block>TODO</Block>
 }
 export default Category48

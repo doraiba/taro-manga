@@ -1,3 +1,6 @@
+/**
+ * 漫画详情页面
+ */
 import Taro, {useCallback, usePullDownRefresh, useRouter, useState} from '@tarojs/taro'
 import {Block, View, Text} from '@tarojs/components'
 import {observer} from '@tarojs/mobx';
@@ -48,7 +51,7 @@ const Manga: Taro.FC = () => {
               <AtDivider className='mg-card-divider' content={e.title} fontColor='#2d8cf0' lineColor='#2d8cf0' />
               <View className='at-card__content-info'>
                 <AtGrid mode='rect' hasBorder={false} columnNum={4}
-                  data={e.data.map(_e=>({value: _e.chapter_title, ..._e, iconInfo: { size: 20, color: '#FF4949', value: 'bookmark', }}))}
+                  data={e.data.map(_e=>({value: _e.chapter_title, ..._e, iconInfo: { color: '#FF4949', value: 'bookmark', }}))}
                   onClick={(__e: any)=> Taro.navigateTo({url: `${BROWSE_PAGE}?oid=${oid}&cid=${__e.chapter_id}`})}
                 />
               </View>

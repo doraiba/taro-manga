@@ -6,6 +6,22 @@ import SubscribeNow from "@/components/subscribe-now/subscribe-now";
 import StartReading from "@/components/start-reading/start-reading";
 import './index.scss'
 
+/**
+ * 漫画详情展示头部card
+ * @param id
+ * @param title
+ * @param cover
+ * @param authors
+ * @param types
+ * @param hot_num
+ * @param subscribe_num
+ * @param status
+ * @param last_updatetime
+ * @param description
+ * @param firstChapter
+ * @param timestamp
+ * @constructor
+ */
 const MangaHeader: Taro.FC<Comic & {firstChapter?: number,timestamp?: number}> = ({id,title,cover, authors, types, hot_num, subscribe_num, status, last_updatetime,description, firstChapter, timestamp}) => {
 
   useEffect(()=>{

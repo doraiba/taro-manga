@@ -1,3 +1,6 @@
+/**
+ * 主页
+ */
 import Taro from '@tarojs/taro'
 import {View} from "@tarojs/components";
 import Header from "@/components/header/header";
