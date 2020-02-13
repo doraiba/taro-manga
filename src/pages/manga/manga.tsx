@@ -31,7 +31,7 @@ const Manga: Taro.FC = () => {
     chapters: [{data: [{chapter_id: -1}]}]
   }
   const {chapters} = filter
-  const firstChapter = (chapters[0].data.splice(-1)[0] as any).chapter_id
+  const firstChapter = (chapters[0].data.slice(-1)[0] as any).chapter_id
   return (
     <Block>
       <View className='mg-primary'>
