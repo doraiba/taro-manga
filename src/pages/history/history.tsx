@@ -7,9 +7,9 @@ import {observer} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {COMICREINFO_ALL} from "@/contexts/manga-api";
 import {MangaHistoryItem} from "@/components/manga-item";
+import {navigateToBrowse} from "@/utils/app-constant";
 
 import './history.scss'
-import {navigateToBrowse} from "@/utils/app-constant";
 
 const History: Taro.FC = () => {
 
