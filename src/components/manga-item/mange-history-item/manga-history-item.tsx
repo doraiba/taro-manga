@@ -20,7 +20,7 @@ type MangaHistoryItemProps = ComicReInfo & { onClick?: (event: ITouchEvent, id?:
  * @param comic_id
  * @constructor
  */
-const MangaHistoryItem: Taro.FC<MangaHistoryItemProps> = ({onClick, children, cover,comic_name, comic_id,chapter_id,chapter_name,record,viewing_time}) => {
+const MangaHistoryItem: Taro.FC<MangaHistoryItemProps> = ({onClick, children, cover,comic_name, comic_id,chapter_name,record,viewing_time}) => {
   return (
     <View className='mg-manga-history-item' onClick={e => onClick && onClick(e, comic_id)}>
       <View className='mg-history-info'>
