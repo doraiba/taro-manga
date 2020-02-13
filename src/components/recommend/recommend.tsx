@@ -1,7 +1,6 @@
 import Taro, {useEffect} from "@tarojs/taro";
 import ListView from 'taro-listview';
 import useAxios from 'axios-hooks'
-import {AtActivityIndicator} from 'taro-ui'
 import {RECOMMEND} from "@/contexts/manga-api";
 import './recommend.scss'
 import Category46 from "./category-46";
@@ -21,7 +20,7 @@ const Recommend: Taro.FC = () => {
   return (
     <ListView onPullDownRefresh={async (stop)=>{
       try { await refetch() }finally {stop()}
-    }} className='mg-discovery' noMore=''
+    }} className='mg-discovery' noMore='' footerLoadedText=''
     >
       <Category46 {...c46} />
       <Category47 {...c47} />
