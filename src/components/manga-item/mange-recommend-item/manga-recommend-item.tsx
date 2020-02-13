@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {ITouchEvent} from "@tarojs/components/types/common";
-import {MANGA_PAGE} from "@/utils/app-constant";
+import {navigateToManga} from "@/utils/app-constant";
 
 import './manga-recommend-item.scss'
 
@@ -30,6 +30,6 @@ const MangaRecommendItem: Taro.FC<MangaRecommendItemProps> = ({onClick,id,obj_id
     </View>)
 }
 MangaRecommendItem.defaultProps = {
-  onClick: (_event, id) => Taro.navigateTo({url: `${MANGA_PAGE}?oid=${id}`})
+  onClick: (_event, id) => navigateToManga(`oid=${id}`)
 }
 export default MangaRecommendItem

@@ -1,8 +1,8 @@
 import Taro from '@tarojs/taro'
-import {Image, View, Text} from '@tarojs/components'
+import {Image, Text, View} from '@tarojs/components'
 import dayjs from "dayjs";
 import {ITouchEvent} from "@tarojs/components/types/common";
-import {MANGA_PAGE} from "@/utils/app-constant";
+import {navigateToManga} from "@/utils/app-constant";
 
 import './manga-item.scss'
 
@@ -51,7 +51,7 @@ const MangaItem: Taro.FC<MangaItemProps> = ({onClick, children, cover, title, au
     </View>)
 }
 MangaItem.defaultProps = {
-  onClick: (_event, id) => Taro.navigateTo({url: `${MANGA_PAGE}?oid=${id}`})
+  onClick: (_event, id) => navigateToManga(`oid=${id}`)
 }
 MangaItem.options = {
   addGlobalClass: true

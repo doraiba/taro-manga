@@ -1,4 +1,4 @@
-import Taro, {navigateTo, useDidShow, useEffect} from '@tarojs/taro'
+import Taro, {useDidShow, useEffect} from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {parsePath} from "@/utils";
@@ -9,7 +9,7 @@ import {AtButton, AtMessage} from "taro-ui";
 import {autorun} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
 import {BaseEventOrig} from "@tarojs/components/types/common";
-import {BROWSE_PAGE} from "@/utils/app-constant";
+import {navigateToBrowse} from "@/utils/app-constant";
 import {Block, View} from '@tarojs/components';
 
 type StartReadingProps = {
@@ -70,7 +70,7 @@ StartReading.defaultProps = {
   onClick: (_e, r, c) => {
     const {comic_id, chapter_id = c} = r as ComicReInfo
     if (!chapter_id) return Taro.showToast({icon: 'none',title: `无法定位章节信息:${comic_id}/${chapter_id}`})
-    navigateTo({url: `${BROWSE_PAGE}?oid=${comic_id}&cid=${chapter_id}`})
+    navigateToBrowse(`oid=${comic_id}&cid=${chapter_id}`)
   }
 }
 

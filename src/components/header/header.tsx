@@ -1,10 +1,10 @@
-import Taro, {useCallback,navigateTo} from '@tarojs/taro'
+import Taro, {useCallback} from '@tarojs/taro'
 import {View} from "@tarojs/components";
 import DefaultLogo from "@/components/header/component/default-logo/default-logo";
 import {AtAvatar, AtIcon} from "taro-ui";
 import useStores from "@/hooks/use-stores";
-import { observer } from '@tarojs/mobx';
-import {LOGIN_PAGE, USER_PAGE} from "@/utils/app-constant";
+import {observer} from '@tarojs/mobx';
+import {navigateToLogin, navigateToSearchManga, navigateToUser} from "@/utils/app-constant";
 
 import './header.scss'
 
@@ -18,9 +18,9 @@ const Header: Taro.FC = ({children}) => {
   const {tokenStore,userStore} =  useStores()
   const toAuth = useCallback(() => {
     if(tokenStore.authed) {
-    return navigateTo({url: USER_PAGE})
+    return navigateToUser()
     }
-    navigateTo({url: LOGIN_PAGE})
+    navigateToLogin()
     // eslint-disable-next-line
   }, [])
 
@@ -37,7 +37,7 @@ const Header: Taro.FC = ({children}) => {
           />: <AtIcon  value='user' className='mg-search' />}
 
         </View>
-        <AtIcon className='mg-search' value='search'></AtIcon>
+        <AtIcon className='mg-search' value='search' onClick={navigateToSearchManga} />
       </View>
     </View>
   )

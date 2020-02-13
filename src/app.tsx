@@ -11,7 +11,6 @@ import injectDefaultLog from "@/utils/inject-axios-log";
 import {autorun} from "mobx";
 import injectDefaultAuth from "@/utils/inject-axios-auth";
 
-
 import './app.scss'
 
 global.Date = Date
@@ -57,6 +56,8 @@ class App extends Component {
       'pages/subscribe/subscribe',
       'pages/manga/manga',
       'pages/browse/browse',
+      'pages/search/search',
+      'pages/history/history'
     ],
     // tabBar: {
     //   list: [

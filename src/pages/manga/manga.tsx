@@ -2,13 +2,13 @@
  * 漫画详情页面
  */
 import Taro, {useCallback, usePullDownRefresh, useRouter, useState} from '@tarojs/taro'
-import {Block, View, Text} from '@tarojs/components'
+import {Block, Text, View} from '@tarojs/components'
 import {observer} from '@tarojs/mobx';
 import dayjs from "dayjs";
 import useComic from "@/hooks/use-comic";
 import MangaHeader from "@/components/manga-header";
-import {BROWSE_PAGE} from "@/utils/app-constant";
-import { AtDivider, AtGrid } from 'taro-ui';
+import {navigateToBrowse} from "@/utils/app-constant";
+import {AtDivider, AtGrid} from 'taro-ui';
 import './manga.scss'
 
 const Manga: Taro.FC = () => {
@@ -52,7 +52,7 @@ const Manga: Taro.FC = () => {
               <View className='at-card__content-info'>
                 <AtGrid mode='rect' hasBorder={false} columnNum={4}
                   data={e.data.map(_e=>({value: _e.chapter_title, ..._e, iconInfo: { color: '#FF4949', value: 'bookmark', }}))}
-                  onClick={(__e: any)=> Taro.navigateTo({url: `${BROWSE_PAGE}?oid=${oid}&cid=${__e.chapter_id}`})}
+                  onClick={(__e: any)=> navigateToBrowse(`oid=${oid}&cid=${__e.chapter_id}`)}
                 />
               </View>
             </View>)

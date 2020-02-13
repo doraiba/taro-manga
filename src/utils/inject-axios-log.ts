@@ -6,7 +6,8 @@ const injectDefaultLog = (axios: AxiosInstance,
     if(config.request) {
       const uniqueId = `${Date.now()}/${(Math.random() * 99).toFixed()}`
       value['uniqueRequestId'] = uniqueId
-      console.log('===unique id: ',uniqueId,' request config: ',value,'===')
+      const {method,url,params,data} = value
+      console.log('===unique id: ',uniqueId,' request config: ',{method,url,params,data},'===')
     }
 
     return value

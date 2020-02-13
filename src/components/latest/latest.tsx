@@ -1,10 +1,10 @@
-import Taro,{useCallback} from '@tarojs/taro'
+import Taro, {useCallback} from '@tarojs/taro'
 import {LATEST} from "@/contexts/manga-api";
 import ListView from "@/components/list-veiw/list-view";
 import {View} from "@tarojs/components";
 import {MangaItem} from "@/components/manga-item";
 import {AtIcon, AtList} from "taro-ui";
-import {BROWSE_PAGE} from "@/utils/app-constant";
+import {navigateToBrowse} from "@/utils/app-constant";
 
 import './latest.scss'
 
@@ -14,7 +14,7 @@ import './latest.scss'
  */
 const Latest: Taro.FC = () => {
   const handleClick = useCallback((oid: number,cid: number)=>()=>{
-    Taro.navigateTo({url: `${BROWSE_PAGE}?oid=${oid}&cid=${cid}`})
+    navigateToBrowse(`oid=${oid}&cid=${cid}`)
   },[])
 
   return (

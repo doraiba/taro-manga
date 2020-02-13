@@ -1,7 +1,7 @@
 /**
  * 登录页面
  */
-import Taro, {useMemo, useCallback} from '@tarojs/taro'
+import Taro, {useCallback, useMemo} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {AtButton, AtForm, AtInput, AtMessage} from 'taro-ui'
 import useFormal from '@kevinwolf/formal'
@@ -11,7 +11,7 @@ import useAxios from 'axios-hooks'
 import {LOGIN} from "@/contexts/manga-api";
 import useStores from "@/hooks/use-stores";
 import qs from 'query-string';
-import {INDEX_PAGE, REGISTER_PAGE} from "@/utils/app-constant";
+import {navigateToIndex, navigateToRegister} from "@/utils/app-constant";
 
 import './login.scss'
 
@@ -43,11 +43,11 @@ const Login: Taro.FC = () => {
       })
 
       tokenStore.setMangaToken(data)
-      Taro.redirectTo({url: INDEX_PAGE})
+      navigateToIndex({redirect: true})
     }
   });
   const toRegister = useCallback(()=>{
-    Taro.navigateTo({url: REGISTER_PAGE})
+    navigateToRegister()
   },[])
 
   const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
