@@ -42,8 +42,16 @@ export const UPCOMICREINFO = `https://interface.dmzj.com/api/record/getRe?callba
 export const SUBSCRIBE_LIST = `/UCenter/subscribe?type=0&letter=all&sub_type=1&page={0}&size=9&uid={uid}&dmzj_token=4e9c1036e3403221d38d5e9d2054ffd0&${suffix}`
 // 搜索热词
 export const SEARCH_HOT = `/search/hot/0.json?${suffix}`
+// 搜索提示
 export const SEARCH_TIPS = `/search/fuzzy/0/{q}.json?${suffix}`
+// 搜索结果
 export const SEARCH_RESULT = `/search/show/0/{qq}/{0}.json?${suffix}`
+// 猜你喜欢
+export const U_LIKE = `/recommend/batchUpdate?category_id=50&uid={uid}&${suffix}`
+// 主页推荐 => 我的订阅
+export const U_SUBSCRIBE = `/recommend/batchUpdate?category_id=49&uid={uid}&${suffix}`
+
+
 
 
 export default DOMAIN
