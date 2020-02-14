@@ -22,7 +22,7 @@ const MangaCard: Taro.FC<MangaCardProps> = ({children, title, leadingIcon = 'che
           <View className='mg-card-title'>{title}</View>
         </View>
         <View className='mg-card-actions'>
-          <AtIcon onClick={actionClick} value={actionIcon} />
+          {title && <AtIcon onClick={actionClick} value={actionIcon} />}
         </View>
       </View>
       <View className='mg-card-need'>

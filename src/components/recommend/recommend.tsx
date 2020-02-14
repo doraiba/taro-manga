@@ -15,7 +15,7 @@ import './recommend.scss'
  */
 const Recommend: Taro.FC = () => {
 
-  const [timestamp, setTimestamp] = useState()
+  const [{t1,t2}, setTimestamp] = useState(()=>({t1:0,t2:0}))
   const [{data = []}, refetch] = useAxios(RECOMMEND, {manual: true})
   useEffect(() => {
     refetch()
@@ -24,7 +24,11 @@ const Recommend: Taro.FC = () => {
   return (
     <TaroList dataManager={undefined as any} onRefresh={async (stop) => {
       try {
-        setTimestamp(() => dayjs().unix())
+
+        setTimestamp(() => {
+          const timestamp = dayjs().unix()
+          return {t1: timestamp, t2: timestamp}
+        })
         await refetch()
       } finally {
         stop()
@@ -32,8 +36,8 @@ const Recommend: Taro.FC = () => {
     }} className='mg-discovery' height='100%'
     >
       <Category46 {...c46} />
-      <Category50 actionIcon='arrow' actionClick={navigateToSubscribe} timestamp={timestamp} URL={U_SUBSCRIBE} />
-      <Category50 timestamp={timestamp} URL={U_LIKE} />
+      <Category50 actionIcon='chevron-right' actionClick={navigateToSubscribe} timestamp={t1} URL={U_SUBSCRIBE} />
+      <Category50 actionIcon='reload' actionClick={()=> setTimestamp((t)=> ({...t,t2: dayjs().unix()}))} timestamp={t2} URL={U_LIKE} />
       <Category47 {...c47} />
       <Category47 {...c54} />
       <Category47 {...c56} />
