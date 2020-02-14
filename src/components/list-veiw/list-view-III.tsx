@@ -4,7 +4,7 @@ import {Block} from "@tarojs/components";
 import useAxios from 'axios-hooks'
 import {action, autorun} from "mobx";
 import {isFunction} from "@/utils";
-import TaroListView from "taro-listview";
+import TaroList from "taro-list";
 
 type CustomProps = {
   className?: string,
@@ -31,7 +31,7 @@ type ListProps = CustomProps;
  */
 const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, search, renderList}) => {
   const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
-  const [{error}, refetch] = useAxios({}, {manual: true});
+  const [, refetch] = useAxios({}, {manual: true});
   const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
     currPage: initialPage,
@@ -80,13 +80,13 @@ const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, 
 
   return (
     <Block>
-      <TaroListView className={className}
-        hasMore={hasMore} isError={!!error} isEmpty={!list.length}
-        onPullDownRefresh={async (stop)=>{ try { await store.refresh() }finally {stop()}}}
-        onScrollToLower={async (stop)=>{ try { await store.forward() }finally {stop()}}}
+      <TaroList className={className} height='100%'
+        dataManager={undefined as any} enableBackToTop
+        onRefresh={async (stop)=>{ try { await store.refresh() }finally {stop()}}}
+        onLoadMore={()=>hasMore && store.forward()}
       >
         {renderList([...list])}
-      </TaroListView>
+      </TaroList>
     </Block>
   );
 }

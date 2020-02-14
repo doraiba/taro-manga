@@ -97,6 +97,13 @@
 					"id": -1,
 					"name": "浏览记录",
 					"pathName": "pages/history/history",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "搜索",
+					"pathName": "pages/search/search",
 					"scene": null
 				}
 			]
