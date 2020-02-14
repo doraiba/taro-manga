@@ -15,7 +15,7 @@ import './recommend.scss'
  */
 const Recommend: Taro.FC = () => {
 
-  const [{t1,t2}, setTimestamp] = useState(()=>({t1:0,t2:0}))
+  const [{t1,t2}, setTimestamp] = useState(()=>({t1:1581691184,t2:1581691184}))
   const [{data = []}, refetch] = useAxios(RECOMMEND, {manual: true})
   useEffect(() => {
     refetch()
