@@ -1,9 +1,8 @@
 import Taro, {useDidShow, useEffect} from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
-import useStores from "@/hooks/use-stores";
 import dayjs from "dayjs";
 import {AtButton, AtMessage} from "taro-ui";
-import {autorun} from "mobx";
+import {reaction} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
 import {BaseEventOrig} from "@tarojs/components/types/common";
 import {navigateToBrowse} from "@/utils/app-constant";
@@ -25,22 +24,20 @@ type StartReadingProps = {
 const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
   const {timestamp, oid, cid, onClick, onChange, ...props} = ignore
   const source = useAsObservableSource({timestamp, oid})
-  const {tokenStore} = useStores()
 
   const {loading, data = {} as ComicReInfo,refetch} = useChapter(()=> oid,[oid])
 
   const autofetch = async () => {
-    if (!!Object.keys(tokenStore.mangaToken).length && tokenStore.authed) {
-      try {
-        const {data: reInfo} = await refetch({params: {timestamp: source.timestamp}})
-        onChange && onChange(reInfo)
-      } catch (_e) {
-        // useDidShow 会报错 axios的CancelToken不存在,内部生命周期有关应该 不影响使用 忽略
-      }
+    try {
+      const {data: reInfo} = await refetch()
+      onChange && onChange(reInfo)
+    } catch (_e) {
+      console.error(_e, '-=-==-=')
+      // useDidShow 会报错 axios的CancelToken不存在,内部生命周期有关应该 不影响使用 忽略
     }
   }
 
-  useEffect(() => autorun(autofetch), [])
+  useEffect(() => reaction(()=>source.timestamp,autofetch), [])
 
   // 用于返回后状态更新,
   useDidShow(autofetch)

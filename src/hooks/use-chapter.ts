@@ -14,17 +14,17 @@ const useChapter = (factory: () => number | string, deps: DependencyList | undef
 
   // eslint-disable-next-line
   const oid = useMemo(() => factory() as any - 0, deps)
-  const {chapterStore: {findById, push}} = useStores()
+  const {chapterStore: {findById, push},tokenStore} = useStores()
   const [{loading, error, data, response}, refetch] = useAxios<ComicReInfo>({url: parsePath(COMICREINFO, {oid})}, {manual: true})
   const exist = useMemo(() => findById(oid), [oid])
   const [chapter, setChapter] = useState<ComicReInfo>(() => exist)
   useEffect(() => {
-    if (!Object.keys(exist).length) refetch()
+    if (!exist && tokenStore.authed) refetch()
     // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
-    if (!Object.keys(data).length) {
+    if (data) {
       setChapter(() => {
         push(data)
         return data
@@ -33,12 +33,12 @@ const useChapter = (factory: () => number | string, deps: DependencyList | undef
     // eslint-disable-next-line
   }, [data])
 
-  const wrapperRefresh = useCallback((config: AxiosRequestConfig, options?: Options) => {
+  const wrapperRefresh = useCallback((config?: AxiosRequestConfig, options?: Options) => {
     const item = findById(oid)
-    if (!item) return refetch(config, options)
+    if (!item && tokenStore.authed) return refetch(config, options)
+    setChapter(()=> item)
     return Promise.resolve({data: item})
-  }, [oid, findById, refetch])
-
+  }, [oid, findById, refetch,tokenStore])
   return {loading, error, data: chapter, response, push, refetch: wrapperRefresh}
 }
 

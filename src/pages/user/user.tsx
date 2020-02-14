@@ -1,13 +1,13 @@
 /**
  * 个人中心页面 TODO
  */
-import Taro, {redirectTo, useEffect, useState} from '@tarojs/taro'
+import Taro, {useEffect, useState} from '@tarojs/taro'
 import {Block, View} from '@tarojs/components'
 import useStores from "@/hooks/use-stores";
 import {AtAvatar, AtButton, AtList, AtListItem} from 'taro-ui';
 import {observer} from '@tarojs/mobx';
 import {autorun} from "mobx";
-import {LOGIN_PAGE, navigateToHistory, navigateToSubscribe} from "@/utils/app-constant";
+import {navigateToHistory, navigateToIndex, navigateToSubscribe} from "@/utils/app-constant";
 
 import './user.scss'
 
@@ -15,7 +15,7 @@ const User: Taro.FC = () => {
   const {userStore, tokenStore,tokenStore: {clearMangaToken}} = useStores()
 
   const {autoCheckIn, setAutoCheckIn, avatar, nickname} = userStore
-  useEffect(()=>autorun(()=>(!tokenStore.authed) && redirectTo({url: LOGIN_PAGE})),[])
+  useEffect(()=>autorun(()=>(!tokenStore.authed) && navigateToIndex({redirect: true})),[])
   const [iconSize] = useState(()=>Taro.pxTransform(25*2).replace('px','') as any - 0)
   return (
     <Block>

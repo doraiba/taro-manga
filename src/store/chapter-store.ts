@@ -9,5 +9,5 @@ export default class ChapterStore {
     this.repository = repository
   }
 
-  findById = (id: number) => this.repository.filter(e => e.comic_id = id)[0]
+  findById = (id: number) => this.repository.filter(e => e.comic_id == id)[0]
 }
