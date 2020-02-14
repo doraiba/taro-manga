@@ -16,6 +16,7 @@ import useStores from "@/hooks/use-stores";
 import SearchHot from "@/components/search-hot/search-hot";
 import ListView from "@/components/list-veiw/list-view-IIIII";
 import {MangaSearchItem} from '@/components/manga-item';
+import dayjs from "dayjs";
 import './search.scss'
 
 const Search: Taro.FC = () => {
@@ -33,17 +34,19 @@ const Search: Taro.FC = () => {
     qq: '',
     setQQ(qq: string) {
       this.qq = qq;
+      this.timestamp = dayjs().unix()
     },
     setUnion(q: string) {
       this.setQ(q)
       this.setQQ(q)
-    }
+    },
+    timestamp: dayjs().unix(),
   }));
   const [{data = []}, refetch] = useAxios<SearchTipsEntity[]>({}, {manual: true})
 
   useEffect(() => reaction(() => store.q, debounce((q) => q && refetch({url: parsePath(SEARCH_TIPS, {q})}), 300)), [])
 
-  const {q, setQ, focus, setFocus, qq, setQQ, setUnion} = store;
+  const {q, setQ, focus, setFocus, qq, setQQ, setUnion,timestamp} = store;
   return (
     <View className='mg-search'>
       <AtSearchBar
@@ -56,8 +59,10 @@ const Search: Taro.FC = () => {
         fail: () => navigateToIndex()
       })}
         onConfirm={() => {
-          push(q);
-          setQQ(q)
+          if(q) {
+            push(q);
+            setQQ(q)
+          }
         }}
       />
       <View className='mg-search-panel'>
@@ -70,7 +75,7 @@ const Search: Taro.FC = () => {
               />)}
           </AtList>
         </View>
-        {qq && <ListView
+        {qq && <ListView timestamp={timestamp}
           className='mg-search-result' url={parsePath(SEARCH_RESULT, {qq})}
           renderList={(list: SearchTipsEntity[] = []) => {
             return <AtList>{

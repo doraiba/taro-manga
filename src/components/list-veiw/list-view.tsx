@@ -2,11 +2,13 @@ import Taro, {useEffect, useMemo} from "@tarojs/taro";
 import {observer, useAsObservableSource, useLocalStore} from '@tarojs/mobx'
 import {Block} from "@tarojs/components";
 import useAxios from 'axios-hooks'
-import {action, autorun} from "mobx";
+import {action, autorun, reaction} from "mobx";
 import {isFunction} from "@/utils";
 import TaroList from "taro-list";
+import dayjs from "dayjs";
 
 type CustomProps = {
+  timestamp?: number,
   className?: string,
   initial?: number,
   psize?: number,
@@ -29,8 +31,8 @@ type ListProps = CustomProps;
  * @param renderList
  * @constructor
  */
-const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, search, renderList}) => {
-  const observableSource = useAsObservableSource({url, search, initial, psize}) as Required<CustomProps>;
+const ListView: Taro.FC<ListProps> = ({ className,convert,timestamp, psize, initial, url, search, renderList}) => {
+  const observableSource = useAsObservableSource({url, search, initial, timestamp,psize}) as Required<CustomProps>;
   const [, refetch] = useAxios({}, {manual: true});
   const initialPage = useMemo(() => observableSource.initial, [observableSource.initial]);
   const store = useLocalStore<StoreType, Required<CustomProps>>((source) => ({
@@ -42,7 +44,7 @@ const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, 
     totalPage: -1,
     // eslint-disable-next-line no-unused-vars,@typescript-eslint/no-unused-vars
     fetch: action(async function (page: number, _refreshCount?: number) {
-      let remoteURL: string = url as string
+      let remoteURL: string = source.url as string
       if (isFunction(url)) {
         remoteURL = url(page) as string
       }
@@ -74,6 +76,8 @@ const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, 
   }), observableSource);
 
   //  eslint-disable-next-line
+  useEffect(()=>reaction(()=>observableSource.timestamp,store.refresh),[])
+  //  eslint-disable-next-line
   useEffect(() => autorun(() => store.fetch(store.currPage, store.refreshCount)), []);
 
   const {list = [], hasMore} = store
@@ -92,7 +96,8 @@ const ListView: Taro.FC<ListProps> = ({ className,convert, psize, initial, url, 
 }
 ListView.defaultProps = {
   initial: 0,
-  psize: 10
+  psize: 10,
+  timestamp: dayjs().unix()
 }
 ListView.options={
   addGlobalClass: true
