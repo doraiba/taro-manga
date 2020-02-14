@@ -45,7 +45,7 @@ type BrowseStore = {
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
 
-  const {chapterStore: {push}} = useStores()
+  const {chapterStore: {push},tokenStore} = useStores()
 
   const {data: repository} = useComic(() => params.oid, [params.oid])
 
@@ -122,7 +122,7 @@ const Browse: Taro.FC = () => {
     const {comic_id,chapter_id,page,title: asTitle,} = store.lastView
     const time = dayjs().unix()
     push({comic_id,chapter_id,chapter_name: asTitle,record: page,cover: repository.cover, comic_name: repository.title, type: 3, viewing_time: time,uid:0})
-    axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page,time}))
+    tokenStore.authed && axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page,time}))
   },[push, repository, store.lastView])
 
   useDidHide(updateVisitorLogs)
