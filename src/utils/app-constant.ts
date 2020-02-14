@@ -14,7 +14,7 @@ export const HISTORY_PAGE = 'pages/history/history'
 export const navigateToLogin = () => navigateTo({url: `/${LOGIN_PAGE}`})
 export const navigateToRegister = () => navigateTo({url: `/${REGISTER_PAGE}`})
 export const navigateToUser = () => navigateTo({url: `/${USER_PAGE}`})
-export const navigateToIndex = ({redirect = false}) => redirect ? redirectTo({url: `/${INDEX_PAGE}`}) : navigateTo({url: `/${INDEX_PAGE}`})
+export const navigateToIndex = ({redirect = false} = {}) => redirect ? redirectTo({url: `/${INDEX_PAGE}`}) : navigateTo({url: `/${INDEX_PAGE}`})
 export const navigateToSubscribe = () => navigateTo({url: `/${SUBSCRIBE_PAGE}`})
 export const navigateToManga = (query: string) => navigateTo({url: `/${MANGA_PAGE}?${query}`})
 export const navigateToBrowse = (query: string) => navigateTo({url: `/${BROWSE_PAGE}?${query}`})

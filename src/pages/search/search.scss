@@ -1,15 +1,39 @@
-.mg-shadow{
-  height: 0;
-  background-color: #ccc;
-  position: absolute;
-  left: 0;
-  right: 0;
-  transition: all .3s;
-}
-.mg-shadow-open {
-  height: calc(100vh - 23px - 30PX);
-}
-.mg-subscribe {
-  height: 1800px;
-  background-color: red;
+
+.mg-search {
+  .mg-search-panel {
+    margin-top: 44px * 2;
+    height: 100%;
+    position: relative;
+    &__mask {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      background-color: rgba(0,0,0,.3);
+      transition: opacity 300ms cubic-bezier(.36,.66,.04,1);
+    }
+    .mg-search-tips{
+
+    }
+  }
+
+  .mg-shadow {
+    height: 0;
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    right: 0;
+    transition: all .3s;
+  }
+
+  .mg-shadow-open {
+    height: calc(100vh - 23px - 30PX);
+  }
+
+  .mg-subscribe {
+    height: 1800px;
+    background-color: red;
+  }
+
 }

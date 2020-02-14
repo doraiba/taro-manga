@@ -19,7 +19,7 @@
 | 我的订阅 | http://v3api.dmzj.com/recommend/batchUpdate?category_id=49&channel=ios&uid=110332672&version=3.0.2 |
 |          |                                                              |
 
-### taro 使用心得
+### taro 踩坑
 
 ```text
 解决提示Function问题: "regenerator-runtime": "0.11.1",

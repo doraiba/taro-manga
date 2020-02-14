@@ -219,3 +219,26 @@ type SubscribeEntity = {
   "id": number,
   "status": string
 }
+
+type SearchHotEntity = {
+  "id": number,
+  "name": string
+}
+type SearchTipsEntity = {
+  _biz: string;
+  addtime: number;
+  alias_name: string;
+  authors: string;
+  copyright: number;
+  cover: string;
+  device_show: number;
+  grade: number;
+  hidden: number;
+  hot_hits: number;
+  last_name: string;
+  quality: number;
+  status: number;
+  title: string;
+  types: string;
+  id: number;
+}
