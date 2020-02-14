@@ -1,0 +1,68 @@
+.mg-manga-search-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5*2px 0;
+  margin-left: 10*2px;
+  border-bottom: 1PX solid #cbcbcb;
+  color: #000;
+
+  .mg-search-info {
+    display: flex;
+    flex: 5;
+    overflow: hidden;
+
+    .mg-search-image-wrapper {
+      width: 78*2px;
+      height: 104*2px;
+      flex-shrink: 0;
+
+      .mg-search-image {
+        border-radius: 3%;
+        vertical-align: bottom;
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .mg-search-desc {
+      margin-left: 5*2px;
+      padding: 5*2px;
+      display: flex;
+      flex-flow: column nowrap;
+      overflow: hidden;
+
+      .mg-search-title {
+        height: 33*2px;
+        line-height: 33*2px;
+        font-size: 15*2px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      .mg-search-produce {
+        flex: 1;
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: space-between;
+
+        .mg-search-authors,
+        .mg-search-tag,
+        .mg-search-name {
+          font-size: 12*2px;
+          opacity: .9;
+          .at-icon {
+            vertical-align: baseline;
+            margin-right: 5*2px;
+          }
+        }
+      }
+    }
+  }
+
+  .mg-item-actions {
+    text-align: center;
+    flex: 2;
+  }
+}

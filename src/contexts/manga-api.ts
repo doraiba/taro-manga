@@ -44,6 +44,7 @@ export const SUBSCRIBE_LIST = `/UCenter/subscribe?type=0&letter=all&sub_type=1&p
 // 搜索热词
 export const SEARCH_HOT = `/search/hot/0.json?${suffix}`
 export const SEARCH_TIPS = `/search/fuzzy/0/{q}.json?${suffix}`
+export const SEARCH_RESULT = `/search/show/0/{qq}/{0}.json?${suffix}`
 
 
 export default DOMAIN

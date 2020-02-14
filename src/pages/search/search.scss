@@ -1,39 +1,43 @@
 
 .mg-search {
-  .mg-search-panel {
-    margin-top: 44px * 2;
-    height: 100%;
-    position: relative;
-    &__mask {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
-      background-color: rgba(0,0,0,.3);
-      transition: opacity 300ms cubic-bezier(.36,.66,.04,1);
-    }
-    .mg-search-tips{
-
-    }
-  }
-
-  .mg-shadow {
-    height: 0;
-    background-color: #ccc;
+  &__mask {
     position: absolute;
     left: 0;
     right: 0;
-    transition: all .3s;
+    bottom: 0;
+    top: 44px * 2;
+    background-color: rgba(0, 0, 0, .3);
+    transition: opacity 300ms cubic-bezier(.36, .66, .04, 1);
+    z-index: 9999999;
+  }
+  .mg-search-panel {
+    margin-top: 44px * 2;
+    height: calc(100vh - 44px * 2);
+    position: relative;
+
+    .mg-search-tips {
+      position: absolute;
+      z-index: 99999999999999999999;
+      left: 0;
+      right: 0;
+    }
+    .mg-search-result {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100%;
+      z-index: 9;
+      background-color: #fff;
+    }
+
   }
 
-  .mg-shadow-open {
-    height: calc(100vh - 23px - 30PX);
+}
+.mg-item-search{
+  .item-thumb {
+    height: 160px;
+    width: 80px;
   }
-
-  .mg-subscribe {
-    height: 1800px;
-    background-color: red;
-  }
-
 }
