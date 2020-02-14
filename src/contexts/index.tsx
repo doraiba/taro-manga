@@ -7,13 +7,15 @@ import UserStore from "@/store/user-store";
 import OtherStore from "@/store/other-store";
 import ComicStore from "@/store/comic-store";
 import SearchStore from "@/store/search-store";
+import ChapterStore from '@/store/chapter-store';
 
 export const stores = {
   tokenStore: new TokenStore(),
   userStore: new UserStore(),
   comicStore: new ComicStore(),
   otherStore: new OtherStore(),
-  searchStore: new SearchStore()
+  searchStore: new SearchStore(),
+  chapterStore: new ChapterStore()
 };
 
 const storesContext = Taro.createContext(stores)

@@ -25,6 +25,8 @@ import flatten from 'lodash-es/flatten'
 import debounce from 'lodash-es/debounce'
 import {ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER} from "@/utils/app-constant";
 
+import dayjs from "dayjs";
+import useStores from "@/hooks/use-stores";
 import './browse.scss'
 
 import ObserveCallbackResult = Taro.IntersectionObserver.ObserveCallbackResult;
@@ -42,6 +44,8 @@ type BrowseStore = {
 
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
+
+  const {chapterStore: {push}} = useStores()
 
   const {data: repository} = useComic(() => params.oid, [params.oid])
 
@@ -115,10 +119,11 @@ const Browse: Taro.FC = () => {
 
   const updateVisitorLogs = useCallback(()=>{
     if(!Object.keys(store.lastView).length) return;
-    const {comic_id,chapter_id,page} = store.lastView
-    axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page}))
-    // eslint-disable-next-line
-  },[])
+    const {comic_id,chapter_id,page,title: asTitle,} = store.lastView
+    const time = dayjs().unix()
+    push({comic_id,chapter_id,chapter_name: asTitle,record: page,cover: repository.cover, comic_name: repository.title, type: 3, viewing_time: time,uid:0})
+    axios.get(parsePath(UPCOMICREINFO,{oid: comic_id,cid: chapter_id,page,time}))
+  },[push, repository, store.lastView])
 
   useDidHide(updateVisitorLogs)
 
