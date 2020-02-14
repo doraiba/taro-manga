@@ -47,6 +47,18 @@ const config = {
   },
   defineConstants: {
   },
+  copy: {
+    patterns: [
+      {
+        from:  'node_modules/taro-list/dist/weapp/components/List/refresh.wxs',
+        to:  'dist/npm/taro-list/dist/weapp/components/List/refresh.wxs',
+      },
+      {
+        from:  'node_modules/taro-list/dist/weapp/components/List/index.template.wxml',
+        to:  'dist/npm/taro-list/dist/weapp/components/List/index.template.wxml',
+      }
+    ]
+  },
   alias: {
     // 'react': 'node_modules/nervjs',
     // 'react-dom': 'node_modules/nervjs',
