@@ -13,6 +13,7 @@ import {SEARCH_TIPS} from '@/contexts/manga-api';
 import {navigateToIndex, navigateToManga} from "@/utils/app-constant";
 import SearchHistory from "@/components/search-history/search-history";
 import useStores from "@/hooks/use-stores";
+import SearchHot from "@/components/search-hot/search-hot";
 import './search.scss'
 
 const Search: Taro.FC = () => {
@@ -55,7 +56,7 @@ const Search: Taro.FC = () => {
           <SearchHistory onClick={setQ} />
         </View>
         <View className='mg-search-hot'>
-
+          <SearchHot />
         </View>
       </View>
     </View>)
