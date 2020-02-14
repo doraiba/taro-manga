@@ -5,7 +5,7 @@ export default class ChapterStore {
 
   push = (item: ComicReInfo) => {
     const repository = this.repository.filter(e => e.comic_id !== item.comic_id)
-    if(!item && Object.keys(item).length){
+    if(item && Object.keys(item).length){
       repository.unshift(item)
     }
     this.repository = repository
