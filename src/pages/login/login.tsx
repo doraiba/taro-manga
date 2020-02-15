@@ -67,7 +67,7 @@ const Login: Taro.FC = () => {
     navigateToRegister()
   },[])
 
-  const {submit, change, errors, isSubmitting, getSubmitButtonProps} = formal
+  const {submit, change, errors,values, isSubmitting, getSubmitButtonProps} = formal
 
   return (
     <View className='mg-login'>
@@ -85,10 +85,10 @@ const Login: Taro.FC = () => {
         <Image className='mg-logo' src={logo} />
       </View>
       <AtForm className='mg-login-form'>
-        <AtInput clear maxLength={11} title='账号' placeholder='请输入用户名/手机号' error={!!errors.nickname} name='nickname'
+        <AtInput clear maxLength={11} title='账号' placeholder='请输入用户名/手机号' error={!!errors.nickname} name='nickname' value={values.nickname}
           onChange={(e) => change('nickname', e)} onErrorClick={() => Taro.atMessage({message: errors.nickname + '', type: 'error'})}
         />
-        <AtInput clear title='密码' placeholder='请输入密码' error={!!errors.passwd} name='password'
+        <AtInput clear title='密码' placeholder='请输入密码' error={!!errors.passwd} name='password' value={values.passwd}
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>

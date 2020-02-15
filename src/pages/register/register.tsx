@@ -85,13 +85,14 @@ const Register: Taro.FC = () => {
         <Image className='mg-logo' src={logo} />
       </View>
       <AtForm className='mg-login-form'>
-        <AtInput clear maxLength={11} placeholder='请输入手机号' error={!!errors.tel} name='nickname'
+        <AtInput clear maxLength={11} placeholder='请输入手机号' error={!!errors.tel} name='nickname' value={values.tel}
           onChange={(e) => change('tel', e)} onErrorClick={() => Taro.atMessage({message: errors.tel + '', type: 'error'})}
         >
           <View className={`captcha ${state.status === 1 ? 'at-tag--disabled' : ''}`} onClick={handleSendCaptcha}>{state.text}</View>
         </AtInput>
         <AtInput
           name='valid_code'
+          value={values.valid_code}
           clear
           title='验证码'
           type='text'
@@ -101,7 +102,7 @@ const Register: Taro.FC = () => {
           onErrorClick={() => Taro.atMessage({message: errors.valid_code + '', type: 'error'})}
           onChange={(e) => change('valid_code', e)}
         />
-        <AtInput clear title='密码' placeholder='请输入密码' error={!!errors.passwd} name='password'
+        <AtInput clear title='密码' placeholder='请输入密码' error={!!errors.passwd} name='password' value={values.passwd}
           onChange={(e) => change('passwd', e)} onErrorClick={() => Taro.atMessage({message: errors.passwd + '', type: 'error'})} type='password'
         />
         <View className='at-row at-row__justify--around'>
