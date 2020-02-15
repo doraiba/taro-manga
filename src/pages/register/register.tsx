@@ -1,7 +1,7 @@
 /**
  * 注册页面
  */
-import Taro, {useMemo,useCallback,useReducer,Reducer} from '@tarojs/taro'
+import Taro, {Reducer, useCallback, useMemo, useReducer} from '@tarojs/taro'
 import {Image, View} from '@tarojs/components'
 import {AtButton, AtForm, AtInput, AtMessage} from 'taro-ui'
 import useFormal from '@kevinwolf/formal'
@@ -10,7 +10,7 @@ import logo from '@/asset/image/logo.png'
 import useAxios from 'axios-hooks'
 import {CAPTCHA, REGISTER} from "@/contexts/manga-api";
 import qs from 'query-string';
-import {LOGIN_PAGE} from "@/utils/app-constant";
+import {navigateToLogin} from "@/utils/app-constant";
 import axios from 'taro-axios'
 import {parsePath} from "@/utils";
 
@@ -43,12 +43,11 @@ const Register: Taro.FC = () => {
         'message': msg,
         'type': 'error',
       })
-
-      Taro.redirectTo({url: LOGIN_PAGE})
+      navigateToLogin()
     }
   });
 
-  const toLogin = useCallback(()=> Taro.navigateTo({url: LOGIN_PAGE}),[])
+  const toLogin = useCallback(navigateToLogin,[])
 
   const {submit, change, errors, isSubmitting, getSubmitButtonProps,values} = formal
 

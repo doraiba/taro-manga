@@ -1,4 +1,4 @@
-import Taro, {navigateTo, Reducer, useCallback, useEffect, useMemo, useReducer,} from '@tarojs/taro'
+import Taro, {Reducer, useCallback, useEffect, useMemo, useReducer,} from '@tarojs/taro'
 import {observer, useAsObservableSource} from '@tarojs/mobx';
 import useAxios from "axios-hooks";
 import {parsePath} from "@/utils";
@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 import {AtButton} from "taro-ui";
 import {autorun} from "mobx";
 import {AtButtonProps} from "taro-ui/@types/button";
-import {LOGIN_PAGE} from "@/utils/app-constant";
+import {navigateToLogin} from "@/utils/app-constant";
 import qs from 'query-string'
 
 type ActionType = 'REQUEST_ADD' | 'REQUEST_CANCEL' | 'NEED_LOGIN'
@@ -70,7 +70,7 @@ const SubscribeNow: Taro.FC<SubscribeNowProps> = (ignore) => {
 
   const handleClick = useCallback(async () => {
     if (!tokenStore.authed) {
-      return await navigateTo({url: LOGIN_PAGE})
+      return await navigateToLogin()
     }
 
     // 初始状态
