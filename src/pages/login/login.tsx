@@ -24,7 +24,7 @@ const Login: Taro.FC = () => {
   const handleTouch = useCallback((()=>{
     let timer = 0;
     return (e: ITouchEvent) => {
-      // if(otherStore.debug) return
+      if(otherStore.debug) return
       const {type, timeStamp} = e
       if(type === 'touchstart') {
         timer = timeStamp
@@ -73,7 +73,9 @@ const Login: Taro.FC = () => {
     <View className='mg-login'>
       <AtMessage />
       <AtModal isOpened={isOpened} closeOnClickOverlay onClose={()=> setIsOpened(()=> false)}>
-        <AtModalHeader><View style={{fontSize:Taro.pxTransform(24)}}>{`请为${ORIGINAL_IMAGE_SERVER}设置代理地址`}</View></AtModalHeader>
+        <AtModalHeader>
+          <View style={{fontSize:Taro.pxTransform(24)}}>{`请为${ORIGINAL_IMAGE_SERVER}设置代理地址`}</View>
+        </AtModalHeader>
         <AtModalContent>
           <AtInput name='proxyURL' onChange={setProxyURL} placeholder={`${PROXY_IMAGE_SERVER}`} />
         </AtModalContent>
