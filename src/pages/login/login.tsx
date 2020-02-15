@@ -79,7 +79,7 @@ const Login: Taro.FC = () => {
         <AtModalContent>
           <AtInput name='proxyURL' onChange={setProxyURL} placeholder={`${PROXY_IMAGE_SERVER}`} />
         </AtModalContent>
-        <AtModalAction><Button onClick={()=> otherStore.setProxyURL(proxyURL)}>设置</Button></AtModalAction>
+        <AtModalAction><Button onClick={()=> {otherStore.setProxyURL(proxyURL); setIsOpened(()=> false)}}>设置</Button></AtModalAction>
       </AtModal>
       <View onTouchStart={handleTouch} onTouchEnd={handleTouch} className='mg-logo-wrapper'>
         <Image className='mg-logo' src={logo} />
