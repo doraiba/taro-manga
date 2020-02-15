@@ -13,8 +13,9 @@ import './latest.scss'
  * @constructor
  */
 const Latest: Taro.FC = () => {
-  const handleClick = useCallback((oid: number,cid: number)=>()=>{
+  const handleClick = useCallback((oid: number,cid: number)=>{
     navigateToBrowse(`oid=${oid}&cid=${cid}`)
+    return false
   },[])
 
   return (
@@ -22,7 +23,7 @@ const Latest: Taro.FC = () => {
       url={LATEST} renderList={(list = []) => <AtList>
       {list.map((e: LatestItem&RankItem, i) => {
         return <MangaItem key={i} {...e} >
-          <View className='mg-latest' onClick={handleClick(e.id,e.last_update_chapter_id)}>
+          <View className='mg-latest' onClick={(event) => {event.stopPropagation();handleClick(e.id,e.last_update_chapter_id)}}>
             <AtIcon value='tags' size={36} color='#ffbb1a' />
             <View className='mg-latest-title' >{e.last_update_chapter_name}</View>
           </View>

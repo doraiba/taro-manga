@@ -32,7 +32,6 @@ const StartReading: Taro.FC<StartReadingProps> = (ignore) => {
       const {data: reInfo} = await refetch()
       onChange && onChange(reInfo)
     } catch (_e) {
-      console.error(_e, '-=-==-=')
       // useDidShow 会报错 axios的CancelToken不存在,内部生命周期有关应该 不影响使用 忽略
     }
   }

@@ -23,7 +23,7 @@ import useComic from "@/hooks/use-comic";
 import {autorun, when} from "mobx";
 import flatten from 'lodash-es/flatten'
 import debounce from 'lodash-es/debounce'
-import {ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER} from "@/utils/app-constant";
+import {ORIGINAL_IMAGE_SERVER} from "@/utils/app-constant";
 
 import dayjs from "dayjs";
 import useStores from "@/hooks/use-stores";
@@ -45,7 +45,7 @@ type BrowseStore = {
 const Browse: Taro.FC = () => {
   const {params} = useRouter()
 
-  const {chapterStore: {push},tokenStore} = useStores()
+  const {chapterStore: {push},tokenStore,otherStore: {proxyURL}} = useStores()
 
   const {data: repository} = useComic(() => params.oid, [params.oid])
 
@@ -64,7 +64,7 @@ const Browse: Taro.FC = () => {
         title,
         page: i + 1,
         count: _this.length,
-        proxy_url: e.replace(ORIGINAL_IMAGE_SERVER, PROXY_IMAGE_SERVER)
+        proxy_url: e.replace(ORIGINAL_IMAGE_SERVER, proxyURL)
       }))))
     },
     async fetch(cid) {
