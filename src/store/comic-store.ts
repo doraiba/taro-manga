@@ -56,7 +56,7 @@ export default class ComicStore {
   }
 
   getExpired = () => dayjs().add(5, "minute").unix()
-  isValid = (comic: any) => (!!comic) && (!!(Object.keys(comic).length))
+  isValid = (comic: any) => typeof comic === 'object' && (!!(Object.keys(comic).length))
 
   //释放
   dispose = () => this.disposer && this.disposer()

@@ -14,7 +14,7 @@ import './user.scss'
 const User: Taro.FC = () => {
   const {userStore, tokenStore,tokenStore: {clearMangaToken}} = useStores()
 
-  const {autoCheckIn, setAutoCheckIn, avatar, nickname} = userStore
+  const {/*autoCheckIn, setAutoCheckIn, */avatar, nickname} = userStore
   useEffect(()=>autorun(()=>(!tokenStore.authed) && navigateToIndex({redirect: true})),[])
   const [iconSize] = useState(()=>Taro.pxTransform(25*2).replace('px','') as any - 0)
   return (
@@ -40,10 +40,10 @@ const User: Taro.FC = () => {
             iconInfo={{size: iconSize, color: '#60b9ff', value: 'eye',}} title='浏览记录'
             arrow='right'
           />
-          <AtListItem iconInfo={{size: iconSize, color: '#ff36e5', value: 'heart',}} title='自动签到'
+         {/* <AtListItem iconInfo={{size: iconSize, color: '#ff36e5', value: 'heart',}} title='自动签到'
             switchIsCheck={autoCheckIn}
             onSwitchChange={(e) => setAutoCheckIn(e.detail.value)} isSwitch
-          />
+          />*/}
         </AtList>
         <View className='mg-user-button'>
           <AtButton onClick={clearMangaToken}>退出</AtButton>
