@@ -14,7 +14,7 @@ const useComic = (factory: () => number | string, deps: DependencyList | undefin
   const oid = useMemo(() => factory() as any - 0, deps)
   const {comicStore: {isValid, findById, insetOrUpdateById}} = useStores()
   const [{loading, error, data, response}, refetch] = useAxios<Comic|string>({url: parsePath(COMIC, {oid})}, {manual: true})
-  const exist = useMemo(()=>findById(oid),[findById, oid]), valid = isValid(exist)
+  const exist = useMemo(()=>findById(oid),[findById, oid]), valid = useMemo(()=>isValid(exist),[exist, isValid])
   const [comic, setComic] = useState<Comic>(() => exist)
   useEffect(() => {
     if (!valid) refetch()
