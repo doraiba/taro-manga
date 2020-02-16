@@ -1,13 +1,3 @@
-
-export const dataURLtoBlob = (dataurl) => {
-  const arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]); let n = bstr.length;const u8arr = new Uint8Array(n);
-  while (n--) {
-    u8arr[n] = bstr.charCodeAt(n);
-  }
-  return new Blob([u8arr], { type: mime });
-}
-
 export const isFunction = <T extends () => void>(value: any): value is T => {
   return typeof value === 'function';
 }
@@ -15,4 +5,17 @@ export const isFunction = <T extends () => void>(value: any): value is T => {
 export const parsePath = (url: string, pathVariables: Record<string, any>): string=> {
   return Object.keys(pathVariables).reduce(((seed, item) => seed.replace(new RegExp(`{${item}}`,'g'),pathVariables[item])), url)
 }
-// eslint-disable-next-line import/prefer-default-export
+
+export const createFormData = (formData: Record<string, any>)=>{
+  const boundary = `AaB0${Math.ceil(Math.random()*9)}x`;
+  const headers = {'Content-Type': `multipart/form-data; boundary=${boundary}`}
+  const data = Object.entries(formData).map(([k,v])=>
+    `\r\n--${boundary}` +
+    `\r\nContent-Disposition: form-data; name="${k}"` +
+    '\r\n' +
+    `\r\n${v}`
+  ).join('') +
+    `\r\n--${boundary}`;
+  return {headers, data}
+}
+

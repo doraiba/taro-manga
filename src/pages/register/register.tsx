@@ -9,10 +9,9 @@ import * as yup from 'yup'
 import logo from '@/asset/image/logo.png'
 import useAxios from 'axios-hooks'
 import {CAPTCHA, REGISTER} from "@/contexts/manga-api";
-import qs from 'query-string';
 import {navigateToLogin} from "@/utils/app-constant";
 import axios from 'taro-axios'
-import {parsePath} from "@/utils";
+import {createFormData, parsePath} from "@/utils";
 
 import './register.scss'
 
@@ -37,8 +36,10 @@ const Register: Taro.FC = () => {
   const formal = useFormal(initialValues, {
     schema,
     onSubmit: async (values) => {
-      const {data: {result, msg}} = await refetch({method: 'post', data: qs.stringify(values),headers: {'Content-Type': 'multipart/form-data'}})
-
+      const {headers,data} = createFormData(values)
+      const {data: {result, msg}} = await refetch({
+        method: 'post',headers, data
+      })
       if (!result) return Taro.atMessage({
         'message': msg,
         'type': 'error',
