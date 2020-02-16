@@ -90,7 +90,7 @@ server {
 map函数结构工具竟然不提示错误,编译显示index.scss问题!!!
 分页组件无法复用 mobx/reducer两种形式都不行.暂时放弃.更新taro-cli 2.0.3没法使用
 taro3.0 上手更简单,后期可能会更新
-
+小程序不支持formdata.... 还好有大佬 yarn add wx-multipart
 
  
 ```
