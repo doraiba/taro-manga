@@ -55,7 +55,7 @@
 
 server {
     listen       80;
-    server_name  img.javautil.top; #按住主页logo30s,再去登录页按住logo3s设置代理地址(为过审核)
+    server_name  img.javautil.top; #登录页按住logo3s设置代理地址
     location / {
             proxy_pass  http://imgsmall.dmzj.com;
             proxy_redirect     off;
@@ -78,6 +78,12 @@ server {
 | ![主页更新](./image/4.png) | ![搜索](./image/10.png) | ![个人中心](./image/8.png) |
 
 
+
+#### 难逃审核
+
+完整的审核过不了,上传初期提交的代码.....
+
+![初期版本](./image/gh_7532ee7c8552_258.jpg)
 
 
 
